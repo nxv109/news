@@ -1,0 +1,13 @@
+.account {
+  @include disFlex(row, center, center);
+
+  &__avatar {
+    max-width: 25px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  & img {
+    width: 100%;
+  }
+}
