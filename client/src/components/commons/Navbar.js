@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-export default function Navbar({ location }) {
+export default function Navbar() {
   const [user, setUser] = React.useState({});
   const appState = useSelector(state => state);
 
@@ -19,7 +19,7 @@ export default function Navbar({ location }) {
     sessionStorage.removeItem("userName");
     sessionStorage.removeItem("image");
 
-    window.location.reload();
+    setUser(null);
   };
 
   console.log(user);
@@ -62,7 +62,7 @@ export default function Navbar({ location }) {
               aria-haspopup="true"
               aria-expanded="false"
             >
-              {user.username || userNameExist ? (
+              {user && userNameExist ? (
                 <div className="account__avatar">
                   <img
                     src={`/uploads/${user.image || imageExist}`}
@@ -73,7 +73,7 @@ export default function Navbar({ location }) {
                 "Account"
               )}
             </a>
-            {user.username || userNameExist ? (
+            {user && userNameExist ? (
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <Link className="dropdown-item" to="/profile">
                   Profiles

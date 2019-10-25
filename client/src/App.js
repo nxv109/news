@@ -7,7 +7,7 @@ import Navbar from "./components/commons/Navbar";
 import Home from "./components/pages/home/Index";
 import Login from "./components/pages/account/Login";
 import Register from "./components/pages/account/Register";
-import Contact from "./components/pages/contact/Index";
+import Contact from "./components/pages/contact";
 import Footer from "./components/commons/Footer";
 
 import "./App.css";

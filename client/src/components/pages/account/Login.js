@@ -42,6 +42,8 @@ export default function Login({ history }) {
         sessionStorage.setItem('userName', username);
         sessionStorage.setItem("image", image);
         dispatch(addUser({ username, email, role, image }));
+
+        history.push('/');
       }
     } catch (error) {
       if (error) console.log("Have a problem", error);
