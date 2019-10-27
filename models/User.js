@@ -4,7 +4,7 @@ const { USERS } = require('../constant');
 const schema = new Schema({
     username: String,
     password: String,
-    image: { type: String, default: null },
+    image: { type: String, default: "avatar-default.jpg" },
     email: String,
     role: { type: String, default: USERS.ROLE.CUSTOMER },
     isDelete: {

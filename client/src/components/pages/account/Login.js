@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import useForm from "react-hook-form";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addUser } from "../../../actions/user.action";
 
 export default function Login({ history }) {
@@ -12,12 +12,7 @@ export default function Login({ history }) {
   const [user, setUser] = React.useState({});
   const { register, handleSubmit, errors } = useForm();
 
-  // const appState = useSelector(state => state);
   const dispatch = useDispatch();
-
-  // React.useEffect(() => {
-  //   console.log('appState', appState.users.data);
-  // },[appState]);
 
   const onSubmit = async (data, e) => {
     const target = e.target;
@@ -32,16 +27,20 @@ export default function Login({ history }) {
       setCodeMsg(res.data.code);
       setMsg(res.data.message);
       
-      // save token
       if (res.data.code === 200) {
+        // luu token
         const tokenCode = res.data.token;
         localStorage.setItem('auth-token', tokenCode);
 
         // truyen user data vao global
-        const { username, email, role, image } = res.data.data.user;
+        const { username, email, role, image, _id } = res.data.data.user;
+        localStorage.setItem('role', role);
         sessionStorage.setItem('userName', username);
         sessionStorage.setItem("image", image);
-        dispatch(addUser({ username, email, role, image }));
+
+        dispatch(addUser({ username, email, role, image, _id }));
+
+        console.log(res.data.data.user);
 
         history.push('/');
       }

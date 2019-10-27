@@ -6,6 +6,8 @@ export default function Navbar() {
   const [user, setUser] = React.useState({});
   const appState = useSelector(state => state);
 
+  console.log("user navbar", appState.users.data);
+
   const userNameExist = sessionStorage.getItem("userName");
   const imageExist = sessionStorage.getItem("image");
 
@@ -19,10 +21,15 @@ export default function Navbar() {
     sessionStorage.removeItem("userName");
     sessionStorage.removeItem("image");
 
+    localStorage.removeItem("auth-token");
+    localStorage.removeItem("role");
+
     setUser(null);
+
+    window.location.reload("/");
   };
 
-  console.log(user);
+  // console.log(user);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">

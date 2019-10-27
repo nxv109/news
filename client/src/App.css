@@ -16,6 +16,7 @@
 
 .account__avatar {
   max-width: 25px;
+  max-height: 25px;
   border-radius: 50%;
   overflow: hidden;
 }

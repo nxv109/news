@@ -9,6 +9,14 @@ import Login from "./components/pages/account/Login";
 import Register from "./components/pages/account/Register";
 import Contact from "./components/pages/contact";
 import Footer from "./components/commons/Footer";
+import NotFound from "./components/pages/404NotFound";
+
+// admin
+import Journalist from "./components/pages/journalist";
+import Editor from "./components/pages/editor";
+
+// auth
+import WithAuth from "./WithAuth";
 
 import "./App.css";
 
@@ -20,8 +28,10 @@ function App() {
         <Switch>
           <Route path="/" component={Home} exact />
           <Route path="/contact" component={Contact} />
+          <Route path="/admin" component={() => WithAuth(Journalist, Editor)} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
+          <Route path="*" component={NotFound} />
         </Switch>
       </div>
       <Footer />
