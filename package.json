@@ -6,9 +6,11 @@
     "start": "node ./bin/www",
     "server": "nodemon ./bin/www",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run client\" \"npm run server\""
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^15.0.0",
+    "@ckeditor/ckeditor5-react": "^1.1.3",
     "bcrypt": "^3.0.6",
     "cookie-parser": "^1.4.4",
     "debug": "~2.6.9",

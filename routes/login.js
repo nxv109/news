@@ -21,10 +21,6 @@ router.post("/register", async function(req, res) {
       const hash = await bcrypt.hash(req.body.password, 8);
       const User = new UserModel();
 
-      // const file = req.files.file;
-
-      // file.mv(`${__dirname}/../client/public/uploads/${file.name}`);
-
       User.username = req.body.userName;
       User.password = hash;
       // User.image = file.name;
@@ -66,10 +62,12 @@ router.post("/", async function(req, res, next) {
     if (result) {
       const token = jwt.sign({ _id: user._id }, key.tokenKey);
 
+      const { username, role, email, image, _id } = user;
+
       return res.header("auth-token", token).json({
         code: 200,
         message: "Đăng nhập thành công",
-        data: { user },
+        data: { username, role, email, image, _id },
         token
       });
     } else {
@@ -77,6 +75,186 @@ router.post("/", async function(req, res, next) {
     }
   } catch (err) {
     return res.json({ code: 400, message: err.message, data: null });
+  }
+});
+
+// get user
+router.get("/getUser/:id", async (req, res) => {
+  const user = await UserModel.findOne({ _id: req.params.id });
+
+  if (user) {
+    const { username, role, email, image, _id } = user;
+
+    res.json({
+      data: { username, role, email, image, _id }
+    });
+  } else {
+    res.json({
+      message: "khong tim thay user nao"
+    });
+  }
+});
+
+// update name, email, password, photo
+router.put("/updateName/:id", async (req, res) => {
+  const userExist = await UserModel.findOne({ _id: req.params.id });
+
+  if (userExist) {
+    try {
+      const user = {
+        username: req.body.userName
+      };
+
+      const updateUserName = await UserModel.findOneAndUpdate(
+        { _id: req.params.id },
+        user,
+        {
+          new: true,
+          useFindAndModify: false
+        }
+      );
+
+      if (updateUserName) {
+        res.json({
+          data: updateUserName,
+          code: 200,
+          message: "Cập nhật name thành công"
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        message: error
+      });
+    }
+  }
+});
+
+router.put("/updateEmail/:id", async (req, res) => {
+  const userExist = await UserModel.findOne({ _id: req.params.id });
+  const emailExist = await UserModel.findOne({ email: req.body.email });
+
+  if (userExist) {
+    if (emailExist) {
+      res.json({
+        code: 404,
+        message: "Email đã tồn tại"
+      });
+    } else {
+      try {
+        const user = {
+          email: req.body.email
+        };
+
+        const updateUserEmail = await UserModel.findOneAndUpdate(
+          { _id: req.params.id },
+          user,
+          {
+            new: true,
+            useFindAndModify: false
+          }
+        );
+
+        if (updateUserEmail) {
+          res.json({
+            code: 200,
+            data: updateUserEmail,
+            message: "Cập nhật email thành công"
+          });
+        }
+      } catch (error) {
+        res.status(500).json({
+          message: error
+        });
+      }
+    }
+  }
+});
+
+router.put("/updatePassword/:id", async (req, res) => {
+  const userExist = await UserModel.findOne({ _id: req.params.id });
+
+  if (userExist) {
+    const comparePassword = await bcrypt.compare(
+      req.body.currentPassword,
+      userExist.password
+    );
+
+    if (comparePassword) {
+      try {
+        const hashPassword = await bcrypt.hash(req.body.newPassword, 8);
+
+        const user = {
+          password: hashPassword
+        };
+
+        const updateUserPassword = await UserModel.findOneAndUpdate(
+          { _id: req.params.id },
+          user,
+          {
+            new: true,
+            useFindAndModify: false
+          }
+        );
+
+        if (updateUserPassword) {
+          res.json({
+            data: updateUserPassword,
+            code: 200,
+            message: "Cập nhật password thành công"
+          });
+        }
+      } catch (error) {
+        res.status(500).json({
+          message: error
+        });
+      }
+    } else {
+      res.json({
+        code: 404,
+        message: "Nhập password hiện tại không đúng"
+      });
+    }
+  }
+});
+
+// upload avatar
+router.put("/uploadAvatar/:id", async (req, res) => {
+  const userExist = await UserModel.findOne({ _id: req.params.id });
+
+  if (userExist) {
+    const file = req.files.file;
+
+    if (file) {
+      try {
+        file.mv(`${__dirname}/../client/public/uploads/${file.name}`);
+
+        const user = {
+          image: file.name
+        };
+
+        const updateUserAvatar = await UserModel.findOneAndUpdate(
+          { _id: req.params.id },
+          user,
+          {
+            new: true,
+            useFindAndModify: false
+          }
+        );
+
+        if (updateUserAvatar) {
+          res.json({
+            data: updateUserAvatar,
+            code: 200,
+            message: "Thay đổi avatar thành công"
+          });
+        }
+      } catch (error) {
+        res.json({
+          code: 500,
+          message: "Thay đổi avatar thất bại"
+        });
+      }
+    }
   }
 });
 

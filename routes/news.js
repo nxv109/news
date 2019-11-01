@@ -1,4 +1,5 @@
 var express = require("express");
+const fileUpload = require("express-fileupload");
 const NewsModel = require("../models/News");
 const RateModel = require("../models/Rate");
 const LikeModel = require("../models/Like");
@@ -8,6 +9,9 @@ const auth = require("../middleware/auth");
 const authJour = require("../middleware/checkJournalist");
 const authEditor = require("../middleware/checkEditor");
 /* GET users listing. */
+
+const app = express();
+app.use(fileUpload());
 
 router.get("/", async function(req, res, next) {
   try {
@@ -51,24 +55,30 @@ router.get("/:_idNews", async function(req, res, next) {
   }
 });
 
-router.post("/", authJour, async function(req, res, next) {
-  try {
-    const body = req.body;
-    const News = new NewsModel({
-      title: body.title,
-      content: body.content,
-      cateNews: body.cateNews,
-      createdBy: req.user._id
-    });
-    const NewsClass = await News.save();
-    return res.json({ code: 200, message: null, data: NewsClass });
-  } catch (err) {
-    return res.json({
-      code: 400,
-      err: err,
-      data: null
-    });
-  }
+router.post("/", async function(req, res, next) {
+  const body = req.body;
+  const files = req.files;
+  console.log(body);
+  console.log(files);
+  // file.mv(`${__dirname}/../client/public/uploads/news/${file.name}`);
+
+  // try {
+  //   const body = req.body;
+  //   const News = new NewsModel({
+  //     title: body.title,
+  //     content: body.content,
+  //     cateNews: body.cateNews,
+  //     createdBy: req.user._id
+  //   });
+  //   const NewsClass = await News.save();
+  //   return res.json({ code: 200, message: null, data: NewsClass });
+  // } catch (err) {
+  //   return res.json({
+  //     code: 400,
+  //     err: err,
+  //     data: null
+  //   });
+  // }
 });
 
 router.put("/:_id", authJour, async function(req, res, next) {

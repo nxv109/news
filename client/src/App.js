@@ -6,6 +6,7 @@ import Navbar from "./components/commons/Navbar";
 // component
 import Home from "./components/pages/home/Index";
 import Login from "./components/pages/account/Login";
+import Profile from "./components/pages/account/Profile";
 import Register from "./components/pages/account/Register";
 import Contact from "./components/pages/contact";
 import Footer from "./components/commons/Footer";
@@ -24,13 +25,14 @@ function App() {
   return (
     <Router className="App">
       <Navbar />
-      <div className="container-fluid mt-3 mb-3">
+      <div className="container-fluid mt-7 mb-3">
         <Switch>
           <Route path="/" component={Home} exact />
           <Route path="/contact" component={Contact} />
           <Route path="/admin" component={() => WithAuth(Journalist, Editor)} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
+          <Route path="/profile" component={Profile} />
           <Route path="*" component={NotFound} />
         </Switch>
       </div>
