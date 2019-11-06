@@ -1,7 +1,9 @@
 import React from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { addUser, setMessage } from "../../../actions/user.action";
+import { addUser } from "../../../actions/user.action";
+import { setMessage } from "../../../actions/message.action";
+import { closeMessage } from "../closeMessage";
 
 export default function Infomation() {
   const [users, setUsers] = React.useState("");
@@ -24,6 +26,7 @@ export default function Infomation() {
 
       dispatch(addUser({ username, email, role, image, _id }));
       dispatch(setMessage({ code, message }));
+      dispatch(closeMessage());
     } catch (error) {
       console.log(error);
     }
@@ -32,7 +35,7 @@ export default function Infomation() {
   return (
     <div className="text-center shadow rounded p-1">
       <img
-        src={`/uploads/${users.image || "avatar-default.jpg"}`}
+        src={`/uploads/users/${users.image || "avatar-default.jpg"}`}
         className="avatar img-circle img-thumbnail"
         alt="avatar"
       />

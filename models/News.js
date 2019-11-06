@@ -29,10 +29,6 @@ const schema = new Schema({
     default: NEWS.STATUS.NEW
   },
   count: Number,
-  cateNews: {
-    type: ObjectId,
-    ref: "CateNews"
-  },
   isDelete: {
     type: Boolean,
     default: false
@@ -41,7 +37,7 @@ const schema = new Schema({
     type: Date,
     default: new Date()
   },
-  tag: [{ type: ObjectId, ref: "Tag" }]
+  tag: { type: Array, default: null }
 });
 
 const NewsModel = mongoose.model("News", schema);

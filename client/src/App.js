@@ -15,6 +15,8 @@ import NotFound from "./components/pages/404NotFound";
 // admin
 import Journalist from "./components/pages/journalist";
 import Editor from "./components/pages/editor";
+import Sensor from "./components/pages/sensor";
+import Admin from "./components/pages/admin";
 
 // auth
 import WithAuth from "./WithAuth";
@@ -25,11 +27,11 @@ function App() {
   return (
     <Router className="App">
       <Navbar />
-      <div className="container-fluid mt-7 mb-3">
+      <div className="container-fluid mt-7 mb-3 min-h-100vh">
         <Switch>
           <Route path="/" component={Home} exact />
           <Route path="/contact" component={Contact} />
-          <Route path="/admin" component={() => WithAuth(Journalist, Editor)} />
+          <Route path="/admin" component={() => WithAuth(Journalist, Editor, Sensor, Admin)} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/profile" component={Profile} />

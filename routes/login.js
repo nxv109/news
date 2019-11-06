@@ -57,6 +57,14 @@ router.post("/", async function(req, res, next) {
       });
     }
 
+    if (user.isDelete === true) {
+      return res.json({
+        code: 401,
+        message: "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ chổ anh Vĩnh Đẹp Trưa nha",
+        data: null
+      });
+    }
+
     const result = await bcrypt.compare(req.body.password, user.password);
 
     if (result) {
@@ -71,7 +79,11 @@ router.post("/", async function(req, res, next) {
         token
       });
     } else {
-      return res.json({ code: 400, message: "Nhập sai password", data: null });
+      return res.json({
+        code: 400,
+        message: "Nhập sai password",
+        data: null
+      });
     }
   } catch (err) {
     return res.json({ code: 400, message: err.message, data: null });
@@ -226,7 +238,7 @@ router.put("/uploadAvatar/:id", async (req, res) => {
 
     if (file) {
       try {
-        file.mv(`${__dirname}/../client/public/uploads/${file.name}`);
+        file.mv(`${__dirname}/../client/public/uploads/users/${file.name}`);
 
         const user = {
           image: file.name
@@ -268,6 +280,18 @@ router.post("/checkToken", (req, res) => {
       res.json({
         role: role,
         message: "Error"
+      });
+    }
+
+    if (decoded && role === "admin") {
+      res.json({
+        role: role
+      });
+    }
+
+    if (decoded && role === "sensor") {
+      res.json({
+        role: role
       });
     }
 

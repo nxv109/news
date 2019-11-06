@@ -3,10 +3,11 @@ import axios from "axios";
 import useForm from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../../actions/user.action";
+import { setMessage } from "../../../actions/message.action";
+import { closeMessage } from "../closeMessage";
+import Message from "../Message";
 
 export default function Login({ history }) {
-  const [codeMsg, setCodeMsg] = React.useState("");
-  const [msg, setMsg] = React.useState("");
   const [remember, setRemember] = React.useState(false);
   const [user, setUser] = React.useState({});
   const { register, handleSubmit, errors } = useForm();
@@ -26,26 +27,28 @@ export default function Login({ history }) {
     try {
       const res = await axios.post("/login", data);
 
-      setCodeMsg(res.data.code);
-      setMsg(res.data.message);
-
       if (res.data.code === 200) {
         // luu token
         const tokenCode = res.data.token;
         localStorage.setItem("auth-token", tokenCode);
 
         // truyen user data vao global
-        const { username, email, role, image, _id } = res.data.data;
-        localStorage.setItem("role", role);
-        sessionStorage.setItem("userName", username);
-        sessionStorage.setItem("image", image);
-        const users = { username, email, role, image, _id };
-        sessionStorage.setItem("users", JSON.stringify(users));
+        const { _id } = res.data.data;
+        const userId = _id;
+        const { code, message } = res.data;
+
+        sessionStorage.setItem("userId", userId);
 
         dispatch(addUser(res.data.data));
+        dispatch(setMessage({ code, message }));
+        dispatch(closeMessage({ code, message }));
 
         history.push("/");
       }
+      const { code, message } = res.data;
+
+      dispatch(setMessage({ code, message }));
+      dispatch(closeMessage({ code, message }));
     } catch (error) {
       if (error) console.log("Have a problem", error);
     }
@@ -54,19 +57,7 @@ export default function Login({ history }) {
   return (
     <div className="container">
       <form onSubmit={handleSubmit(onSubmit)}>
-        {codeMsg === 401 ? (
-          <div className="alert alert-danger" role="alert">
-            {msg}
-          </div>
-        ) : codeMsg === 400 ? (
-          <div className="alert alert-danger" role="alert">
-            {msg}
-          </div>
-        ) : codeMsg === 200 ? (
-          <div className="alert alert-success" role="alert">
-            {msg}
-          </div>
-        ) : null}
+        <Message />
         <div className="form-group">
           <input
             type="text"

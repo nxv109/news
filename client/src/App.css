@@ -42,7 +42,19 @@
   width: 100%;
 }
 
+.min-h-100vh {
+  min-height: 100vh;
+}
+
 .ck.ck-editor {
   width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.alert--lb {
+  position: fixed;
+  bottom: calc(100vh - 95%);
+  left: 1rem;
+  z-index: 30;
 }
 /*# sourceMappingURL=App.css.map */

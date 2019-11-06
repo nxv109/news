@@ -21,7 +21,6 @@ export default function Register({ history }) {
       formData.append("userName", data.userName);
       formData.append("email", data.email);
       formData.append("password", data.password);
-      // formData.append("file", data.file[0]);
 
       try {
         const res = await axios.post("/login/register", formData, {

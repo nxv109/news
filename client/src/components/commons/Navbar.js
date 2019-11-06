@@ -1,29 +1,30 @@
 import React from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { addUser } from "../../actions/user.action";
 
 export default function Navbar() {
-  const [user, setUser] = React.useState({});
   const appState = useSelector(state => state);
-
-  const userNameExist = sessionStorage.getItem("userName");
-  const imageExist = sessionStorage.getItem("image");
+  const dispatch = useDispatch();
+  const userId = sessionStorage.getItem("userId");
 
   React.useEffect(() => {
-    if (appState.users.data) {
-      setUser(appState.users.data);
-    }
-  }, [appState.users.data]);
+    const fetchUser = async () => {
+      const res = await axios.get(`/login/getUser/${userId}`);
+      const rs = await res.data.data;
+
+      dispatch(addUser(rs));
+    };
+
+    fetchUser();
+  }, [dispatch, userId]);
 
   const hanldLogout = () => {
-    sessionStorage.removeItem("userName");
-    sessionStorage.removeItem("image");
-    sessionStorage.removeItem("users");
+    dispatch(addUser(null))
 
+    sessionStorage.removeItem("userId");
     localStorage.removeItem("auth-token");
-    localStorage.removeItem("role");
-
-    setUser(null);
   };
 
   return (
@@ -65,10 +66,10 @@ export default function Navbar() {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                {user && userNameExist ? (
+                {appState.users.data ? (
                   <div className="account__avatar">
                     <img
-                      src={`/uploads/${user.image || imageExist}`}
+                      src={`/uploads/users/${appState.users.data.image || "avatar-default.jpg"}`}
                       alt="avatar"
                     />
                   </div>
@@ -76,7 +77,7 @@ export default function Navbar() {
                   "Account"
                 )}
               </a>
-              {user && userNameExist ? (
+              {appState.users.data ? (
                 <div className="dropdown-menu shadow" aria-labelledby="navbarDropdown">
                   <Link className="dropdown-item" to="/profile">
                     <i className="far fa-address-card mr-4"></i>
@@ -84,7 +85,7 @@ export default function Navbar() {
                   </Link>
                   <Link className="dropdown-item" to="/admin">
                     <i className="far fa-plus-square mr-4"></i>
-                    <span>Add news</span>
+                    <span>Admin</span>
                   </Link>
                   <div className="dropdown-divider" />
                   <Link

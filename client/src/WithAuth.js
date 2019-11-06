@@ -2,25 +2,33 @@ import React from "react";
 import axios from "axios";
 import Message from "./components/Message";
 
-export default function WithAuth(ComponentJournalist, ComponentEditor) {
+export default function WithAuth(ComponentJournalist, ComponentEditor, ComponentSensor, ComponentAdmin) {
   const [role, setRole] = React.useState("");
-  const [msg, setMsg] = React.useState("Unauthorized: Bạn không được cấp phép vào trang này.");
+  const msg = "Unauthorized: Bạn không được cấp phép vào trang này.";
+  
+  const token = localStorage.getItem("auth-token") || "asdasd";
+  const userId = sessionStorage.getItem("userId");
 
   React.useEffect(() => {
-    const fetchData = async () => {
-      const token = localStorage.getItem("auth-token") || "asdasd";
-      const role = localStorage.getItem("role") || "not login";
+    async function fetchData() {
+      const getRole = await axios.get(`/login/getUser/${userId}`);
+      const role = await getRole.data.data.role;
 
-      const res = await axios.post("/login/checkToken", {
-        token: token,
-        role: role
-      });
+      const checkToken = async () => {
 
-      setRole(res.data.role);
-    };
+        const res = await axios.post("/login/checkToken", {
+          token: token,
+          role: role
+        });
+  
+        setRole(res.data.role);
+      };
+  
+      checkToken();
+    }
 
     fetchData();
-  }, [setRole, setMsg]);
+  }, [setRole, role, token, userId]);
 
   return (
     <React.Fragment>
@@ -28,6 +36,10 @@ export default function WithAuth(ComponentJournalist, ComponentEditor) {
         <ComponentEditor />
       ) : role === "journalist" ? (
         <ComponentJournalist />
+      ) : role === "sensor" ? (
+        <ComponentSensor />
+      ) : role === "admin" ? (
+        <ComponentAdmin />
       ) : role === "customer" || role === "not login" ? (
         <Message message={msg} />
       ) : null}

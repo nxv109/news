@@ -1,11 +1,23 @@
-.mt-7{
+.mt-7 {
   margin-top: 5rem;
 }
 
-.w-100{
+.w-100 {
   width: 100%;
 }
 
-.ck.ck-editor{
+.min-h-100vh{
+  min-height: 100vh;
+}
+
+.ck.ck-editor {
   width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.alert--lb {
+  position: fixed;
+  bottom: calc(100vh - 95%);
+  left: 1rem;
+  z-index: 30;
 }

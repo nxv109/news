@@ -6,10 +6,10 @@ export default function Message() {
   const appState = useSelector(state => state);
 
   React.useEffect(() => {
-    if (appState.users.message) {
-      setMsg(appState.users.message);
+    if (appState.message.message) {
+      setMsg(appState.message.message);
     }
-  }, [appState.users.message]);
+  }, [appState.message.message]);
 
   return (
     <React.Fragment>
@@ -17,11 +17,12 @@ export default function Message() {
         <div
           className={`${
             msg.code === 200
-              ? "alert alert-success text-center"
-              : "alert alert-danger text-center"
+              ? "alert alert-success text-center alert--lb alert-dismissible fade show shadow"
+              : "alert alert-danger text-center alert--lb alert-dismissible fade show shadow"
           }`}
+          role="alert"
         >
-          {msg.message}
+          <strong>{msg.message}</strong>
         </div>
       ) : null}
     </React.Fragment>

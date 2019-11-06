@@ -55,30 +55,45 @@ router.get("/:_idNews", async function(req, res, next) {
   }
 });
 
+// add news
 router.post("/", async function(req, res, next) {
-  const body = req.body;
-  const files = req.files;
-  console.log(body);
-  console.log(files);
-  // file.mv(`${__dirname}/../client/public/uploads/news/${file.name}`);
+  try {
+    const body = req.body;
+    const News = new NewsModel({
+      title: body.title,
+      content: body.content,
+      tag: body.tags,
+      cateNews: body.category,
+      createdBy: body.createdBy
+    });
 
-  // try {
-  //   const body = req.body;
-  //   const News = new NewsModel({
-  //     title: body.title,
-  //     content: body.content,
-  //     cateNews: body.cateNews,
-  //     createdBy: req.user._id
-  //   });
-  //   const NewsClass = await News.save();
-  //   return res.json({ code: 200, message: null, data: NewsClass });
-  // } catch (err) {
-  //   return res.json({
-  //     code: 400,
-  //     err: err,
-  //     data: null
-  //   });
-  // }
+    const NewsClass = await News.save();
+
+    return res.json({ code: 200, message: "Thêm thành công", data: NewsClass });
+  } catch (err) {
+    return res.json({
+      code: 400,
+      err: err,
+      message: "Thêm thất bại"
+    });
+  }
+});
+
+// add news ( upload anh )
+router.post("/upload", function(req, res, next) {
+  try {
+    const file = req.files.upload;
+
+    console.log(file);
+
+    file.mv(`${__dirname}/../client/public/uploads/news/${file.name}`);
+  } catch (err) {
+    return res.json({
+      code: 400,
+      err: err,
+      message: "Upload thất bại"
+    });
+  }
 });
 
 router.put("/:_id", authJour, async function(req, res, next) {

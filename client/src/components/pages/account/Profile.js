@@ -1,13 +1,15 @@
 import React from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import { addUser, setMessage } from "../../../actions/user.action";
+import { addUser } from "../../../actions/user.action";
+import { setMessage } from "../../../actions/message.action";
 
 // components
 import Infomation from "./Infomation";
 import Avatar from "./Avatar";
 import Message from "../Message";
+import { closeMessage } from "../closeMessage";
 
 export default function Profile() {
   const [userName, setUserName] = React.useState("");
@@ -27,19 +29,19 @@ export default function Profile() {
   );
 
   const dispatch = useDispatch();
-  const appState = useSelector(state => state);
-  const users = JSON.parse(sessionStorage.getItem("users"));
+  const userId = sessionStorage.getItem("userId");
 
   React.useEffect(() => {
+    dispatch(setMessage({ message: "" }));
     const fetchUser = async () => {
-      const res = await axios.get(`/login/getUser/${users._id}`);
+      const res = await axios.get(`/login/getUser/${userId}`);
       const rs = await res.data.data;
 
       dispatch(addUser(rs));
     };
 
     fetchUser();
-  }, [dispatch, users._id]);
+  }, [dispatch, userId]);
 
   const mer = "Không được để trống";
 
@@ -53,12 +55,13 @@ export default function Profile() {
       setUserNameErr(mer);
     } else {
       try {
-        const res = await axios.put(`/login/updateName/${users._id}`, {
+        const res = await axios.put(`/login/updateName/${userId}`, {
           userName: userName
         });
 
         const { code, message } = res.data;
         dispatch(setMessage({ code, message }));
+        dispatch(closeMessage());
 
         if (code === 200) {
           const { username, email, role, image, _id } = res.data.data;
@@ -81,12 +84,13 @@ export default function Profile() {
       setUserEmailErr(mer);
     } else {
       try {
-        const res = await axios.put(`/login/updateEmail/${users._id}`, {
+        const res = await axios.put(`/login/updateEmail/${userId}`, {
           email: userEmail
         });
 
         const { code, message } = res.data;
         dispatch(setMessage({ code, message }));
+        dispatch(closeMessage());
 
         if (code === 200) {
           const { username, email, role, image, _id } = res.data.data;
@@ -119,13 +123,14 @@ export default function Profile() {
         setUserPasswordErr("Mật khẩu không trùng khớp");
       } else {
         try {
-          const res = await axios.put(`/login/updatePassword/${users._id}`, {
+          const res = await axios.put(`/login/updatePassword/${userId}`, {
             newPassword: userPassword.newPassword,
             currentPassword: userPassword.currentPassword
           });
           const { code, message } = res.data;
 
           dispatch(setMessage({ code, message }));
+          dispatch(closeMessage());
   
           if (code === 200) {
             const { username, email, role, image, _id } = res.data.data;

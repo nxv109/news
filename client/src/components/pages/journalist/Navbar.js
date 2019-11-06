@@ -13,7 +13,7 @@ export default function Navbar() {
         </li>
         <li className="nav-item sidebar-actions">
           <span className="nav-link">
-            <Link to="/journalist/add-news" className="btn btn-block btn-lg btn-outline-danger mt-4">
+            <Link to="/admin/add-new" className="btn btn-block btn-lg btn-outline-danger mt-4 p-3">
               + Add a new
             </Link>
           </span>

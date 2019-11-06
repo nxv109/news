@@ -4,12 +4,14 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const logger = require("morgan");
+
 const cateNewsRouter = require("./routes/cateNews");
 const newsRouter = require("./routes/news");
 const loginRouter = require("./routes/login");
 const newsEditRouter = require("./routes/newsEdit");
 const likeRouter = require('./routes/like');
 const rateRouter = require('./routes/rate');
+const usersRouter = require('./routes/users');
 // const viewRouter = require('./routes/view')
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
@@ -57,7 +59,7 @@ app.use(function(req, res, next) {
   return next();
 });
 
-// app.use('/users', usersRouter);
+app.use('/users', usersRouter);
 app.use("/cateNews", cateNewsRouter);
 app.use("/news", newsRouter);
 app.use("/newsEdits", newsEditRouter);
