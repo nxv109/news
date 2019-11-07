@@ -8,6 +8,7 @@ const schema = new Schema({
   content: String,
   cateNews: { type: ObjectId, ref: "CateNews" },
   createdBy: { type: ObjectId, ref: "User" },
+  articlePicture: { type: String },
   countLike: {
     type: Number,
     default: 0

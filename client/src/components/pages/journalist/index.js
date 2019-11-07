@@ -3,6 +3,8 @@ import { Route, Switch } from "react-router-dom";
 import NavbarRight from "./Navbar";
 import Dashboard from "./Dashboard";
 import AddNew from "./AddNew";
+import News from "./News";
+import Trash from "./Trash";
 
 export default function Journalist() {
   return (
@@ -13,6 +15,8 @@ export default function Journalist() {
           <Switch>
             <Route exact path="/admin" component={Dashboard} />
             <Route path="/admin/add-new" component={AddNew} />
+            <Route path="/admin/news" component={News} />
+            <Route path="/admin/trash" component={Trash} />
           </Switch>
         </div>
       </div>

@@ -15,6 +15,7 @@ export default function AddNew() {
   const [tag, setTag] = React.useState("");
   const [tagAlready, setTagAlready] = React.useState("");
   const [tags, setTags] = React.useState([]);
+  const [file, setFile] = React.useState(null);
   const [categories, setCategories] = React.useState([]);
 
   const appState = useSelector(state => state);
@@ -37,8 +38,6 @@ export default function AddNew() {
     setTag(e.target.value);
   };
 
-  console.log(tags);
-
   const hanldAddTag = () => {
     if (tag === "" || tag === null) {
       setTagAlready("Bạn cần nhập tag");
@@ -52,27 +51,28 @@ export default function AddNew() {
         setTagAlready("");
       }
     }
-
-    console.log(tags);
   };
 
   const hanldChangeContent = content => {
     setContent(content);
   };
 
+  const hanldeChangeUpload = e => {
+    setFile(e.target.files[0]);
+  };
+
   const onSunmit = async data => {
     try {
-      const dataNews = {
-        title: data.title,
-        category: data.category,
-        content: content,
-        tags: tags,
-        createdBy: appState.users.data._id
-      };
+      const formData = new FormData();
 
-      console.log(dataNews);
+      formData.append('title', data.title);
+      formData.append('category', data.category);
+      formData.append('content', content);
+      formData.append('tags', JSON.stringify(tags));
+      formData.append('createdBy', appState.users.data._id);
+      formData.append("file", file);
 
-      const res = await axios.post("/news", dataNews);
+      const res = await axios.post("/news", formData);
       const { code, message } = res.data;
 
       dispatch(setMessage({ code, message }));
@@ -106,6 +106,7 @@ export default function AddNew() {
           <form onSubmit={handleSubmit(onSunmit)} className="w-100">
             <Message />
             <div className="form-group">
+              <label>Tiêu đề:</label>
               <input
                 type="text"
                 name="title"
@@ -118,21 +119,25 @@ export default function AddNew() {
                 <small className="text-danger">This field is required</small>
               )}
             </div>
-            <CKEditor
-              className="w-100 mb-2"
-              editor={ClassicEditor}
-              data="<p>Hello from CKEditor 5!</p>"
-              config={{
-                ckfinder: {
-                  uploadUrl: "/news/upload?command=QuickUpload&type=Files&responseType=json"
-                }
-              }}
-              onChange={(event, editor) => {
-                const data = editor.getData();
-                hanldChangeContent(data);
-              }}
-            />
             <div className="form-group">
+              <label>Nội dung:</label>
+              <CKEditor
+                className="w-100 mb-2"
+                editor={ClassicEditor}
+                data="<p>Hello from CKEditor 5!</p>"
+                config={{
+                  ckfinder: {
+                    uploadUrl: "/news/upload?command=QuickUpload&type=Files&responseType=json"
+                  }
+                }}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  hanldChangeContent(data);
+                }}
+              />
+            </div>
+            <div className="form-group">
+              <label>Thể loại:</label>
               <select
                 name="category"
                 className="form-control"
@@ -147,6 +152,7 @@ export default function AddNew() {
               </select>
             </div>
             <div className="form-group">
+              <label>Tags:</label>
               <input
                 type="text"
                 name="tags"
@@ -181,12 +187,32 @@ export default function AddNew() {
               <button
                 onClick={hanldAddTag}
                 type="button"
-                className="btn btn-danger"
+                className="btn btn-danger btn-sm"
               >
                 Thêm tag
               </button>
             </div>
-            <button type="submit" className="btn btn-danger mt-3">
+            <div className="form-group">
+              <label>Ảnh đại diện:</label>
+              <div className="custom-file mb-3">
+                <input
+                  type="file"
+                  className="custom-file-input"
+                  style={{ border: `${errors.email ? "1px solid red" : ""}` }}
+                  id="customFile"
+                  name="filename"
+                  onChange={hanldeChangeUpload}
+                  ref={register({ required: true })}
+                />
+                <label style={{ height: "calc(1.5em + 0.75rem + 0px)" }} className="custom-file-label bd-none bdr-none" htmlFor="customFile">
+                  Choose file
+                </label>
+              </div>
+              {errors.filename && (
+                <small className="text-danger">This field is required</small>
+              )}
+            </div>
+            <button type="submit" className="btn btn-danger">
               Gửi yêu cầu phê duyệt
             </button>
           </form>

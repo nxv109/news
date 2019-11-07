@@ -184,7 +184,7 @@ export default function Profile() {
                   <div className="col-xs-12">
                     <button
                       onClick={hanldeUpdateName}
-                      className="btn btn-danger mt-3"
+                      className="btn btn-danger btn-sm mt-3"
                       type="submit"
                     >
                       <i className="glyphicon glyphicon-ok-sign" /> Update name
@@ -215,7 +215,7 @@ export default function Profile() {
                   <div className="col-xs-12">
                     <button
                       onClick={hanldeUpdateEmail}
-                      className="btn btn-danger mt-3"
+                      className="btn btn-danger btn-sm mt-3"
                       type="submit"
                     >
                       <i className="glyphicon glyphicon-ok-sign" /> Update email
@@ -290,7 +290,7 @@ export default function Profile() {
                 <div className="col-xs-12">
                   <button
                     onClick={hanldeUpdatePassword}
-                    className="btn btn-danger"
+                    className="btn btn-danger btn-sm"
                     type="submit"
                   >
                     <i className="glyphicon glyphicon-ok-sign" /> Update
