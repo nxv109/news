@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import useForm from "react-hook-form";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
@@ -9,14 +8,14 @@ import { setMessage } from "../../../actions/message.action";
 import Message from "../Message";
 import { closeMessage } from "../closeMessage";
 
-export default function AddNew() {
-  const { register, handleSubmit, errors } = useForm();
+export default function Edit({ match }) {
   const [content, setContent] = React.useState(null);
-  const [tag, setTag] = React.useState("");
   const [tagAlready, setTagAlready] = React.useState("");
   const [tags, setTags] = React.useState([]);
   const [file, setFile] = React.useState(null);
   const [categories, setCategories] = React.useState([]);
+  const [newData, setNewData] = React.useState([]);
+  const [news, setNews] = React.useState({});
 
   const appState = useSelector(state => state);
   const dispatch = useDispatch();
@@ -31,23 +30,34 @@ export default function AddNew() {
       setCategories(data);
     };
 
-    fetchCategories();
-  }, [dispatch]);
+    const fetchNew = async () => {
+      const res = await axios.get(`/news/${match.params.id}`);
+      const data = res.data.data;
 
-  const hanldChangeTag = e => {
-    setTag(e.target.value);
+      setNewData(data);
+      setTags(data.tags);
+    };
+
+    fetchCategories();
+    fetchNew();
+  }, [dispatch, match.params.id]);
+  console.log('newData', newData);
+
+  const handleChange = e => {
+    setNews({ ...news, [e.target.name]: e.target.value});
+    console.log('news', news);
   };
 
   const hanldAddTag = () => {
-    if (tag === "" || tag === null) {
+    if (news.tag === "") {
       setTagAlready("Bạn cần nhập tag");
     } else {
-      const tagExist = tags.filter(v => v.toLowerCase() === tag.toLowerCase());
+      const tagExist = tags.filter(v => v.toLowerCase() === news.tag.toLowerCase());
 
       if (tagExist.length > 0) {
         setTagAlready("Tag đã tồn tại");
       } else {
-        setTags([...tags, tag]);
+        setTags([...tags, news.tag]);
         setTagAlready("");
       }
     }
@@ -61,18 +71,19 @@ export default function AddNew() {
     setFile(e.target.files[0]);
   };
 
-  const onSunmit = async data => {
+  const hanldeSubmit = async e => {
+    e.preventDefault();
+    console.log('news', news);
     try {
       const formData = new FormData();
 
-      formData.append('title', data.title);
-      formData.append('category', data.category);
-      formData.append('content', content);
+      formData.append('title', news.title || newData.title);
+      formData.append('categoryId', news.category || newData.categoryId);
+      formData.append('content', content || newData.content);
       formData.append('tags', JSON.stringify(tags));
-      formData.append('createdBy', appState.users.data._id);
-      formData.append("file", file);
+      formData.append("file", file || newData.articlePicture);
 
-      const res = await axios.post("/news", formData);
+      const res = await axios.put(`/news/${match.params.id}`, formData);
       const { code, message } = res.data;
 
       dispatch(setMessage({ code, message }));
@@ -89,7 +100,7 @@ export default function AddNew() {
           <span className="page-title-icon bg-gradient-danger text-white mr-2">
             <i className="mdi mdi-format-list-bulleted" />
           </span>
-          Add news
+          Edit
         </h3>
         <nav aria-label="breadcrumb">
           <ul className="breadcrumb">
@@ -103,28 +114,25 @@ export default function AddNew() {
       </div>
       <div className="row">
         <div className="col-xl-12 grid-margin">
-          <form onSubmit={handleSubmit(onSunmit)} className="w-100">
+          <form onSubmit={hanldeSubmit} className="w-100">
             <Message />
             <div className="form-group">
               <label>Tiêu đề:</label>
               <input
                 type="text"
                 name="title"
-                style={{ border: `${errors.email ? "1px solid red" : ""}` }}
                 className="form-control"
                 placeholder="Enter new title..."
-                ref={register({ required: true })}
+                value={news.title || newData.title || ""}
+                onChange={handleChange}
               />
-              {errors.title && (
-                <small className="text-danger">This field is required</small>
-              )}
             </div>
             <div className="form-group">
               <label>Nội dung:</label>
               <CKEditor
                 className="w-100 mb-2"
                 editor={ClassicEditor}
-                data=""
+                data={newData.content}
                 config={{
                   ckfinder: {
                     uploadUrl: "/news/upload?command=QuickUpload&type=Files&responseType=json"
@@ -141,9 +149,9 @@ export default function AddNew() {
               <select
                 name="category"
                 className="form-control"
-                style={{ border: `${errors.category ? "1px solid red" : ""}` }}
-                ref={register({ required: true })}
+                onChange={handleChange}
               >
+                <option value={newData.categoryId}>>{newData.categoryName}</option>
                 {categories.map((category, index) => (
                   <option key={index} value={category._id}>
                     {category.name}
@@ -155,11 +163,11 @@ export default function AddNew() {
               <label>Tags:</label>
               <input
                 type="text"
-                name="tags"
+                name="tag"
                 className="form-control"
                 placeholder="Enter new tag..."
-                value={tag || ""}
-                onChange={hanldChangeTag}
+                value={news.tag || ""}
+                onChange={handleChange}
               />
               <div className="mt-2">
                 <u className="mr-2">Tags:</u>
@@ -198,22 +206,17 @@ export default function AddNew() {
                 <input
                   type="file"
                   className="custom-file-input"
-                  style={{ border: `${errors.email ? "1px solid red" : ""}` }}
                   id="customFile"
                   name="filename"
                   onChange={hanldeChangeUpload}
-                  ref={register({ required: true })}
                 />
                 <label style={{ height: "calc(1.5em + 0.75rem + 0px)" }} className="custom-file-label bd-none bdr-none" htmlFor="customFile">
                   Choose file
                 </label>
               </div>
-              {errors.filename && (
-                <small className="text-danger">This field is required</small>
-              )}
             </div>
             <button type="submit" className="btn btn-danger">
-              Gửi yêu cầu phê duyệt
+              SỬA
             </button>
           </form>
         </div>

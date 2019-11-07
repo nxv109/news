@@ -62,10 +62,21 @@ router.get("/:_idNews", async function(req, res, next) {
     })
       .populate("cateNews")
       .populate("createdBy");
+
+    const news = News[0];
+    const data = {
+      title: news.title,
+      content: news.content,
+      categoryId: news.cateNews._id,
+      categoryName: news.cateNews.name,
+      tags: news.tag,
+      articlePicture: news.articlePicture
+    };
+
     return res.json({
       code: 200,
       err: null,
-      data: News
+      data: data
     });
   } catch (err) {
     return res.json({
@@ -97,7 +108,11 @@ router.post("/", async function(req, res, next) {
 
     const NewsClass = await News.save();
 
-    return res.json({ code: 200, message: "Gửi yêu cầu thành công", data: NewsClass });
+    return res.json({
+      code: 200,
+      message: "Gửi yêu cầu thành công",
+      data: NewsClass
+    });
   } catch (err) {
     return res.json({
       code: 400,
@@ -124,42 +139,57 @@ router.post("/upload", function(req, res, next) {
   }
 });
 
-router.put("/:_id", authJour, async function(req, res, next) {
+router.put("/:_id", async function(req, res, next) {
   try {
     const _id = req.params._id;
-    const newsCheck = await NewsModel.findOne({ _id: _id });
-    if (newsCheck == null) {
-      return res.json({
-        data: null,
-        messege: "Khong co san pham nay",
-        code: 200
-      });
-    }
-    if (newsCheck != null) {
-      console.log(newsCheck);
-      console.log(req.user._id);
-      if (newsCheck.createdBy.toString() == req.user._id.toString()) {
-        const body = req.body;
-        const NewsUpdate = await NewsModel.updateOne(
-          { _id: _id },
-          {
-            title: body.title,
-            content: body.content,
-            cateNews: body.cateNews
-          }
-        );
-        return res.json({ code: 200, message: null, data: NewsUpdate });
+    const newExist = await NewsModel.findOne({ _id: _id });
+
+    if (newExist) {
+      const body = req.body;
+      const files = req.files;
+
+      if (files) {
+        files.file.mv(`${__dirname}/../client/public/uploads/news/${files.file.name}`);
+
+        const news = {
+          title: body.title,
+          content: body.content,
+          cateNews: body.categoryId,
+          tag: JSON.parse(body.tags),
+          articlePicture: files.file.name
+        };
+
+        if (news) {
+          await NewsModel.findOneAndUpdate({ _id: _id }, news);
+
+          return res.json({
+            code: 200,
+            message: "Sửa bài viết thành công"
+          });
+        }
       } else {
-        return res.json({
-          data: null,
-          message: "Khong co quyen thay doi"
-        });
+        const news = {
+          title: body.title,
+          content: body.content,
+          cateNews: body.categoryId,
+          tag: JSON.parse(body.tags)
+        };
+
+        if (news) {
+          await NewsModel.findOneAndUpdate({ _id: _id }, news);
+
+          return res.json({
+            code: 200,
+            message: "Sửa bài viết thành công"
+          });
+        }
       }
     }
   } catch (err) {
     console.log(err);
     return res.json({
       code: 400,
+      message: "Sửa bài viết thất bại",
       err: err,
       data: null
     });
@@ -232,7 +262,7 @@ router.delete("/:_id", async function(req, res, next) {
   try {
     const _id = req.params._id;
     const newExist = await NewsModel.findOne({ _id: _id });
-    
+
     if (newExist) {
       const newDelete = await NewsModel.findOneAndDelete({ _id: _id });
       const news = await NewsModel.find({ isDelete: true });

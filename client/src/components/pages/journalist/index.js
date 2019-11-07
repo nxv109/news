@@ -5,6 +5,7 @@ import Dashboard from "./Dashboard";
 import AddNew from "./AddNew";
 import News from "./News";
 import Trash from "./Trash";
+import Edit from "./Edit";
 
 export default function Journalist() {
   return (
@@ -17,6 +18,7 @@ export default function Journalist() {
             <Route path="/admin/add-new" component={AddNew} />
             <Route path="/admin/news" component={News} />
             <Route path="/admin/trash" component={Trash} />
+            <Route path="/admin/new/:id" component={Edit} />
           </Switch>
         </div>
       </div>

@@ -69,13 +69,13 @@ export default function News() {
       Cell: props => {
         return (
           <div>
-            <button
-              type="button"
+            <Link
+              to={`/admin/new/${props.original._id}`}
               className="btn btn-warning btn-sm mr-1"
               title="Sửa bài viết"
             >
               <i className="mdi mdi-table-edit"></i>
-            </button>
+            </Link>
             <button
               type="button"
               className="btn btn-danger btn-sm"
@@ -89,6 +89,9 @@ export default function News() {
       }
     }
   ];
+
+  const html = "<strong><em>Show bai viet bang cach nay</em></strong>";
+
   return (
     <div className="content-wrapper">
       <div className="page-header">
@@ -97,6 +100,7 @@ export default function News() {
             <i className="mdi mdi-view-list" />
           </span>
           News
+          <div dangerouslySetInnerHTML={{__html: html}} />
         </h3>
         <nav aria-label="breadcrumb">
           <ul className="breadcrumb">
