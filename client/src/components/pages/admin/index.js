@@ -4,6 +4,7 @@ import NavbarRight from "./Navbar";
 import Dashboard from "./Dashboard";
 import Member from "./Member";
 import Category from "./Category";
+import Trash from "./Trash";
 import AddNew from "./AddNew";
 
 export default function Admin() {
@@ -16,6 +17,7 @@ export default function Admin() {
             <Route exact path="/admin" component={Dashboard} />
             <Route path="/admin/manage-members" component={Member} />
             <Route path="/admin/categories" component={Category} />
+            <Route path="/admin/trash" component={Trash} />
             <Route path="/admin/add-new-category" component={AddNew} />
           </Switch>
         </div>

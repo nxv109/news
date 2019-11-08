@@ -69,4 +69,24 @@
 .cursor {
   cursor: initial !important;
 }
+
+.tag {
+  position: relative;
+}
+
+.tag:hover .tag__close {
+  opacity: 1;
+}
+
+.tag__close {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  font-size: 0.8rem;
+  -webkit-transition: .3s;
+  transition: .3s;
+  color: #000;
+  opacity: 0;
+  cursor: pointer;
+}
 /*# sourceMappingURL=App.css.map */

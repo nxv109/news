@@ -43,7 +43,6 @@ export default function Edit({ match }) {
 
   const handleChange = e => {
     setNews({ ...news, [e.target.name]: e.target.value});
-    console.log('news', news);
   };
 
   const hanldAddTag = () => {
@@ -61,6 +60,14 @@ export default function Edit({ match }) {
     }
   };
 
+  // remove tag
+  const hanldeRemoveTag = (index) => {
+    const newTag = [ ...tags ];
+    newTag.splice(index, 1);
+
+    setTags(newTag);
+  };
+
   const hanldChangeContent = content => {
     setContent(content);
   };
@@ -71,7 +78,7 @@ export default function Edit({ match }) {
 
   const hanldeSubmit = async e => {
     e.preventDefault();
-    console.log('news', news);
+
     try {
       const formData = new FormData();
 
@@ -171,8 +178,9 @@ export default function Edit({ match }) {
                 <u className="mr-2">Tags:</u>
                 {tags.length > 0 ? (
                   tags.map((tag, index) => (
-                    <span className="badge badge-success mr-1" key={index}>
+                    <span className="badge badge-success mr-1 tag" key={index}>
                       {tag}
+                      <i onClick={() => hanldeRemoveTag(index)} className="mdi mdi-close-circle-outline tag__close text-dangder" />
                     </span>
                   ))
                 ) : (

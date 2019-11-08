@@ -1,53 +1,46 @@
 import React from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import { setMessage } from "../../../actions/message.action";
 import { useDispatch } from "react-redux";
 
 import Message from "../Message";
-import { closeMessage } from "../closeMessage";
 
-export default function Category() {
+export default function Trash() {
   const [categories, setCategories] = React.useState([]);
-  const [amountCategory, setAmountCategory] = React.useState(0);
-  const [amountTrash, setAmountTrash] = React.useState(0);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     dispatch(setMessage({ message: "" }));
     const fetchCategories = async () => {
-      const res = await axios.get("/cateNews");
-      const data = res.data.data;
-
-      setCategories(data);
-      setAmountCategory(data.length);
-    };
-
-    const fetchTrash = async () => {
       const res = await axios.get("/cateNews/trash");
       const data = res.data.data;
 
-      setAmountTrash(data.length);
+      setCategories(data);
     };
 
     fetchCategories();
-    fetchTrash();
   }, [dispatch]);
 
-  // move to trash
-  const hanldeTrash = async id => {
-    const res = await axios.put(`/cateNews/trash/${id}`);
+  // delete category
+  const hanldeDelete = async id => {
+    const res = await axios.delete(`/cateNews/${id}`);
+
     const { code, message, data } = res.data;
-    const categories = await data.filter(v => v.isDelete === false);
-    const amountTrash = await data.filter(v => v.isDelete === true);
-
-    setAmountTrash(amountTrash.length);
     dispatch(setMessage({ code, message }));
-    dispatch(closeMessage());
 
-    setCategories(categories);
+    setCategories(data);
+  };
+
+  // restore category
+  const hanldeRestore = async id => {
+    const res = await axios.put(`/cateNews/restore/${id}`);
+
+    const { code, message, data } = res.data;
+    dispatch(setMessage({ code, message }));
+
+    setCategories(data);
   };
 
   const columns = [
@@ -64,11 +57,17 @@ export default function Category() {
       Cell: props => {
         return (
           <div>
+          <button
+            onClick={() => hanldeRestore(props.original._id)}
+            type="button"
+            className="btn btn-warning btn-sm mr-1"
+          >
+            <i className="mdi mdi-backup-restore"></i>
+          </button>
             <button
-              onClick={() => hanldeTrash(props.original._id)}
+              onClick={() => hanldeDelete(props.original._id)}
               type="button"
               className="btn btn-danger btn-sm"
-              title="Bỏ chuyên mục"
             >
               <i className="mdi mdi-delete"></i>
             </button>
@@ -97,22 +96,6 @@ export default function Category() {
         </nav>
       </div>
       <div className="row">
-        <div className="col-xl-12 stretch-card">
-          <div className="border-bottom border-secondary text-center w-100">
-            <Link to="/admin/trash" className="btn btn-link text-dark pl-0">
-              <i className="mdi mdi-delete-variant" /> Trash
-              <span className="badge badge-secondary ml-1">{amountTrash}</span>
-              <span className="sr-only">unread messages</span>
-            </Link>
-            <button className="btn btn-link text-dark pl-0 cursor">
-              <i className="mdi mdi-table-edit" /> Số lượng category
-              <span className="badge badge-secondary ml-1">
-                {amountCategory}
-              </span>
-              <span className="sr-only">unread messages</span>
-            </button>
-          </div>
-        </div>
         <div className="col-xl-12">
           <Message />
         </div>

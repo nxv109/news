@@ -54,6 +54,14 @@ export default function AddNew() {
     }
   };
 
+  // remove tag
+  const hanldeRemoveTag = (index) => {
+    const newTag = [ ...tags ];
+    newTag.splice(index, 1);
+
+    setTags(newTag);
+  };
+
   const hanldChangeContent = content => {
     setContent(content);
   };
@@ -173,8 +181,9 @@ export default function AddNew() {
                 <u className="mr-2">Tags:</u>
                 {tags.length > 0 ? (
                   tags.map((tag, index) => (
-                    <span className="badge badge-success mr-1" key={index}>
+                    <span className="badge badge-success mr-1 tag" key={index}>
                       {tag}
+                      <i onClick={() => hanldeRemoveTag(index)} className="mdi mdi-close-circle-outline tag__close text-dangder" />
                     </span>
                   ))
                 ) : (

@@ -1,0 +1,18 @@
+.tag{
+  position: relative;
+
+  &:hover &__close{
+    opacity: 1;
+  }
+
+  &__close{
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    font-size: 0.8rem;
+    transition: .3s;
+    color: #000;
+    opacity: 0;
+    cursor: pointer;
+  }
+}

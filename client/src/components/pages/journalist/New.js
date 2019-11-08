@@ -149,31 +149,33 @@ export default function News() {
           <Message />
         </div>
         <div className="col-xl-12 stretch-card">
-          <Link to="/admin/trash" className="btn btn-link text-dark pl-0">
-            <i className="mdi mdi-delete-variant" /> Trash
-            <span className="badge badge-dark ml-1">{amountTrash}</span>
-            <span className="sr-only">unread messages</span>
-          </Link>
-          <button className="btn btn-link text-dark pl-0 cursor">
-            Tổng tin
-            <span className="badge badge-danger ml-1">{total}</span>
-            <span className="sr-only">unread messages</span>
-          </button>
-          <button className="btn btn-link text-dark pl-0 cursor">
-            Tin chưa phê duyệt
-            <span className="badge badge-secondary ml-1">{notApproved}</span>
-            <span className="sr-only">unread messages</span>
-          </button>
-          <button className="btn btn-link text-dark pl-0 cursor">
-            Tin chưa pushlished
-            <span className="badge badge-info ml-1">{notPublished}</span>
-            <span className="sr-only">unread messages</span>
-          </button>
-          <button className="btn btn-link text-dark pl-0 cursor">
-            Tin đã pushlished
-            <span className="badge badge-success ml-1">{published}</span>
-            <span className="sr-only">unread messages</span>
-          </button>
+          <div className="border-bottom border-secondary text-center w-100">
+            <Link to="/admin/trash" className="btn btn-link text-dark pl-0">
+              <i className="mdi mdi-delete-variant" /> Trash
+              <span className="badge badge-dark ml-1">{amountTrash}</span>
+              <span className="sr-only">unread messages</span>
+            </Link>
+            <button className="btn btn-link text-dark pl-0 cursor">
+              Tổng tin
+              <span className="badge badge-danger ml-1">{total}</span>
+              <span className="sr-only">unread messages</span>
+            </button>
+            <button className="btn btn-link text-dark pl-0 cursor">
+              Tin chưa phê duyệt
+              <span className="badge badge-secondary ml-1">{notApproved}</span>
+              <span className="sr-only">unread messages</span>
+            </button>
+            <button className="btn btn-link text-dark pl-0 cursor">
+              Tin chưa pushlish
+              <span className="badge badge-info ml-1">{notPublished}</span>
+              <span className="sr-only">unread messages</span>
+            </button>
+            <button className="btn btn-link text-dark pl-0 cursor">
+              Tin đã pushlish
+              <span className="badge badge-success ml-1">{published}</span>
+              <span className="sr-only">unread messages</span>
+            </button>
+          </div>
         </div>
         <div className="col-xl-12 grid-margin stretch-card">
           <ReactTable

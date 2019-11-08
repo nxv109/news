@@ -97,11 +97,13 @@ export default function News() {
       </div>
       <div className="row">
         <div className="col-xl-12 stretch-card">
-          <button className="btn btn-link text-dark pl-0">
-            <i className="mdi mdi-table-edit" /> Tin cần chỉnh sửa/phê duyệt
-            <span className="badge badge-warning ml-1">{amountNews}</span>
-            <span className="sr-only">unread messages</span>
-          </button>
+          <div className="border-bottom border-secondary text-center w-100">
+            <button className="btn btn-link text-dark pl-0 cursor">
+              <i className="mdi mdi-table-edit" /> Tin cần chỉnh sửa/phê duyệt
+              <span className="badge badge-secondary ml-1">{amountNews}</span>
+              <span className="sr-only">unread messages</span>
+            </button>
+          </div>
         </div>
         <div className="col-xl-12">
           <Message />

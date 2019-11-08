@@ -31,6 +31,28 @@ router.get("/", async function(req, res, next) {
   }
 });
 
+
+router.get("/trash", async function(req, res, next) {
+  try {
+    const cateNews = await CateNewsModel.find({ isDelete: true }).populate(
+      "createdBy"
+    );
+
+    return res.json({
+      code: 200,
+      err: null,
+      data: cateNews
+    });
+  } catch (err) {
+    console.log(err);
+    return res.json({
+      code: 400,
+      err: err.messege,
+      data: null
+    });
+  }
+});
+
 router.get("/:_idCate", auth, async function(req, res, next) {
   try {
     const _idCate = req.params._idCate;
@@ -79,32 +101,56 @@ router.post("/", async function(req, res, next) {
   }
 });
 
-router.put("/:_id", authAdmin, async function(req, res, next) {
+// move to trash
+router.put("/trash/:_id", async function(req, res, next) {
   try {
     const _id = req.params._id;
-    const name = req.body.name;
-    const cateCheck = await CateNewsModel.findOne({ _id: _id });
-    if (cateCheck == null) {
-      return res.json({
-        data: null,
-        messege: "Khong co san pham nay",
-        code: 200
-      });
-    }
-    if (cateCheck != null) {
-      const cateUpdate = await CateNewsModel.updateOne(
-        { _id: _id },
-        { name: name, createdBy: req.user._id }
-      );
-      return res.json({
-        code: 200,
-        data: { cateUpdate },
-        err: null
-      });
+    const cateExist = await CateNewsModel.findOne({ _id: _id });
+
+    if (cateExist) {
+      const moveToTrash = await CateNewsModel.findOneAndUpdate({ _id: _id }, { isDelete: true });
+      const categories = await CateNewsModel.find({});
+
+      if (moveToTrash) {
+        res.json({
+          data: categories,
+          message: "Đã thêm vào giỏ rác",
+          code: 200
+        });
+      }
     }
   } catch (err) {
     return res.json({
       code: 400,
+      message: "Thêm vào giỏ rác thất bại",
+      err: err,
+      data: null
+    });
+  }
+});
+
+// restore from trash
+router.put("/restore/:_id", async function(req, res, next) {
+  try {
+    const _id = req.params._id;
+    const cateExist = await CateNewsModel.findOne({ _id: _id });
+
+    if (cateExist) {
+      const restoreFromTrash = await CateNewsModel.findOneAndUpdate({ _id: _id }, { isDelete: false });
+      const categories = await CateNewsModel.find({ isDelete: true });
+
+      if (restoreFromTrash) {
+        res.json({
+          data: categories,
+          message: "Restore thành công",
+          code: 200
+        });
+      }
+    }
+  } catch (err) {
+    return res.json({
+      code: 400,
+      message: "Restore thất bại",
       err: err,
       data: null
     });
@@ -116,8 +162,8 @@ router.delete("/:id", async function(req, res, next) {
   const cateCheck = CateNewsModel.findOne({ _id: cateId });
   try {
     if (cateCheck) {
-      const cateDelete = await CateNewsModel.deleteOne({ _id: cateId });
-      const cateNews = await CateNewsModel.find({ isDelete: false }).populate(
+      const cateDelete = await CateNewsModel.findOneAndDelete({ _id: cateId });
+      const cateNews = await CateNewsModel.find({ isDelete: true }).populate(
         "createdBy"
       );
 

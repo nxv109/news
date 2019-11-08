@@ -143,7 +143,7 @@ export default function Member() {
       Header: "ACTION",
       filterable: false,
       sortable: false,
-      minWidth: 150,
+      maxWidth: 200,
       Cell: props => {
         return (
           <div>
