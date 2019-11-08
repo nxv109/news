@@ -49,7 +49,7 @@ export default function Category() {
             <button
               onClick={() => hanldeDelete(props.original._id)}
               type="button"
-              className="btn btn-danger"
+              className="btn btn-danger btn-sm"
             >
               Xóa
             </button>

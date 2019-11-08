@@ -65,4 +65,8 @@
 .bdr-none {
   border-radius: unset;
 }
+
+.cursor {
+  cursor: initial !important;
+}
 /*# sourceMappingURL=App.css.map */

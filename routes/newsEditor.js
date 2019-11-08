@@ -9,7 +9,8 @@ const authEditor = require("../middleware/checkEditor");
 const { NEWS } = require("../constant");
 /* GET users listing. */
 
-router.get("/", authEditor, async function(req, res, next) {
+// news ( isDelete = false )
+router.get("/", async function(req, res, next) {
   try {
     const News = await NewsModel.find({
       isDelete: false,
@@ -60,32 +61,60 @@ router.get("/:_idNews", authEditor, async function(req, res, next) {
   }
 });
 
-router.put("/:_id", authEditor, async function(req, res, next) {
+// gửi phê duyệt lên sensor
+router.put("/:_id", async function(req, res, next) {
   try {
     const _id = req.params._id;
-    const proCheck = await NewsModel.findOne({ _id: _id });
-    if (proCheck == null) {
-      return res.json({
-        data: null,
-        messege: "Khong co san pham nay",
-        code: 200
-      });
-    }
-    if (proCheck != null) {
+    const newExist = await NewsModel.findOne({ _id: _id });
+
+    if (newExist) {
       const body = req.body;
-      const NewsUpdate = await NewsModel.updateOne(
-        { _id: _id },
-        {
+      const files = req.files;
+
+      if (files) {
+        files.file.mv(`${__dirname}/../client/public/uploads/news/${files.file.name}`);
+
+        const news = {
           title: body.title,
           content: body.content,
-          cateNews: body.cateNews
+          cateNews: body.categoryId,
+          status: "edited",
+          tag: JSON.parse(body.tags),
+          articlePicture: files.file.name
+        };
+
+        if (news) {
+          await NewsModel.findOneAndUpdate({ _id: _id }, news);
+
+          return res.json({
+            code: 200,
+            message: "Sửa bài viết và gửi yêu cầu phê duyệt thành công"
+          });
         }
-      );
-      return res.json({ code: 200, message: null, data: NewsUpdate });
+      } else {
+        const news = {
+          title: body.title,
+          content: body.content,
+          cateNews: body.categoryId,
+          status: "edited",
+          tag: JSON.parse(body.tags)
+        };
+
+        if (news) {
+          await NewsModel.findOneAndUpdate({ _id: _id }, news);
+
+          return res.json({
+            code: 200,
+            message: "Sửa bài viết và gửi yêu cầu phê duyệt thành công"
+          });
+        }
+      }
     }
   } catch (err) {
+    console.log(err);
     return res.json({
       code: 400,
+      message: "Sửa bài viết thất bại",
       err: err,
       data: null
     });

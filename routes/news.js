@@ -97,22 +97,42 @@ router.post("/", async function(req, res, next) {
       file.mv(`${__dirname}/../client/public/uploads/news/${file.name}`);
     }
 
-    const News = new NewsModel({
-      title: body.title,
-      content: body.content,
-      tag: JSON.parse(body.tags),
-      cateNews: body.category,
-      createdBy: body.createdBy,
-      articlePicture: file.name
-    });
-
-    const NewsClass = await News.save();
-
-    return res.json({
-      code: 200,
-      message: "Gửi yêu cầu thành công",
-      data: NewsClass
-    });
+    if (body.draft) {
+      const News = new NewsModel({
+        title: body.title,
+        content: body.content,
+        tag: JSON.parse(body.tags),
+        cateNews: body.category,
+        status: "draft",
+        createdBy: body.createdBy,
+        articlePicture: file.name
+      });
+  
+      const NewsClass = await News.save();
+  
+      return res.json({
+        code: 200,
+        message: "Đã lưu vào nháp",
+        data: NewsClass
+      });
+    } else {
+      const News = new NewsModel({
+        title: body.title,
+        content: body.content,
+        tag: JSON.parse(body.tags),
+        cateNews: body.category,
+        createdBy: body.createdBy,
+        articlePicture: file.name
+      });
+  
+      const NewsClass = await News.save();
+  
+      return res.json({
+        code: 200,
+        message: "Gửi yêu cầu thành công",
+        data: NewsClass
+      });
+    }
   } catch (err) {
     return res.json({
       code: 400,

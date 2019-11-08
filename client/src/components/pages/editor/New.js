@@ -1,48 +1,30 @@
 import React from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import { setMessage } from "../../../actions/message.action";
 import { useDispatch } from "react-redux";
 
 import Message from "../Message";
-import { closeMessage } from "../closeMessage";
 
-export default function Trash() {
+export default function News() {
   const [news, setNews] = React.useState([]);
+  const [amountNews, setAmountNews] = React.useState([]);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     dispatch(setMessage({ message: "" }));
     const fetchNews = async () => {
-      const res = await axios.get("/news/trash");
+      const res = await axios.get("/newsEdits");
       const data = res.data.data;
 
       setNews(data);
+      setAmountNews(data.length);
     };
 
     fetchNews();
   }, [dispatch]);
-
-  // delete
-  const hanldeDelete = async id => {
-    const res = await axios.delete(`/news/${id}`);
-    const { code, message, data } = res.data;
-
-    setNews(data);
-    dispatch(setMessage({ code, message }));
-    dispatch(closeMessage());
-  };
-
-  // restore
-  const hanldeRestore = async id => {
-    const res = await axios.put(`/news/restore/${id}`);
-    const { code, message, data } = res.data;
-
-    setNews(data);
-    dispatch(setMessage({ code, message }));
-    dispatch(closeMessage());
-  };
 
   const columns = [
     {
@@ -56,33 +38,39 @@ export default function Trash() {
       accessor: "status",
       sortable: true,
       className: "text-center",
-      maxWidth: 200
+      maxWidth: 200,
+      Cell: props => {
+        return (
+          <span
+            className={
+              props.original.status === "new"
+                ? "badge badge-secondary"
+                : props.original.status === "edited"
+                ? "badge badge-info"
+                : "badge badge-success"
+            }
+          >
+            {props.original.status}
+          </span>
+        );
+      }
     },
     {
       Header: "ACTION",
       filterable: false,
       sortable: false,
-      className: "text-center",
       maxWidth: 200,
+      className: "text-center",
       Cell: props => {
         return (
           <div>
-            <button
-              type="button"
+            <Link
+              to={`/admin/new/${props.original._id}`}
               className="btn btn-warning btn-sm mr-1"
-              title="Restore bài viết"
-              onClick={() => hanldeRestore(props.original._id)}
+              title="Sửa bài viết"
             >
-              <i className="mdi mdi-backup-restore"></i>
-            </button>
-            <button
-              type="button"
-              className="btn btn-danger btn-sm"
-              title="Xóa bài viết"
-              onClick={() => hanldeDelete(props.original._id)}
-            >
-              <i className="mdi mdi-delete"></i>
-            </button>
+              <i className="mdi mdi-table-edit"></i>
+            </Link>
           </div>
         );
       }
@@ -95,7 +83,7 @@ export default function Trash() {
           <span className="page-title-icon bg-gradient-danger text-white mr-2">
             <i className="mdi mdi-view-list" />
           </span>
-          Trash
+          News needs approval
         </h3>
         <nav aria-label="breadcrumb">
           <ul className="breadcrumb">
@@ -108,6 +96,13 @@ export default function Trash() {
         </nav>
       </div>
       <div className="row">
+        <div className="col-xl-12 stretch-card">
+          <button className="btn btn-link text-dark pl-0">
+            <i className="mdi mdi-table-edit" /> Tin cần chỉnh sửa/phê duyệt
+            <span className="badge badge-warning ml-1">{amountNews}</span>
+            <span className="sr-only">unread messages</span>
+          </button>
+        </div>
         <div className="col-xl-12">
           <Message />
         </div>

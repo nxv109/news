@@ -154,8 +154,8 @@ export default function Member() {
               type="button"
               className={
                 props.original.isDelete
-                  ? "btn btn-success mr-1"
-                  : "btn btn-warning mr-1"
+                  ? "btn btn-success btn-sm mr-1"
+                  : "btn btn-warning btn-sm mr-1"
               }
               title={
                 props.original.isDelete ? "Mở khóa tài khoản" : "Khóa tài khoản"
@@ -169,7 +169,7 @@ export default function Member() {
             </button>
             <button
               type="button"
-              className="btn btn-danger"
+              className="btn btn-danger btn-sm"
               title="Xóa tài khoản"
               onClick={() => handleDeleteUser(props.original._id)}
             >

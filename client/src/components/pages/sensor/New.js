@@ -7,46 +7,24 @@ import { setMessage } from "../../../actions/message.action";
 import { useDispatch } from "react-redux";
 
 import Message from "../Message";
-import { closeMessage } from "../closeMessage";
 
 export default function News() {
   const [news, setNews] = React.useState([]);
-  const [amountTrash, setAmountTrash] = React.useState(0);
+  const [amountNews, setAmountNews] = React.useState([]);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     dispatch(setMessage({ message: "" }));
     const fetchNews = async () => {
-      const res = await axios.get("/news");
+      const res = await axios.get("/newsSensors");
       const data = res.data.data;
 
       setNews(data);
-    };
-
-    const fetchTrash = async () => {
-      const res = await axios.get("/news/trash");
-      const data = res.data.data;
-      
-      setAmountTrash(data.length);
+      setAmountNews(data.length);
     };
 
     fetchNews();
-    fetchTrash();
   }, [dispatch]);
-
-  // move to trash
-  const hanldeMoveToTrash = async id => {
-    const res = await axios.put(`/news/trash/${id}`);
-    const { code, message, data } = res.data;
-
-    const news = await data.filter(v => v.isDelete === false);
-    const amountTrash = await data.filter(v => v.isDelete === true);
-
-    setNews(news);
-    setAmountTrash(amountTrash.length);
-    dispatch(setMessage({ code, message }));
-    dispatch(closeMessage());
-  };
 
   const columns = [
     {
@@ -59,13 +37,30 @@ export default function News() {
       Header: "STATUS",
       accessor: "status",
       sortable: true,
-      maxWidth: 200
+      maxWidth: 200,
+      className: "text-center",
+      Cell: props => {
+        return (
+          <span
+            className={
+              props.original.status === "new"
+                ? "badge badge-secondary"
+                : props.original.status === "edited"
+                ? "badge badge-info"
+                : "badge badge-success"
+            }
+          >
+            {props.original.status}
+          </span>
+        );
+      }
     },
     {
       Header: "ACTION",
       filterable: false,
       sortable: false,
       maxWidth: 200,
+      className: "text-center",
       Cell: props => {
         return (
           <div>
@@ -76,22 +71,11 @@ export default function News() {
             >
               <i className="mdi mdi-table-edit"></i>
             </Link>
-            <button
-              type="button"
-              className="btn btn-danger btn-sm"
-              title="Bỏ bài viết"
-              onClick={() => hanldeMoveToTrash(props.original._id)}
-            >
-              <i className="mdi mdi-delete"></i>
-            </button>
           </div>
         );
       }
     }
   ];
-
-  const html = "<strong><em>Show bai viet bang cach nay</em></strong>";
-
   return (
     <div className="content-wrapper">
       <div className="page-header">
@@ -99,8 +83,7 @@ export default function News() {
           <span className="page-title-icon bg-gradient-danger text-white mr-2">
             <i className="mdi mdi-view-list" />
           </span>
-          News
-          <div dangerouslySetInnerHTML={{__html: html}} />
+          News needs approval
         </h3>
         <nav aria-label="breadcrumb">
           <ul className="breadcrumb">
@@ -113,15 +96,15 @@ export default function News() {
         </nav>
       </div>
       <div className="row">
+        <div className="col-xl-12 stretch-card">
+          <button className="btn btn-link text-dark pl-0">
+            <i className="mdi mdi-table-edit" /> Tin cần edit/publish
+            <span className="badge badge-danger ml-1">{amountNews}</span>
+            <span className="sr-only">unread messages</span>
+          </button>
+        </div>
         <div className="col-xl-12">
           <Message />
-        </div>
-        <div className="col-xl-12 stretch-card">
-          <Link to="/admin/trash" className="btn btn-link text-dark pl-0">
-            <i className="mdi mdi-delete-variant" /> Trash
-            <span className="badge badge-secondary ml-1">{amountTrash}</span>
-            <span className="sr-only">unread messages</span>
-          </Link>
         </div>
         <div className="col-xl-12 grid-margin stretch-card">
           <ReactTable

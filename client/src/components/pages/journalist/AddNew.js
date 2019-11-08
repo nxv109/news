@@ -17,6 +17,7 @@ export default function AddNew() {
   const [tags, setTags] = React.useState([]);
   const [file, setFile] = React.useState(null);
   const [categories, setCategories] = React.useState([]);
+  const [draft, setDraft] = React.useState(false);
 
   const appState = useSelector(state => state);
   const dispatch = useDispatch();
@@ -61,16 +62,22 @@ export default function AddNew() {
     setFile(e.target.files[0]);
   };
 
+  const hanldeChangeDraft = e => {
+    setDraft(e.target.checked);
+    console.log("draft", draft);
+  };
+
   const onSunmit = async data => {
     try {
       const formData = new FormData();
 
-      formData.append('title', data.title);
-      formData.append('category', data.category);
-      formData.append('content', content);
-      formData.append('tags', JSON.stringify(tags));
-      formData.append('createdBy', appState.users.data._id);
+      formData.append("title", data.title);
+      formData.append("category", data.category);
+      formData.append("content", content);
+      formData.append("tags", JSON.stringify(tags));
+      formData.append("createdBy", appState.users.data._id);
       formData.append("file", file);
+      formData.append("draft", draft);
 
       const res = await axios.post("/news", formData);
       const { code, message } = res.data;
@@ -127,7 +134,8 @@ export default function AddNew() {
                 data=""
                 config={{
                   ckfinder: {
-                    uploadUrl: "/news/upload?command=QuickUpload&type=Files&responseType=json"
+                    uploadUrl:
+                      "/news/upload?command=QuickUpload&type=Files&responseType=json"
                   }
                 }}
                 onChange={(event, editor) => {
@@ -204,7 +212,11 @@ export default function AddNew() {
                   onChange={hanldeChangeUpload}
                   ref={register({ required: true })}
                 />
-                <label style={{ height: "calc(1.5em + 0.75rem + 0px)" }} className="custom-file-label bd-none bdr-none" htmlFor="customFile">
+                <label
+                  style={{ height: "calc(1.5em + 0.75rem + 0px)" }}
+                  className="custom-file-label bd-none bdr-none"
+                  htmlFor="customFile"
+                >
                   Choose file
                 </label>
               </div>
@@ -212,9 +224,27 @@ export default function AddNew() {
                 <small className="text-danger">This field is required</small>
               )}
             </div>
-            <button type="submit" className="btn btn-danger">
-              Gửi yêu cầu phê duyệt
-            </button>
+            <div className="form-check mb-5">
+              <input
+                type="checkbox"
+                className="form-check-input ml-0"
+                name="draft"
+                value={draft}
+                onChange={hanldeChangeDraft}
+              />
+              <label className="form-check-label" htmlFor="exampleCheck1">
+                Đánh dấu là nháp
+              </label>
+            </div>
+            {draft ? (
+              <button type="submit" className="btn btn-danger">
+                Lưu vào nháp
+              </button>
+            ) : (
+              <button type="submit" className="btn btn-danger">
+                Gửi yêu cầu phê duyệt
+              </button>
+            )}
           </form>
         </div>
       </div>

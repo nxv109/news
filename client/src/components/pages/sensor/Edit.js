@@ -43,7 +43,6 @@ export default function Edit({ match }) {
 
   const handleChange = e => {
     setNews({ ...news, [e.target.name]: e.target.value});
-    console.log('news', news);
   };
 
   const hanldAddTag = () => {
@@ -71,7 +70,6 @@ export default function Edit({ match }) {
 
   const hanldeSubmit = async e => {
     e.preventDefault();
-    console.log('news', news);
     try {
       const formData = new FormData();
 
@@ -81,7 +79,7 @@ export default function Edit({ match }) {
       formData.append('tags', JSON.stringify(tags));
       formData.append("file", file || newData.articlePicture);
 
-      const res = await axios.put(`/news/${match.params.id}`, formData);
+      const res = await axios.put(`/newsSensors/${match.params.id}`, formData);
       const { code, message } = res.data;
 
       dispatch(setMessage({ code, message }));
@@ -214,7 +212,7 @@ export default function Edit({ match }) {
               </div>
             </div>
             <button type="submit" className="btn btn-danger">
-              SỬA
+              Published
             </button>
           </form>
         </div>

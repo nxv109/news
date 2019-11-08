@@ -17,7 +17,7 @@ const schema = new Schema({
     type: Number,
     default: 0
   },
-  avangeRating: {
+  avengeRating: {
     type: mongoose.Schema.Types.Double,
     default: 0
   },
