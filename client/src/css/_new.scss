@@ -1,11 +1,11 @@
-.tag{
+.tag {
   position: relative;
 
-  &:hover &__close{
+  &:hover &__close {
     opacity: 1;
   }
 
-  &__close{
+  &__close {
     position: absolute;
     top: -5px;
     right: -5px;
@@ -14,5 +14,109 @@
     color: #000;
     opacity: 0;
     cursor: pointer;
+  }
+}
+
+// featured new
+.featured-new:first-of-type {
+  @include disFlex(column nowrap, flex-start, center);
+
+  .featured-new__image {
+    @extend %mr-0;
+    max-height: 20rem;
+    overflow: hidden;
+
+    &>img {
+      width: 100%;
+    }
+  }
+}
+
+.featured-new {
+  @include disFlex(row nowrap, flex-start, center);
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  cursor: pointer;
+  transition: .3s;
+
+  &:hover{
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+
+  &__image {
+    flex: 20%;
+    @extend %mr-1;
+
+    &>img {
+      width: 100%;
+    }
+  }
+
+  &__info {
+    flex: 80%;
+  }
+
+  &:not(:last-child){
+    @extend %mb-1;
+  }
+}
+
+// latest new
+.latest-new {
+  @include disFlex(row nowrap, flex-start, center);
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  cursor: pointer;
+  transition: .3s;
+
+  &:hover{
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+
+  &__image {
+    flex: 20%;
+    @extend %mr-1;
+    max-height: 4rem;
+    overflow: hidden;
+
+    &>img {
+      width: 100%;
+    }
+  }
+
+  &__info {
+    flex: 80%;
+  }
+
+  &:not(:last-child){
+    @extend %mb-1;
+  }
+}
+
+// channel new
+.channel {
+  @include disFlex(row nowrap, flex-start, center);
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  cursor: pointer;
+  transition: .3s;
+
+  &:hover{
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+
+  &__image {
+    flex: 20%;
+    @extend %mr-1;
+    overflow: hidden;
+
+    &>img {
+      width: 100%;
+    }
+  }
+
+  &__info {
+    flex: 80%;
+  }
+
+  &:not(:last-child){
+    @extend %mb-1;
   }
 }

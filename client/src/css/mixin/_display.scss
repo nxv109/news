@@ -1,6 +1,6 @@
 @mixin disFlex($fl, $algnI, $jtfC) {
   display: flex;
-  flex-flow: $fl wrap;
+  flex-flow: $fl;
   align-items: $algnI;
   justify-content: $jtfC;
 }

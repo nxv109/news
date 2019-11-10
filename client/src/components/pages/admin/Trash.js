@@ -61,6 +61,7 @@ export default function Trash() {
             onClick={() => hanldeRestore(props.original._id)}
             type="button"
             className="btn btn-warning btn-sm mr-1"
+            title="Restore"
           >
             <i className="mdi mdi-backup-restore"></i>
           </button>
@@ -68,6 +69,7 @@ export default function Trash() {
               onClick={() => hanldeDelete(props.original._id)}
               type="button"
               className="btn btn-danger btn-sm"
+              title="Delete"
             >
               <i className="mdi mdi-delete"></i>
             </button>

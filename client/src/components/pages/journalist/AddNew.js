@@ -55,8 +55,8 @@ export default function AddNew() {
   };
 
   // remove tag
-  const hanldeRemoveTag = (index) => {
-    const newTag = [ ...tags ];
+  const hanldeRemoveTag = index => {
+    const newTag = [...tags];
     newTag.splice(index, 1);
 
     setTags(newTag);
@@ -72,7 +72,6 @@ export default function AddNew() {
 
   const hanldeChangeDraft = e => {
     setDraft(e.target.checked);
-    console.log("draft", draft);
   };
 
   const onSunmit = async data => {
@@ -183,7 +182,10 @@ export default function AddNew() {
                   tags.map((tag, index) => (
                     <span className="badge badge-success mr-1 tag" key={index}>
                       {tag}
-                      <i onClick={() => hanldeRemoveTag(index)} className="mdi mdi-close-circle-outline tag__close text-dangder" />
+                      <i
+                        onClick={() => hanldeRemoveTag(index)}
+                        className="mdi mdi-close-circle-outline tag__close text-dangder"
+                      />
                     </span>
                   ))
                 ) : (
@@ -237,11 +239,12 @@ export default function AddNew() {
               <input
                 type="checkbox"
                 className="form-check-input ml-0"
+                id="draft"
                 name="draft"
                 value={draft}
                 onChange={hanldeChangeDraft}
               />
-              <label className="form-check-label" htmlFor="exampleCheck1">
+              <label className="form-check-label" htmlFor="draft">
                 Đánh dấu là nháp
               </label>
             </div>

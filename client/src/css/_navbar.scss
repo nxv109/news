@@ -1,5 +1,5 @@
 .account {
-  @include disFlex(row, center, center);
+  @include disFlex(row wrap, center, center);
 
   &__avatar {
     max-width: 25px;

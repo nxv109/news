@@ -10260,6 +10260,7 @@ html {
   overflow: auto; }
 
 .container-scroller {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   overflow: hidden; }
 
 pre {
@@ -13343,7 +13344,7 @@ dl {
       width: 100%; } }
 
 .content-wrapper {
-  background: #f2edf3;
+  background: #f1f4f7;
   padding: 2.75rem 2.25rem;
   width: 100%;
   -webkit-box-flex: 1;

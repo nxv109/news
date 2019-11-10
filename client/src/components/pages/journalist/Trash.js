@@ -56,7 +56,16 @@ export default function Trash() {
       accessor: "status",
       sortable: true,
       className: "text-center",
-      maxWidth: 200
+      maxWidth: 200,
+      Cell: props => {
+        return (
+          <span
+            className="badge badge-dark"
+          >
+            {props.original.status}
+          </span>
+        )
+      }
     },
     {
       Header: "ACTION",

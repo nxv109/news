@@ -126,19 +126,10 @@ router.delete("/:_idRate", auth, async function(req, res, next) {
         { _id: idRate },
         { isDelete: true }
       );
-      const ratePro = await NewsModel.findOneAndUpdate(
-        { _id: idNews },
-        { $inc: { ratingCount: -1 } }
-      );
-      const rated = await RateModel.find({ news: idRate.news });
-      let scoreRate = [];
-      for (let i = 0; i < rated.length; i++) {
-        scoreRate.push(rated[i].score);
-      }
       let average = scoreRate.reduce((a, b) => a + b) / scoreRate.length;
       const ratePro = await NewsModel.findOneAndUpdate(
         { _id: idNews },
-        { $inc: { ratingCount: 1 }, avangeRating: average }
+        { $inc: { ratingCount: -1 }, avangeRating: average }
       );
       return res.json({
         code: 200,
