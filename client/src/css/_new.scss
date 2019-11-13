@@ -21,13 +21,18 @@
 .featured-new:first-of-type {
   @include disFlex(column nowrap, flex-start, center);
 
+  .featured-new__info{
+    @extend %mt-1;
+  }
+
   .featured-new__image {
     @extend %mr-0;
     max-height: 20rem;
     overflow: hidden;
+    @extend %w-100;
 
     &>img {
-      width: 100%;
+      @extend %w-100;
     }
   }
 }
@@ -53,6 +58,10 @@
 
   &__info {
     flex: 80%;
+  }
+
+  &__createby{
+    @extend %mb-0;
   }
 
   &:not(:last-child){

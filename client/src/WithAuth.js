@@ -11,7 +11,7 @@ export default function WithAuth(ComponentJournalist, ComponentEditor, Component
 
   React.useEffect(() => {
     async function fetchData() {
-      const getRole = await axios.get(`/login/getUser/${userId}`);
+      const getRole = await axios.get(`/login/${userId}`);
       const role = await getRole.data.data.role;
 
       const checkToken = async () => {

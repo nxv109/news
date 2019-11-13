@@ -91,7 +91,7 @@ router.post("/", async function(req, res, next) {
 });
 
 // get user
-router.get("/getUser/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   const user = await UserModel.findOne({ _id: req.params.id });
 
   if (user) {

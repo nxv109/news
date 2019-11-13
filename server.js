@@ -13,7 +13,7 @@ const newsSensorRouter = require("./routes/newsSensor");
 const likeRouter = require('./routes/like');
 const rateRouter = require('./routes/rate');
 const usersRouter = require('./routes/users');
-// const viewRouter = require('./routes/view')
+// const viewRouter = require('./routes/view') 
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 

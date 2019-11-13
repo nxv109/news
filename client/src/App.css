@@ -2,12 +2,24 @@
   margin-right: 1rem;
 }
 
+.featured-new:first-of-type .featured-new__info {
+  margin-top: 1rem;
+}
+
 .featured-new:first-of-type .featured-new__image {
   margin-right: 0;
 }
 
 .featured-new:not(:last-child), .latest-new:not(:last-child), .channel:not(:last-child) {
   margin-bottom: 1rem;
+}
+
+.featured-new__createby {
+  margin-bottom: 0;
+}
+
+.featured-new:first-of-type .featured-new__image, .featured-new:first-of-type .featured-new__image > img {
+  width: 100%;
 }
 
 .account {
@@ -52,6 +64,10 @@ body {
 
 .mt-7 {
   margin-top: 5rem;
+}
+
+.mt-8 {
+  margin-top: 6rem;
 }
 
 .mr-1 {
@@ -129,10 +145,6 @@ body {
 .featured-new:first-of-type .featured-new__image {
   max-height: 20rem;
   overflow: hidden;
-}
-
-.featured-new:first-of-type .featured-new__image > img {
-  width: 100%;
 }
 
 .featured-new {

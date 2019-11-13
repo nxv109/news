@@ -8,7 +8,7 @@ import Home from "./components/pages/home/Index";
 import Login from "./components/pages/account/Login";
 import Profile from "./components/pages/account/Profile";
 import Register from "./components/pages/account/Register";
-import Contact from "./components/pages/contact";
+import Contact from "./components/pages/Contact";
 import Footer from "./components/commons/Footer";
 import NotFound from "./components/pages/404NotFound";
 
@@ -23,11 +23,14 @@ import WithAuth from "./WithAuth";
 
 import "./App.css";
 
+// categories
+import Category from "./components/pages/category";
+
 function App() {
   return (
     <Router className="App">
       <Navbar />
-      <div className="container-fluid mt-7 mb-3 min-h-100vh">
+      <div className="container-fluid mt-8 mb-3 min-h-100vh">
         <Switch>
           <Route path="/" component={Home} exact />
           <Route path="/contact" component={Contact} />
@@ -35,6 +38,7 @@ function App() {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/profile" component={Profile} />
+          <Route path="/categories/:id" component={Category} />
           <Route path="*" component={NotFound} />
         </Switch>
       </div>

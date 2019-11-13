@@ -2,7 +2,7 @@ import React from "react";
 
 export default function LatestNew() {
   return (
-    <div className="col-sm-4">
+    <div className="col-lg-4">
       <h3 className="mb-3">Tin tức mới nhất</h3>
       <div className="latest-new p-1 bg-white rounded">
         <div className="latest-new__image">

@@ -53,6 +53,47 @@ router.get("/trash", async function(req, res, next) {
   }
 });
 
+// news ( status = "published" )
+router.get("/published", async function(req, res, next) {
+  try {
+    const News = await NewsModel.find({ status: 'published', view: { $gt: 9 } })
+      .populate("createdBy"); 
+    
+    return res.json({
+      code: 200,
+      err: null,
+      data: News
+    });
+  } catch (err) {
+    return res.json({
+      code: 400,
+      err: err.messege,
+      data: null
+    });
+  }
+});
+
+// show news of category ( status = "published" )
+router.get("/categories/:id", async function(req, res, next) {
+  try {
+    const id = req.params.id;
+    const News = await NewsModel.find({ status: 'published', cateNews: { _id: id } })
+      .populate("cateNews");
+    
+    return res.json({
+      code: 200,
+      err: null,
+      data: News
+    });
+  } catch (err) {
+    return res.json({
+      code: 400,
+      err: err.messege,
+      data: null
+    });
+  }
+});
+
 router.get("/:_idNews", async function(req, res, next) {
   try {
     const idNews = req.params._idNews;

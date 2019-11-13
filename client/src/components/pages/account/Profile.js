@@ -34,7 +34,7 @@ export default function Profile() {
   React.useEffect(() => {
     dispatch(setMessage({ message: "" }));
     const fetchUser = async () => {
-      const res = await axios.get(`/login/getUser/${userId}`);
+      const res = await axios.get(`/login/${userId}`);
       const rs = await res.data.data;
 
       dispatch(addUser(rs));

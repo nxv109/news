@@ -2,7 +2,7 @@ import React from "react";
 
 export default function FeaturedChannel() {
   return (
-    <div className="col-sm-2">
+    <div className="col-lg-2">
       <h3 className="mb-3">Kênh uy tín</h3>
       <div className="channel p-1 bg-white rounded">
         <div className="channel__image rounded-circle">
