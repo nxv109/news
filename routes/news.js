@@ -56,9 +56,29 @@ router.get("/trash", async function(req, res, next) {
 // news ( status = "published" )
 router.get("/published", async function(req, res, next) {
   try {
-    const News = await NewsModel.find({ status: 'published', view: { $gt: 9 } })
-      .populate("createdBy"); 
-    
+    const News = await NewsModel.find({ status: 'published', view: { $gt: 9 } }).limit(3).sort({ view: -1 })
+      .populate("createdBy");
+
+    return res.json({
+      code: 200,
+      err: null,
+      data: News
+    });
+  } catch (err) {
+    return res.json({
+      code: 400,
+      err: err.messege,
+      data: null
+    });
+  }
+});
+
+// news other
+router.get("/other", async function(req, res, next) {
+  try {
+    const News = await NewsModel.find({ status: 'published' }).limit(8).sort({ view: -1 })
+      .populate("createdBy");
+
     return res.json({
       code: 200,
       err: null,
@@ -78,8 +98,31 @@ router.get("/categories/:id", async function(req, res, next) {
   try {
     const id = req.params.id;
     const News = await NewsModel.find({ status: 'published', cateNews: { _id: id } })
-      .populate("cateNews");
-    
+      .populate("cateNews")
+      .populate("createdBy");
+
+    return res.json({
+      code: 200,
+      err: null,
+      data: News
+    });
+  } catch (err) {
+    return res.json({
+      code: 400,
+      err: err.messege,
+      data: null
+    });
+  }
+});
+
+// tin tức tương tự
+router.get("/similar/:id", async function(req, res, next) {
+  try {
+    const id = req.params.id;
+    const News = await NewsModel.find({ status: 'published', cateNews: { _id: id } }).limit(8)
+      .populate("cateNews")
+      .populate("createdBy");
+
     return res.json({
       code: 200,
       err: null,
@@ -128,6 +171,30 @@ router.get("/:_idNews", async function(req, res, next) {
   }
 });
 
+// get news detail
+router.get("/details/:_idNews", async function(req, res, next) {
+  try {
+    const idNews = req.params._idNews;
+    const News = await NewsModel.find({
+      _id: idNews,
+      isDelete: false
+    })
+      .populate("createdBy");
+
+    return res.json({
+      code: 200,
+      err: null,
+      data: News
+    });
+  } catch (err) {
+    return res.json({
+      code: 400,
+      err: err.messege,
+      data: null
+    });
+  }
+});
+
 // add news
 router.post("/", async function(req, res, next) {
   try {
@@ -138,7 +205,7 @@ router.post("/", async function(req, res, next) {
       file.mv(`${__dirname}/../client/public/uploads/news/${file.name}`);
     }
 
-    if (body.draft) {
+    if (JSON.parse(body.draft)) {
       const News = new NewsModel({
         title: body.title,
         content: body.content,
@@ -148,9 +215,9 @@ router.post("/", async function(req, res, next) {
         createdBy: body.createdBy,
         articlePicture: file.name
       });
-  
+
       const NewsClass = await News.save();
-  
+
       return res.json({
         code: 200,
         message: "Đã lưu vào nháp",
@@ -165,9 +232,9 @@ router.post("/", async function(req, res, next) {
         createdBy: body.createdBy,
         articlePicture: file.name
       });
-  
+
       const NewsClass = await News.save();
-  
+
       return res.json({
         code: 200,
         message: "Gửi yêu cầu thành công",
@@ -251,6 +318,68 @@ router.put("/:_id", async function(req, res, next) {
     return res.json({
       code: 400,
       message: "Sửa bài viết thất bại",
+      err: err,
+      data: null
+    });
+  }
+});
+
+// Give up draft
+router.put("/giveUpDraft/:_id", async function(req, res, next) {
+  try {
+    const _id = req.params._id;
+    const newExist = await NewsModel.findOne({ _id: _id });
+
+    if (newExist) {
+      const giveUpDraft = await NewsModel.findOneAndUpdate(
+        { _id: _id },
+        { status: "new" }
+      );
+      const news = await NewsModel.find({});
+
+      if (giveUpDraft) {
+        res.json({
+          code: 200,
+          message: "Bỏ nháp thành công",
+          data: news
+        });
+      }
+    }
+  } catch (err) {
+    return res.json({
+      code: 400,
+      message: "Bỏ nháp thất bại",
+      err: err,
+      data: null
+    });
+  }
+});
+
+// save draft
+router.put("/saveDraft/:_id", async function(req, res, next) {
+  try {
+    const _id = req.params._id;
+    const newExist = await NewsModel.findOne({ _id: _id });
+
+    if (newExist) {
+      const giveUpDraft = await NewsModel.findOneAndUpdate(
+        { _id: _id },
+        { status: "draft" }
+      );
+      const news = await NewsModel.find({});
+
+      if (giveUpDraft) {
+        res.json({
+          code: 200,
+          message: "Lưu nháp thành công",
+          data: news
+        });
+      }
+    }
+  } catch (err) {
+    return res.json({
+      code: 400,
+      message: "Lưu nháp thất bại",
       err: err,
       data: null
     });

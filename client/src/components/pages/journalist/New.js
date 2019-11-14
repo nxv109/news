@@ -23,15 +23,15 @@ export default function News() {
     const fetchNews = async () => {
       const res = await axios.get("/news");
       const data = res.data.data;
-      
+
       function getData(property) {
         const rs = data.filter(v => v.status === property);
         return rs;
       }
 
-      const notApproved = getData('new');
-      const notPublished = getData('edited');
-      const published = getData('published');
+      const notApproved = getData("new");
+      const notPublished = getData("edited");
+      const published = getData("published");
 
       setNews(data);
       setTotal(data.length);
@@ -65,6 +65,26 @@ export default function News() {
     dispatch(closeMessage());
   };
 
+  // bỏ nháp
+  const handleGiveUpDraft = async (id) => {
+    const res = await axios.put(`/news/giveUpDraft/${id}`);
+    const { code, message, data } = res.data;
+
+    setNews(data);
+    dispatch(setMessage({ code, message }));
+    dispatch(closeMessage());
+  };
+
+  // save nháp
+  const handleSaveDraft = async (id) => {
+    const res = await axios.put(`/news/saveDraft/${id}`);
+    const { code, message, data } = res.data;
+
+    setNews(data);
+    dispatch(setMessage({ code, message }));
+    dispatch(closeMessage());
+  };
+
   const columns = [
     {
       Header: "TÊN BÀI VIẾT",
@@ -80,19 +100,29 @@ export default function News() {
       className: "text-center",
       Cell: props => {
         return (
-          <span
-            className={
-              props.original.status === "new"
-                ? "badge badge-secondary"
-                : props.original.status === "edited"
-                ? "badge badge-info"
-                : props.original.status === "draft"
-                ? "badge badge-dark"
-                : "badge badge-success"
+          <>
+            <span
+              className={
+                props.original.status === "new"
+                  ? "badge badge-secondary"
+                  : props.original.status === "edited"
+                  ? "badge badge-info"
+                  : props.original.status === "draft"
+                  ? "badge badge-dark"
+                  : "badge badge-success"
+              }
+            >
+              {props.original.status}
+            </span>
+            <br />
+            {props.original.status === "draft" ? (
+              <button onClick={() => handleGiveUpDraft(props.original._id)} className="btn btn-link">Xóa nháp</button>
+            )
+            : props.original.status === "new"
+            ? <button onClick={() => handleSaveDraft(props.original._id)} className="btn btn-link">Lưu nháp</button>
+            : null
             }
-          >
-            {props.original.status}
-          </span>
+          </>
         );
       }
     },

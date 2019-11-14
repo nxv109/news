@@ -1,10 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 import { useDispatch, useSelector } from "react-redux";
 import { getNews } from "../../../actions/new.action";
 
-export default function FeaturedNew() {
+export default function NewsWatchMuch(props) {
   const dispatch = useDispatch();
   const appState = useSelector(state => state);
 
@@ -12,10 +11,10 @@ export default function FeaturedNew() {
     dispatch(getNews());
   }, [dispatch]);
 
-  return (
+  return(
     <React.Fragment>
-      <div className="col-lg-6 main-featured-new">
-        <h3 className="mb-3">Tin tức nổi bật</h3>
+      <div className="col-lg-8 main-featured-new p-0">
+        <h3 className="mb-3 mt-3">Tin tức xem nhiều</h3>
         {appState.news.data
           ? appState.news.data.map((item, index) => (
               <Link to={`/${item.title}/${item._id}`} key={index} className="featured-new p-3 bg-white rounded text-decoration-none">
@@ -34,5 +33,5 @@ export default function FeaturedNew() {
           : null}
       </div>
     </React.Fragment>
-  );
+  )
 }

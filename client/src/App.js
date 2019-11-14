@@ -25,6 +25,8 @@ import "./App.css";
 
 // categories
 import Category from "./components/pages/category";
+// detail
+import Detail from "./components/pages/detail";
 
 function App() {
   return (
@@ -39,6 +41,7 @@ function App() {
           <Route path="/register" component={Register} />
           <Route path="/profile" component={Profile} />
           <Route path="/categories/:id" component={Category} />
+          <Route path="/*/:id" component={Detail} />
           <Route path="*" component={NotFound} />
         </Switch>
       </div>

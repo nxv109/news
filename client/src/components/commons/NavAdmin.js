@@ -16,7 +16,7 @@ export default function NavAdmin() {
   };
 
   return (
-    <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light shadow-sm">
+    <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light shadow-sm py-0 px-2">
         <Link to="/" className="navbar-brand">
           <img src="/Logo-news.png" alt="Logo news" />
         </Link>

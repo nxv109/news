@@ -21,7 +21,7 @@ export default function NavUser() {
   };
 
   return (
-    <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light shadow-sm">
+    <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light shadow-sm py-0 px-2">
         <Link to="/" className="navbar-brand">
           <img src="/Logo-news.png" alt="Logo news" />
         </Link>
@@ -43,11 +43,6 @@ export default function NavUser() {
                 Home <span className="sr-only">(current)</span>
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/contact">
-                Contact
-              </Link>
-            </li>
             {appState.categories.data
               ? appState.categories.data.map((item, index) => (
                   <li key={index} className="nav-item">
@@ -57,6 +52,11 @@ export default function NavUser() {
                   </li>
                 ))
               : null}
+            <li className="nav-item">
+              <Link className="nav-link" to="/contact">
+                Contact
+              </Link>
+            </li>
             <li className="nav-item dropdown">
               <a
                 className="nav-link dropdown-toggle account text-danger"
@@ -115,7 +115,7 @@ export default function NavUser() {
               )}
             </li>
           </ul>
-          <form className="form-inline my-2">
+          <form className="form-inline my-1">
             <input
               className="form-control mr-sm-2"
               type="search"
@@ -123,7 +123,7 @@ export default function NavUser() {
               aria-label="Search"
             />
             <button
-              className="btn btn-outline-danger my-2 my-sm-0"
+              className="btn btn-outline-danger my-1 my-sm-0"
               type="submit"
             >
               <i className="mdi mdi-magnify" />
