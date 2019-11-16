@@ -12,13 +12,11 @@ export default function NewsOther() {
     dispatch(getNewsOther());
   }, [dispatch]);
 
-  console.log('news other', appState.news.other);
-
   return(
     <React.Fragment>
       {appState.news.other
         ? appState.news.other.map((item, index) => (
-            <Link to={`/${item.title}/${item._id}`} key={index} className="featured-new p-3 bg-white rounded text-decoration-none">
+            <Link to={`/${item._id}`} key={index} className="featured-new p-3 bg-white rounded text-decoration-none">
               <div className="featured-new__image border border-secondary">
                 <img
                   src={`/uploads/news/${item.articlePicture}`}
@@ -27,7 +25,7 @@ export default function NewsOther() {
               </div>
               <div className="featured-new__info">
                 <h3 className="featured-new__title">{item.title}</h3>
-                <p className="featured-new__createby text-secondary">Creator: {item.createdBy.username} | Time: {item.dateCreate}</p>
+                <p className="featured-new__createby text-secondary">Creator: {item.createdBy.username} | Time: {item.dateCreate} | <i className="mdi mdi-eye" /> {item.view}</p>
               </div>
             </Link>
           ))

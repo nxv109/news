@@ -40,21 +40,21 @@ export default function NavUser() {
           <ul className="navbar-nav mr-auto">
             <li className="nav-item active">
               <Link className="nav-link" to="/">
-                Home <span className="sr-only">(current)</span>
+                HOME <span className="sr-only">(current)</span>
               </Link>
             </li>
             {appState.categories.data
               ? appState.categories.data.map((item, index) => (
                   <li key={index} className="nav-item">
                     <Link className="nav-link" to={`/categories/${item._id}`}>
-                      {item.name}
+                      {item.name.toUpperCase()}
                     </Link>
                   </li>
                 ))
               : null}
             <li className="nav-item">
               <Link className="nav-link" to="/contact">
-                Contact
+                CONTACT
               </Link>
             </li>
             <li className="nav-item dropdown">
@@ -76,7 +76,7 @@ export default function NavUser() {
                     />
                   </div>
                 ) : (
-                  "Account"
+                  "ACCOUNT"
                 )}
               </a>
               {appState.users.data ? (
@@ -115,7 +115,7 @@ export default function NavUser() {
               )}
             </li>
           </ul>
-          <form className="form-inline my-1">
+          <form className="form-inline my-2 my-lg-0">
             <input
               className="form-control mr-sm-2"
               type="search"
@@ -123,7 +123,7 @@ export default function NavUser() {
               aria-label="Search"
             />
             <button
-              className="btn btn-outline-danger my-1 my-sm-0"
+              className="btn btn-outline-danger my-2 my-sm-0"
               type="submit"
             >
               <i className="mdi mdi-magnify" />

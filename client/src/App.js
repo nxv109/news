@@ -25,6 +25,8 @@ import "./App.css";
 
 // categories
 import Category from "./components/pages/category";
+// channel
+import Channel from "./components/pages/channel";
 // detail
 import Detail from "./components/pages/detail";
 
@@ -41,7 +43,8 @@ function App() {
           <Route path="/register" component={Register} />
           <Route path="/profile" component={Profile} />
           <Route path="/categories/:id" component={Category} />
-          <Route path="/*/:id" component={Detail} />
+          <Route path="/channel/:id" component={Channel} />
+          <Route path="/:id" component={Detail} />
           <Route path="*" component={NotFound} />
         </Switch>
       </div>

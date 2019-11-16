@@ -1,20 +1,41 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import { getUsers } from "../../../actions/user.action";
 
 export default function FeaturedChannel() {
+  const appState = useSelector(state => state);
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
+
   return (
-    <div className="col-lg-2">
-      <h3 className="mb-3">Kênh uy tín</h3>
-      <div className="channel p-1 bg-white rounded">
-        <div className="channel__image rounded-circle">
-          <img
-            src="/uploads/news/57511910_833199540371570_201023415352748526_n_1_2.jpg"
-            alt=""
-          />
-        </div>
-        <div className="channel__info">
-          <h5 className="channel__title">title</h5>
-        </div>
+    <React.Fragment>
+      <div className="col-lg-2">
+        <h3 className="mb-3">Kênh uy tín</h3>
+        {appState.users.users
+          ? appState.users.users.map((user, index) => (
+              <Link
+                to={`/channel/${user._id}`}
+                key={index}
+                className="channel p-1 bg-white rounded text-decoration-none text-dark"
+              >
+                <div className="channel__image">
+                  <img
+                    src={`/uploads/users/${user.image}`}
+                    alt={user.username}
+                  />
+                </div>
+                <div className="channel__info">
+                  <h5 className="channel__title">{user.username}</h5>
+                </div>
+              </Link>
+            ))
+          : null}
       </div>
-    </div>
+    </React.Fragment>
   );
 }

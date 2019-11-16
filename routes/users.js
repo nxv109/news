@@ -21,6 +21,23 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+/* GET channel. */
+router.get('/channels', async (req, res, next) => {
+  const users = await UserModel.find({ role: "journalist", follow: { $gt: 10 } });
+
+  try {
+    res.json({
+      code: 200,
+      data: users
+    })
+  } catch (error) {
+    res.json({
+      code: 500,
+      error: TypeError,
+    })
+  }
+});
+
 // vô hiệu hóa tài khoản người dùng
 router.post('/locked/:id', async (req, res, next) => {
   const userExist = await UserModel.find({ _id: req.params.id });

@@ -10,15 +10,19 @@ import { closeMessage } from "../closeMessage";
 
 export default function Member() {
   const [users, setUsers] = React.useState([]);
+  const [usersData, setUsersData] = React.useState([]);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     dispatch(setMessage({ message: "" }));
     const fetchUsers = async () => {
       const res = await axios.get("/users");
-      const data = res.data.data;
+      const datas = res.data.data;
 
-      setUsers(data);
+      const notAdminUsers = datas.filter(data => data.role !== "admin");
+
+      setUsers(notAdminUsers);
+      setUsersData(notAdminUsers);
     };
 
     fetchUsers();
@@ -67,6 +71,17 @@ export default function Member() {
     });
   }
 
+  // filter ROLE
+  const hanldeFilterRole = (role) => {
+    if (role === "all") {
+      setUsersData(users);
+    } else {
+      const rs = users.filter(user => user.role === role);
+
+      setUsersData(rs);
+    }
+  };
+
   const columns = [
     {
       Header: "AVATAR",
@@ -106,7 +121,7 @@ export default function Member() {
     {
       Header: "ROLE",
       filterable: false,
-      sortable: false,
+      sortable: true,
       Cell: props => {
         return (
           <React.Fragment>
@@ -200,13 +215,25 @@ export default function Member() {
         </nav>
       </div>
       <div className="row">
+        <div className="col-xl-12 stretch-card">
+          <div className="form-group w-100">
+            <label>Lọc người dùng:</label>
+            <select onClick={(e) => hanldeFilterRole(e.target.value)} className="form-control form-control-sm">
+              <option value="all">All</option>
+              <option value="sensor">Sensor</option>
+              <option value="editor">Editor</option>
+              <option value="journalist">Journalist</option>
+              <option value="customer">Customer</option>
+            </select>
+          </div>
+        </div>
         <div className="col-xl-12">
           <Message />
         </div>
         <div className="col-xl-12 grid-margin stretch-card">
           <ReactTable
             columns={columns}
-            data={users}
+            data={usersData}
             filterable
             defaultPageSize={5}
             noDataText={"Please wait..."}

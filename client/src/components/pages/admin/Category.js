@@ -54,7 +54,8 @@ export default function Category() {
     {
       Header: "TÊN",
       accessor: "name",
-      sortable: true
+      sortable: true,
+      className: "text-left"
     },
     {
       Header: "ACTION",

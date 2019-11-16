@@ -7,6 +7,7 @@ const schema = new Schema({
     image: { type: String, default: "avatar-default.jpg" },
     email: String,
     role: { type: String, default: USERS.ROLE.CUSTOMER },
+    follow: { type: Number, default: 0 },
     isDelete: {
         type: Boolean,
         default: false

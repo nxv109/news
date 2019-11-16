@@ -115,6 +115,28 @@ router.get("/categories/:id", async function(req, res, next) {
   }
 });
 
+// show news of users ( status = "published" ) channel
+router.get("/users/:id", async function(req, res, next) {
+  try {
+    const id = req.params.id;
+    const News = await NewsModel.find({ status: 'published', createdBy: { _id: id } })
+      .populate("cateNews")
+      .populate("createdBy");
+
+    return res.json({
+      code: 200,
+      err: null,
+      data: News
+    });
+  } catch (err) {
+    return res.json({
+      code: 400,
+      err: err.messege,
+      data: null
+    });
+  }
+});
+
 // tin tức tương tự
 router.get("/similar/:id", async function(req, res, next) {
   try {
@@ -318,6 +340,41 @@ router.put("/:_id", async function(req, res, next) {
     return res.json({
       code: 400,
       message: "Sửa bài viết thất bại",
+      err: err,
+      data: null
+    });
+  }
+});
+
+// increase views
+router.put("/views/:_id", async function(req, res, next) {
+  try {
+    const _id = req.params._id;
+    const newExist = await NewsModel.findOne({ _id: _id });
+
+    if (newExist) {
+      const views = req.body.views;
+      const increaseViews = await NewsModel.findOneAndUpdate(
+        { _id: _id },
+        { view: views }
+      );
+
+      const news = await NewsModel.find({
+        _id: _id,
+        isDelete: false
+      })
+        .populate("createdBy");
+
+      if (increaseViews) {
+        res.json({
+          code: 200,
+          data: news
+        });
+      }
+    }
+  } catch (err) {
+    return res.json({
+      code: 400,
       err: err,
       data: null
     });

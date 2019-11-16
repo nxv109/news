@@ -6,7 +6,7 @@ import NewsSimilar from "./NewsSimilar";
 import NewsWatchMuch from "./NewsWatchMuch";
 import NewsOther from "../home/NewsOther";
 
-export default function Detail({ match }) {
+export default function Detail({ match, location }) {
   const [ datas, setDatas ] = React.useState([]);
   const id = match.params.id;
 
