@@ -3,8 +3,8 @@ import axios from "axios";
 
 import NewsDetail from "./NewsDetail";
 import NewsSimilar from "./NewsSimilar";
-import NewsWatchMuch from "./NewsWatchMuch";
 import NewsOther from "../home/NewsOther";
+import NewsWatchMuch from "../home/FeaturedNew.js";
 
 export default function Detail({ match, location }) {
   const [ datas, setDatas ] = React.useState([]);
@@ -33,11 +33,14 @@ export default function Detail({ match, location }) {
           <NewsSimilar id={datas.cateNews} />
         </div>
         <div className="row">
-          <NewsWatchMuch />
+          <div className="col-lg-8 main-featured-new p-0">
+            <h3 className="mb-3 mt-5">Xem nhiều</h3>
+            <NewsWatchMuch />
+          </div>
         </div>
         <div className="row">
           <div className="col-lg-8 p-0 main-featured-new">
-            <h3 className="mb-3 mt-3">Tin khác</h3>
+            <h3 className="mb-3 mt-5">Tin khác</h3>
             <NewsOther />
           </div>
         </div>

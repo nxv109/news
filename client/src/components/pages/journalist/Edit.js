@@ -30,11 +30,11 @@ export default function Edit({ match }) {
     };
 
     const fetchNew = async () => {
-      const res = await axios.get(`/news/${match.params.id}`);
-      const data = res.data.data;
+      const res = await axios.get(`/news/new/${match.params.id}`);
+      const data = res.data.data[0];
 
       setNewData(data);
-      setTags(data.tags);
+      setTags(data.tag);
     };
 
     fetchCategories();
@@ -83,7 +83,7 @@ export default function Edit({ match }) {
       const formData = new FormData();
 
       formData.append('title', news.title || newData.title);
-      formData.append('categoryId', news.category || newData.categoryId);
+      formData.append('categoryId', news.category || newData.cateNews._id);
       formData.append('content', content || newData.content);
       formData.append('tags', JSON.stringify(tags));
       formData.append("file", file || newData.articlePicture);
@@ -156,7 +156,7 @@ export default function Edit({ match }) {
                 className="form-control"
                 onChange={handleChange}
               >
-                <option value={newData.categoryId}>>{newData.categoryName}</option>
+                <option value={newData.cateNews ? newData.cateNews._id : null}>>{newData.cateNews ? newData.cateNews.name : null}</option>
                 {categories.map((category, index) => (
                   <option key={index} value={category._id}>
                     {category.name}

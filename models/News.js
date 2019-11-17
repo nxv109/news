@@ -1,8 +1,12 @@
 const mongoose = require("mongoose");
 require("mongoose-double")(mongoose);
+const moment = require("moment");
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 const { NEWS } = require("../constant");
+
+let timedate = moment().format();
+
 const schema = new Schema({
   title: String,
   content: String,
@@ -36,7 +40,9 @@ const schema = new Schema({
   },
   dateCreate: {
     type: Date,
-    default: new Date()
+    default: moment(timedate)
+      .add(7, "hour")
+      .format("YYYY-MM-DD HH:mm:ss Z")
   },
   tag: { type: Array, default: null }
 });

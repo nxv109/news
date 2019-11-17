@@ -13,12 +13,12 @@ const authEditor = require("../middleware/checkEditor");
 const app = express();
 app.use(fileUpload());
 
-// news ( isDelete = false )
-router.get("/", async function(req, res, next) {
+// get latestnews
+router.get("/latestNews", async function(req, res, next) {
   try {
-    const News = await NewsModel.find({ isDelete: false })
-      .populate("cateNews")
+    const News = await NewsModel.find({ status: 'published' }).limit(8).sort({ dateCreate: -1 })
       .populate("createdBy");
+
     return res.json({
       code: 200,
       err: null,
@@ -33,12 +33,14 @@ router.get("/", async function(req, res, next) {
   }
 });
 
-// news ( isDelete = true )
-router.get("/trash", async function(req, res, next) {
+// news other
+router.get("/other", async function(req, res, next) {
   try {
-    const News = await NewsModel.find({ isDelete: true })
-      .populate("cateNews")
+    const number = +req.query.number;
+    console.log(typeof number);
+    const News = await NewsModel.find({ status: 'published' }).limit(number).sort({ view: -1 })
       .populate("createdBy");
+
     return res.json({
       code: 200,
       err: null,
@@ -73,12 +75,55 @@ router.get("/published", async function(req, res, next) {
   }
 });
 
-// news other
-router.get("/other", async function(req, res, next) {
+// news ( isDelete = false ) by id user
+router.get("/:id", async function(req, res, next) {
   try {
-    const News = await NewsModel.find({ status: 'published' }).limit(8).sort({ view: -1 })
+    const id = req.params.id;
+    const News = await NewsModel.find({ createdBy: { _id: id }, isDelete: false })
+      .populate("cateNews")
       .populate("createdBy");
+    return res.json({
+      code: 200,
+      err: null,
+      data: News
+    });
+  } catch (err) {
+    return res.json({
+      code: 400,
+      err: err.messege,
+      data: null
+    });
+  }
+});
 
+// news ( edit )
+router.get("/new/:id", async function(req, res, next) {
+  try {
+    const id = req.params.id;
+    const News = await NewsModel.find({ _id: id })
+      .populate("cateNews")
+      .populate("createdBy");
+    return res.json({
+      code: 200,
+      err: null,
+      data: News
+    });
+  } catch (err) {
+    return res.json({
+      code: 400,
+      err: err.messege,
+      data: null
+    });
+  }
+});
+
+// news ( isDelete = true )
+router.get("/trash/:id", async function(req, res, next) {
+  try {
+    const id = req.params.id;
+    const News = await NewsModel.find({ createdBy: { _id: id }, isDelete: true })
+      .populate("cateNews")
+      .populate("createdBy");
     return res.json({
       code: 200,
       err: null,
@@ -454,7 +499,8 @@ router.put("/trash/:_id", async function(req, res, next) {
         { _id: _id },
         { isDelete: true }
       );
-      const news = await NewsModel.find({});
+      const news = await NewsModel.find({})
+        .populate("createdBy");
 
       if (moveToTrash) {
         res.json({
@@ -485,7 +531,8 @@ router.put("/restore/:_id", async function(req, res, next) {
         { _id: _id },
         { isDelete: false }
       );
-      const news = await NewsModel.find({ isDelete: true });
+      const news = await NewsModel.find({ isDelete: true })
+        .populate("createdBy");
 
       if (restoreFromTrash) {
         res.json({
@@ -512,7 +559,8 @@ router.delete("/:_id", async function(req, res, next) {
 
     if (newExist) {
       const newDelete = await NewsModel.findOneAndDelete({ _id: _id });
-      const news = await NewsModel.find({ isDelete: true });
+      const news = await NewsModel.find({ isDelete: true })
+        .populate("createdBy");
 
       if (newDelete) {
         res.json({
@@ -567,6 +615,26 @@ router.get("/bestNews", auth, async function(req, res, next) {
     return res.json({
       code: 400,
       err: err,
+      data: null
+    });
+  }
+});
+
+// news ( isDelete = false )
+router.get("/", async function(req, res, next) {
+  try {
+    const News = await NewsModel.find({ isDelete: false })
+      .populate("cateNews")
+      .populate("createdBy");
+    return res.json({
+      code: 200,
+      err: null,
+      data: News
+    });
+  } catch (err) {
+    return res.json({
+      code: 400,
+      err: err.messege,
       data: null
     });
   }

@@ -17,6 +17,11 @@
   }
 }
 
+// load more
+.load-more{
+  @include disFlex(column nowrap, center, center);
+}
+
 // featured new
 .featured-new:first-of-type {
   @include disFlex(column nowrap, flex-start, center);
@@ -34,6 +39,14 @@
     &>img {
       @extend %w-100;
     }
+  }
+}
+
+.featured-new, .latest-new, .channel{
+  color: $color-black;
+
+  &:hover{
+    color: inherit;
   }
 }
 

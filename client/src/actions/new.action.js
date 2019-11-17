@@ -10,6 +10,11 @@ const setNewsOther = (data) => ({
   payload: data
 });
 
+const setLatestNews = (data) => ({
+  type: "GET_LATEST_NEWS",
+  payload: data
+});
+
 export const getNews = () => {
   return async dispatch => {
     const res = await axios.get("/news/published");
@@ -19,11 +24,20 @@ export const getNews = () => {
   };
 };
 
-export const getNewsOther = () => {
+export const getNewsOther = (number) => {
   return async dispatch => {
-    const res = await axios.get("/news/other");
+    const res = await axios.get("/news/other", { params: { number: number } });
     const data = res.data.data;
 
     dispatch(setNewsOther(data));
+  };
+};
+
+export const getLatestNews = () => {
+  return async dispatch => {
+    const res = await axios.get("/news/latestNews");
+    const data = res.data.data;
+
+    dispatch(setLatestNews(data));
   };
 };

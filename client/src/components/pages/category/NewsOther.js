@@ -1,15 +1,43 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 export default function NewsOther(props) {
   const [tags, setTags] = React.useState([]);
   const [newByTag, setNewByTag] = React.useState([]);
 
   React.useEffect(() => {
-    setTags(props.tags);
-    setNewByTag(props.newByTag);
+    // xủ lý  tin tức trùng lặp
+    if (props.newsHighlightId && props.newByTag) {
+      const newByTag = props.newByTag.filter(v => v._id !== props.newsHighlightId);
 
-  }, [props.tags, props.newByTag]);
+      setNewByTag(newByTag);
+    }
+
+    // xủ lý tin tức có tags giống với tin tức nỗi bật
+    if (props.highlightNew && props.tags) {
+      const highlightNewTags = props.highlightNew.tag;
+
+      if (highlightNewTags) {
+        let tags = [];
+
+        for (let j = 0; j < props.tags.length; j++) {
+          for (let i = 0; i < highlightNewTags.length; i++) {
+            if (props.tags[j] === highlightNewTags[i]) {
+              tags.push(props.tags[j]);
+            }
+          }
+        }
+
+        // console.log("tags", tags);
+
+        const rs = props.tags.filter(v => !tags.includes(v));
+
+        setTags(rs);
+      }
+    }
+
+  }, [props.tags, props.newByTag, props.newsHighlightId, props.highlightNew]);
 
   // just show news <= 50
   newByTag.length = 50;
@@ -37,7 +65,7 @@ export default function NewsOther(props) {
                         </div>
                         <div className="featured-new__info">
                           <h3 className="featured-new__title">{item.title}</h3>
-                          <p className="featured-new__createby text-secondary">Creator: {item.createdBy.username} | Time: {item.dateCreate} | <i className="mdi mdi-eye" /> {item.view}</p>
+                          <p className="featured-new__createby text-secondary"><i className="mdi mdi-monitor" /> {item.createdBy.username} | <i className="mdi mdi-av-timer" /> {moment(item.dateCreate).format("DD-MM-YYYY")} | <i className="mdi mdi-eye" /> {item.view}</p>
                         </div>
                       </Link>
                     )

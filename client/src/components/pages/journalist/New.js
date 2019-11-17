@@ -17,47 +17,52 @@ export default function News() {
   const [notPublished, setNotPublished] = React.useState(0);
   const [published, setPublished] = React.useState(0);
   const dispatch = useDispatch();
+  const userId = sessionStorage.getItem("userId");
 
   React.useEffect(() => {
     dispatch(setMessage({ message: "" }));
     const fetchNews = async () => {
-      const res = await axios.get("/news");
-      const data = res.data.data;
+      if (userId) {
+        const res = await axios.get(`/news/${userId}`);
+        const data = res.data.data;
 
-      function getData(property) {
-        const rs = data.filter(v => v.status === property);
-        return rs;
+        function getData(property) {
+          const rs = data.filter(v => v.status === property);
+          return rs;
+        }
+
+        const notApproved = getData("new");
+        const notPublished = getData("edited");
+        const published = getData("published");
+
+        setNews(data);
+        setTotal(data.length);
+        setNotApproved(notApproved.length);
+        setNotPublished(notPublished.length);
+        setPublished(published.length);
       }
-
-      const notApproved = getData("new");
-      const notPublished = getData("edited");
-      const published = getData("published");
-
-      setNews(data);
-      setTotal(data.length);
-      setNotApproved(notApproved.length);
-      setNotPublished(notPublished.length);
-      setPublished(published.length);
     };
 
     const fetchTrash = async () => {
-      const res = await axios.get("/news/trash");
+      const res = await axios.get(`/news/trash/${userId}`);
       const data = res.data.data;
 
-      setAmountTrash(data.length);
+      if (data) {
+        setAmountTrash(data.length);
+      }
     };
 
     fetchNews();
     fetchTrash();
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   // move to trash
   const hanldeMoveToTrash = async id => {
     const res = await axios.put(`/news/trash/${id}`);
     const { code, message, data } = res.data;
 
-    const news = await data.filter(v => v.isDelete === false);
-    const amountTrash = await data.filter(v => v.isDelete === true);
+    const news = await data.filter(v => v.isDelete === false && v.createdBy._id === userId);
+    const amountTrash = await data.filter(v => v.isDelete === true && v.createdBy._id === userId);
 
     setNews(news);
     setAmountTrash(amountTrash.length);
@@ -70,7 +75,9 @@ export default function News() {
     const res = await axios.put(`/news/giveUpDraft/${id}`);
     const { code, message, data } = res.data;
 
-    setNews(data);
+    const news = await data.filter(v => v.isDelete === false && v.createdBy === userId);
+
+    setNews(news);
     dispatch(setMessage({ code, message }));
     dispatch(closeMessage());
   };
@@ -80,7 +87,9 @@ export default function News() {
     const res = await axios.put(`/news/saveDraft/${id}`);
     const { code, message, data } = res.data;
 
-    setNews(data);
+    const news = await data.filter(v => v.isDelete === false && v.createdBy === userId);
+
+    setNews(news);
     dispatch(setMessage({ code, message }));
     dispatch(closeMessage());
   };

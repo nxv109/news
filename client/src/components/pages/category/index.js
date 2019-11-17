@@ -45,7 +45,11 @@ export default function Category({ match }) {
         <div className="row">
           <div className="col-lg-8">
             <NewsHighlight highlightNew={highlightNew} />
-            <NewsOther tags={tags} newByTag={newByTag} />
+            {
+              highlightNew
+              ? (<NewsOther tags={tags} newByTag={newByTag} newsHighlightId={highlightNew._id} highlightNew={highlightNew} />)
+              : null
+            }
           </div>
           <div className="col-lg-4">show quang cao / fangage</div>
         </div>

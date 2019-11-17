@@ -31,7 +31,8 @@ export default function News() {
       Header: "TÊN BÀI VIẾT",
       accessor: "title",
       sortable: true,
-      filterable: true
+      filterable: true,
+      className: "text-left"
     },
     {
       Header: "STATUS",

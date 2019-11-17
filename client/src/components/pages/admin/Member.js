@@ -13,16 +13,18 @@ export default function Member() {
   const [usersData, setUsersData] = React.useState([]);
   const dispatch = useDispatch();
 
+  function notAdminUsers(datas) {
+    return datas.filter(data => data.role !== "admin");
+  }
+
   React.useEffect(() => {
     dispatch(setMessage({ message: "" }));
     const fetchUsers = async () => {
       const res = await axios.get("/users");
       const datas = res.data.data;
 
-      const notAdminUsers = datas.filter(data => data.role !== "admin");
-
-      setUsers(notAdminUsers);
-      setUsersData(notAdminUsers);
+      setUsers(notAdminUsers(datas));
+      setUsersData(notAdminUsers(datas));
     };
 
     fetchUsers();
@@ -35,6 +37,7 @@ export default function Member() {
         const { code, message, data } = res.data;
 
         setUsers(data);
+        setUsersData(notAdminUsers(data));
         dispatch(setMessage({ code, message }));
         dispatch(closeMessage());
       }
@@ -51,6 +54,7 @@ export default function Member() {
         const { code, message, data } = res.data;
 
         setUsers(data);
+        setUsersData(notAdminUsers(data));
         dispatch(setMessage({ code, message }));
         dispatch(closeMessage());
       }
@@ -65,6 +69,7 @@ export default function Member() {
         const { code, message, data } = res.data;
 
         setUsers(data);
+        setUsersData(notAdminUsers(data));
         dispatch(setMessage({ code, message }));
         dispatch(closeMessage());
       }
@@ -74,7 +79,7 @@ export default function Member() {
   // filter ROLE
   const hanldeFilterRole = (role) => {
     if (role === "all") {
-      setUsersData(users);
+      setUsersData(notAdminUsers(users));
     } else {
       const rs = users.filter(user => user.role === role);
 

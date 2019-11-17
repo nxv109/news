@@ -9,12 +9,15 @@ export default function Home() {
     <div className="container">
       <div className="row">
         <LatestNew />
-        <FeaturedNew />
+        <div className="col-lg-6 main-featured-new">
+          <h3 className="mb-3">Tin tức nổi bật</h3>
+          <FeaturedNew />
+        </div>
         <FeaturedChannel />
       </div>
       <div className="row">
         <div className="col-lg-10 main-featured-new">
-          <h3 className="mb-3 mt-3">Dành cho bạn</h3>
+          <h3 className="mb-3 mt-5">Dành cho bạn</h3>
           <NewsOther />
         </div>
       </div>

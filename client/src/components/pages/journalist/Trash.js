@@ -11,25 +11,28 @@ import { closeMessage } from "../closeMessage";
 export default function Trash() {
   const [news, setNews] = React.useState([]);
   const dispatch = useDispatch();
+  const userId = sessionStorage.getItem("userId");
 
   React.useEffect(() => {
     dispatch(setMessage({ message: "" }));
     const fetchNews = async () => {
-      const res = await axios.get("/news/trash");
+      const res = await axios.get(`/news/trash/${userId}`);
       const data = res.data.data;
 
       setNews(data);
     };
 
     fetchNews();
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   // delete
   const hanldeDelete = async id => {
     const res = await axios.delete(`/news/${id}`);
     const { code, message, data } = res.data;
 
-    setNews(data);
+    const drafts = await data.filter(v => v.isDelete === true && v.createdBy._id === userId);
+
+    setNews(drafts);
     dispatch(setMessage({ code, message }));
     dispatch(closeMessage());
   };
@@ -39,7 +42,9 @@ export default function Trash() {
     const res = await axios.put(`/news/restore/${id}`);
     const { code, message, data } = res.data;
 
-    setNews(data);
+    const drafts = await data.filter(v => v.isDelete === true && v.createdBy._id === userId);
+
+    setNews(drafts);
     dispatch(setMessage({ code, message }));
     dispatch(closeMessage());
   };

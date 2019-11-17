@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import Loading from "../../Loading";
+
 export default function NewsOther(props) {
   const [tags, setTags] = React.useState([]);
   const [newByTag, setNewByTag] = React.useState([]);
@@ -44,7 +46,7 @@ export default function NewsOther(props) {
                     : null
                   ))
                 )
-                : null
+                : (<Loading />)
               }
             </div>
           ))

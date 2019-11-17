@@ -23,18 +23,18 @@ export default function Edit({ match }) {
     dispatch(setMessage({ message: "" }));
 
     const fetchCategories = async () => {
-      const res = await axios.get("/cateNews");
+      const res = await axios.get("/newsSensors");
       const data = res.data.data;
 
       setCategories(data);
     };
 
     const fetchNew = async () => {
-      const res = await axios.get(`/news/${match.params.id}`);
-      const data = res.data.data;
+      const res = await axios.get(`/news/new/${match.params.id}`);
+      const data = res.data.data[0];
 
       setNewData(data);
-      setTags(data.tags);
+      setTags(data.tag);
     };
 
     fetchCategories();
@@ -60,6 +60,14 @@ export default function Edit({ match }) {
     }
   };
 
+  // remove tag
+  const hanldeRemoveTag = (index) => {
+    const newTag = [ ...tags ];
+    newTag.splice(index, 1);
+
+    setTags(newTag);
+  };
+
   const hanldChangeContent = content => {
     setContent(content);
   };
@@ -70,11 +78,12 @@ export default function Edit({ match }) {
 
   const hanldeSubmit = async e => {
     e.preventDefault();
+
     try {
       const formData = new FormData();
 
       formData.append('title', news.title || newData.title);
-      formData.append('categoryId', news.category || newData.categoryId);
+      formData.append('categoryId', news.category || newData.cateNews._id);
       formData.append('content', content || newData.content);
       formData.append('tags', JSON.stringify(tags));
       formData.append("file", file || newData.articlePicture);
@@ -147,7 +156,7 @@ export default function Edit({ match }) {
                 className="form-control"
                 onChange={handleChange}
               >
-                <option value={newData.categoryId}>>{newData.categoryName}</option>
+                <option value={newData.cateNews ? newData.cateNews._id : null}>>{newData.cateNews ? newData.cateNews.name : null}</option>
                 {categories.map((category, index) => (
                   <option key={index} value={category._id}>
                     {category.name}
@@ -169,8 +178,9 @@ export default function Edit({ match }) {
                 <u className="mr-2">Tags:</u>
                 {tags.length > 0 ? (
                   tags.map((tag, index) => (
-                    <span className="badge badge-success mr-1" key={index}>
+                    <span className="badge badge-success mr-1 tag" key={index}>
                       {tag}
+                      <i onClick={() => hanldeRemoveTag(index)} className="mdi mdi-close-circle-outline tag__close text-dangder" />
                     </span>
                   ))
                 ) : (
@@ -212,7 +222,7 @@ export default function Edit({ match }) {
               </div>
             </div>
             <button type="submit" className="btn btn-danger">
-              Published
+              CÔNG KHAI
             </button>
           </form>
         </div>
