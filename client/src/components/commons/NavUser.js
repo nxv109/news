@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { addUser } from "../../actions/user.action";
 import { getCategories } from "../../actions/category.action";
 
+import Search from "./Search";
+
 export default function NavUser() {
   const appState = useSelector(state => state);
   const dispatch = useDispatch();
@@ -21,7 +23,8 @@ export default function NavUser() {
   };
 
   return (
-    <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light shadow-sm py-0 px-2">
+    <nav style={{ zIndex: 1041 }} className="navbar fixed-top navbar-expand-lg navbar-light bg-light shadow-sm py-0 px-2">
+      <div className="container">
         <Link to="/" className="navbar-brand">
           <img src="/Logo-news.png" alt="Logo news" />
         </Link>
@@ -115,21 +118,23 @@ export default function NavUser() {
               )}
             </li>
           </ul>
-          <form className="form-inline my-2 my-lg-0">
-            <input
-              className="form-control mr-sm-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button
-              className="btn btn-outline-danger my-2 my-sm-0"
-              type="submit"
-            >
+
+          <div>
+            <button type="button" className="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal">
               <i className="mdi mdi-magnify" />
             </button>
-          </form>
+            {/* Modal */}
+            <div className="modal fade" id="exampleModal" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div className="modal-dialog" role="document">
+                <div className="modal-content">
+                  <Search />
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
+      </div>
     </nav>
   );
 }

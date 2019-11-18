@@ -13,6 +13,28 @@ const authEditor = require("../middleware/checkEditor");
 const app = express();
 app.use(fileUpload());
 
+// search
+router.get("/q", async function(req, res, next) {
+  try {
+    const textSearch = req.query.textSearch;
+    const News = await NewsModel.find({ title: { $regex: `${textSearch}`, $options: "i" }, isDelete: false, status: "published" }).limit(10);
+
+    return res.json({
+      code: 200,
+      err: null,
+      data: News
+    });
+  } catch (err) {
+    return res.json({
+      code: 400,
+      err: err.messege,
+      data: null
+    });
+  }
+});
+
+
+
 // get latestnews
 router.get("/latestNews", async function(req, res, next) {
   try {
@@ -58,7 +80,7 @@ router.get("/other", async function(req, res, next) {
 // news ( status = "published" )
 router.get("/published", async function(req, res, next) {
   try {
-    const News = await NewsModel.find({ status: 'published', view: { $gt: 9 } }).limit(3).sort({ view: -1 })
+    const News = await NewsModel.find({ status: 'published', view: { $gt: 9 } }).limit(5).sort({ view: -1 })
       .populate("createdBy");
 
     return res.json({

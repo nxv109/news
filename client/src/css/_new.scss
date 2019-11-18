@@ -94,9 +94,9 @@
   }
 
   &__image {
-    flex: 20%;
+    flex: 50%;
     @extend %mr-1;
-    max-height: 4rem;
+    max-height: 8rem;
     overflow: hidden;
 
     &>img {

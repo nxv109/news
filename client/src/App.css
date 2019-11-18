@@ -205,8 +205,8 @@ body {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 .latest-new__image {
-  flex: 20%;
-  max-height: 4rem;
+  flex: 50%;
+  max-height: 8rem;
   overflow: hidden;
 }
 .latest-new__image > img {
@@ -236,6 +236,18 @@ body {
 }
 .channel__info {
   flex: 80%;
+}
+.search {
+  position: relative;
+}
+.search__result {
+  position: absolute;
+  background: #ffffff;
+  top: 3rem;
+  left: 0;
+}
+.search__title {
+  font-size: 0.8rem;
 }
 
 /*# sourceMappingURL=App.css.map */

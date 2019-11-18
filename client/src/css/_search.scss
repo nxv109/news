@@ -1,0 +1,14 @@
+.search{
+  position: relative;
+
+  &__result{
+    position: absolute;
+    background: $color-white;
+    top: 3rem;
+    left: 0;
+  }
+
+  &__title{
+    font-size: $text-size-sm;
+  }
+}

@@ -15,6 +15,11 @@ const setLatestNews = (data) => ({
   payload: data
 });
 
+const setSearchNews = (data) => ({
+  type: "GET_SEARCH_NEWS",
+  payload: data
+});
+
 export const getNews = () => {
   return async dispatch => {
     const res = await axios.get("/news/published");
@@ -39,5 +44,14 @@ export const getLatestNews = () => {
     const data = res.data.data;
 
     dispatch(setLatestNews(data));
+  };
+};
+
+export const getSearchNews = (textSearch) => {
+  return async dispatch => {
+    const res = await axios.get("/news/q", { params: { textSearch: textSearch } });
+    const data = res.data.data;
+
+    dispatch(setSearchNews(data));
   };
 };

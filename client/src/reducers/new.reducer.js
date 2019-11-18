@@ -8,6 +8,8 @@ export default function newReducer(state = initialState, action) {
       return { ...state, other: action.payload };
     case "GET_LATEST_NEWS":
       return { ...state, latest: action.payload };
+    case "GET_SEARCH_NEWS":
+      return { ...state, search: action.payload };
     default:
       return state;
   }
