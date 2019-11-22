@@ -13,7 +13,7 @@ export default function Search() {
   const hanldeChangeSearch = () => {
     if (textSearch.current.value.length >= 2) {
       setIsSearch(true);
-      dispatch(getSearchNews(textSearch.current.value));
+      dispatch(getSearchNews(textSearch.current.value.trim()));
     } else {
       setIsSearch(false);
     }
@@ -23,9 +23,14 @@ export default function Search() {
     setIsSearch(false);
   });
 
+  const hanldeIsSearch = () => {
+    setIsSearch(false);
+  };
+
   return (
     <div className="search">
       <input
+        id="searchId"
         className="form-control mr-sm-2 search__input"
         type="search"
         placeholder="Search..."
@@ -41,6 +46,7 @@ export default function Search() {
                   to={`/${item._id}`}
                   key={index}
                   className="latest-new p-1 bg-white rounded text-decoration-none text-dark"
+                  onClick={hanldeIsSearch}
                 >
                   <div className="latest-new__image">
                     <img

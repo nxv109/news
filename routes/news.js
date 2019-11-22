@@ -1,10 +1,10 @@
-var express = require("express");
+const express = require("express");
 const fileUpload = require("express-fileupload");
 const NewsModel = require("../models/News");
 const RateModel = require("../models/Rate");
 const LikeModel = require("../models/Like");
 const ViewModel = require("../models/View");
-var router = express.Router();
+const router = express.Router();
 const auth = require("../middleware/auth");
 const authJour = require("../middleware/checkJournalist");
 const authEditor = require("../middleware/checkEditor");
@@ -17,13 +17,15 @@ app.use(fileUpload());
 router.get("/q", async function(req, res, next) {
   try {
     const textSearch = req.query.textSearch;
-    const News = await NewsModel.find({ title: { $regex: `${textSearch}`, $options: "i" }, isDelete: false, status: "published" }).limit(10);
+    const News = await NewsModel.find({ title: { $regex: textSearch, $options: "i" }, isDelete: false, status: "published" }).limit(10).sort({ view: -1 });
 
-    return res.json({
-      code: 200,
-      err: null,
-      data: News
-    });
+    if (News) {
+      return res.json({
+        code: 200,
+        err: null,
+        data: News
+      });
+    }
   } catch (err) {
     return res.json({
       code: 400,
@@ -80,7 +82,7 @@ router.get("/other", async function(req, res, next) {
 // news ( status = "published" )
 router.get("/published", async function(req, res, next) {
   try {
-    const News = await NewsModel.find({ status: 'published', view: { $gt: 9 } }).limit(5).sort({ view: -1 })
+    const News = await NewsModel.find({ status: 'published', view: { $gt: 9 } }).limit(4).sort({ view: -1 })
       .populate("createdBy");
 
     return res.json({
@@ -186,7 +188,7 @@ router.get("/categories/:id", async function(req, res, next) {
 router.get("/users/:id", async function(req, res, next) {
   try {
     const id = req.params.id;
-    const News = await NewsModel.find({ status: 'published', createdBy: { _id: id } })
+    const News = await NewsModel.find({ status: 'published', createdBy: { _id: id } }).limit(40)
       .populate("cateNews")
       .populate("createdBy");
 

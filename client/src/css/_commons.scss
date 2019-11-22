@@ -2,6 +2,24 @@ body{
   background: #f5f7f9;
 }
 
+div[class*="col-"]{
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+._2p3a{
+  width: 100% !important;
+}
+
+.p-fixed{
+  position: fixed;
+  top: 2rem;
+}
+
+.mt-6 {
+  margin-top: 4rem;
+}
+
 .mt-7 {
   margin-top: 5rem;
 }

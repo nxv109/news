@@ -15,10 +15,14 @@ export default function FeaturedNew() {
     dispatch(getNews());
   }, [dispatch]);
 
+  const featured = React.useMemo(() => {
+    return appState.news.data;
+  }, [appState.news.data]);
+
   return (
     <React.Fragment>
-      {appState.news.data
-        ? appState.news.data.map((item, index) => (
+      {featured
+        ? featured.map((item, index) => (
             <Link to={`/${item._id}`} key={index} className="featured-new p-3 bg-white rounded text-decoration-none">
               <div className="featured-new__image border border-secondary">
                 <img

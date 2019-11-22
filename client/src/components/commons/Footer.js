@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="page-footer font-small indigo bg-dark text-white">
+    <footer className="page-footer font-small indigo bg-dark text-white mt-7">
       {/* Footer Links */}
       <div className="container text-center text-md-left">
         {/* Grid row */}

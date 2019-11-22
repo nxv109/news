@@ -8,13 +8,40 @@ export default function NewsOther(props) {
   const [newByTag, setNewByTag] = React.useState([]);
 
   React.useEffect(() => {
-    setTags(props.tags);
-    setNewByTag(props.newByTag);
+    // xủ lý  tin tức trùng lặp
+    if (props.newsHighlightId && props.newByTag) {
+      const newByTag = props.newByTag.filter(v => v._id !== props.newsHighlightId);
 
-  }, [props.tags, props.newByTag]);
+      setNewByTag(newByTag);
+    }
+
+    // xủ lý tin tức có tags giống với tin tức nỗi bật
+    if (props.highlightNew && props.tags) {
+      const highlightNewTags = props.highlightNew.tag;
+
+      if (highlightNewTags) {
+        let tags = [];
+
+        for (let j = 0; j < props.tags.length; j++) {
+          for (let i = 0; i < highlightNewTags.length; i++) {
+            if (props.tags[j] === highlightNewTags[i]) {
+              tags.push(props.tags[j]);
+            }
+          }
+        }
+
+        // console.log("tags", tags);
+
+        const rs = props.tags.filter(v => !tags.includes(v));
+
+        setTags(rs);
+      }
+    }
+
+  }, [props.tags, props.newByTag, props.newsHighlightId, props.highlightNew]);
 
   // just show news <= 50
-  newByTag.length = 50;
+  // newByTag.length = 50;
 
   return(
     <React.Fragment>

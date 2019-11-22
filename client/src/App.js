@@ -35,7 +35,7 @@ function App() {
   return (
     <Router className="App">
       <ScrollToTop />
-      <div className="container-fluid mt-7 mb-3 min-h-100vh">
+      <div className="container-fluid mt-6 mb-3 min-h-100vh">
         <Navbar />
         <React.Suspense
           fallback={

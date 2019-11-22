@@ -11,14 +11,16 @@ export default function Navbar() {
   const userId = sessionStorage.getItem("userId");
 
   React.useEffect(() => {
-    const fetchUser = async () => {
-      const res = await axios.get(`/login/${userId}`);
-      const rs = await res.data.data;
+    if (userId) {
+      const fetchUser = async () => {
+        const res = await axios.get(`/login/${userId}`);
+        const rs = await res.data.data;
 
-      dispatch(addUser(rs));
-    };
+        dispatch(addUser(rs));
+      };
 
-    fetchUser();
+      fetchUser();
+    }
   }, [dispatch, userId]);
 
   return (

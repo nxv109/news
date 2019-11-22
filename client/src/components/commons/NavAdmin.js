@@ -16,9 +16,10 @@ export default function NavAdmin() {
   };
 
   return (
-    <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light shadow-sm py-0 px-2">
+    <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark shadow-sm py-0 px-2">
+      <div className="container">
         <Link to="/" className="navbar-brand">
-          <img src="/Logo-news.png" alt="Logo news" />
+          <img width="100%" src="/Logo-news.png" alt="Logo news" />
         </Link>
         <button
           className="navbar-toggler"
@@ -35,12 +36,12 @@ export default function NavAdmin() {
           <ul className="navbar-nav mr-auto">
             <li className="nav-item active">
               <Link className="nav-link" to="/">
-                Home <span className="sr-only">(current)</span>
+                HOME <span className="sr-only">(current)</span>
               </Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/contact">
-                Contact
+                CONTACT
               </Link>
             </li>
             <li className="nav-item dropdown">
@@ -106,6 +107,7 @@ export default function NavAdmin() {
             </li>
           </ul>
         </div>
+      </div>
     </nav>
   );
 }

@@ -23,10 +23,10 @@ export default function NavUser() {
   };
 
   return (
-    <nav style={{ zIndex: 1041 }} className="navbar fixed-top navbar-expand-lg navbar-light bg-light shadow-sm py-0 px-2">
+    <nav style={{ zIndex: 1041 }} className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark shadow-sm py-0 px-2">
       <div className="container">
         <Link to="/" className="navbar-brand">
-          <img src="/Logo-news.png" alt="Logo news" />
+          <img width="100%" src="/Logo-news.png" alt="Logo news" />
         </Link>
         <button
           className="navbar-toggler"

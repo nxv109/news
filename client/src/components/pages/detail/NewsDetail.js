@@ -22,15 +22,16 @@ export default function NewsDetail(props) {
           return;
         } else {
           Cookies.set(`ip${id}`, `${res.data.ip}-/${id}`, { expires: 1 });
-          console.log("ok t se tang 1 view");
 
           const resIncreaseViews = await axios.put(`/news/views/${id}`, {
             views: props.datas.view + 1
           });
 
+          // thống kê lượt xem
+          axios.post("/statisticals/news", { id: id });
+
           if (resIncreaseViews.data.data) {
             setDatas(resIncreaseViews.data.data[0]);
-            console.log(resIncreaseViews.data.data[0]);
           }
         }
       };

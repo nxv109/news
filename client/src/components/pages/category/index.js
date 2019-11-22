@@ -3,6 +3,8 @@ import axios from "axios";
 
 import NewsHighlight from "./NewsHighlight";
 import NewsOther from "./NewsOther";
+import FeaturedChannel from "../home/FeaturedChannel";
+import LatestNew from "../home/LatestNew";
 
 export default function Category({ match }) {
   const [highlightNew, setHighlightNew] = React.useState({});
@@ -51,7 +53,12 @@ export default function Category({ match }) {
               : null
             }
           </div>
-          <div className="col-lg-4">show quang cao / fangage</div>
+          <div className="col-lg-4">
+            <FeaturedChannel />
+            <div className="mt-4">
+              <LatestNew />
+            </div>
+          </div>
         </div>
       </div>
     </React.Fragment>

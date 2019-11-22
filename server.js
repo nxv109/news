@@ -13,7 +13,8 @@ const newsSensorRouter = require("./routes/newsSensor");
 const likeRouter = require('./routes/like');
 const rateRouter = require('./routes/rate');
 const usersRouter = require('./routes/users');
-// const viewRouter = require('./routes/view') 
+const statisticalRouter = require('./routes/statistical');
+// const viewRouter = require('./routes/view')
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
@@ -68,7 +69,7 @@ app.use("/newsSensors", newsSensorRouter);
 app.use("/login", loginRouter);
 app.use('/likes', likeRouter);
 app.use('/rates', rateRouter);
-// app.use('/views', viewRouter);
+app.use('/statisticals', statisticalRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

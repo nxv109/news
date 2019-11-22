@@ -14,13 +14,17 @@ export default function LatestNew() {
 
   }, [dispatch]);
 
+  const latest = React.useMemo(() => {
+    return appState.news.latest;
+  }, [appState.news.latest]);
+
   return (
-    <div className="col-lg-4">
+    <div>
       <h3 className="mb-3">Tin tức mới nhất</h3>
       {
-        appState.news.latest
+        latest
         ? (
-          appState.news.latest.map((item, index) => (
+          latest.map((item, index) => (
             <Link to={`/${item._id}`} key={index} className="latest-new p-1 bg-white rounded text-decoration-none text-dark">
               <div className="latest-new__image">
                 <img
@@ -30,7 +34,6 @@ export default function LatestNew() {
               </div>
               <div className="latest-new__info">
                 <h5 className="latest-new__title">{item.title}</h5>
-                <p className="featured-new__createby text-secondary"><i className="mdi mdi-monitor" /> {item.createdBy.username} | <i className="mdi mdi-eye" /> {item.view}</p>
               </div>
             </Link>
           ))

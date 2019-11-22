@@ -34,11 +34,15 @@ export default function NewsOther() {
         }
       }
     }
-  }
+  };
+
+  const other = React.useMemo(() => {
+    return appState.news.other;
+  }, [appState.news.other]);
 
   return (
     <React.Fragment>
-      {appState.news.other ? (appState.news.other.map((item, index) => (
+      {other ? (other.map((item, index) => (
                 <Link
                   to={`/${item._id}`}
                   key={index}

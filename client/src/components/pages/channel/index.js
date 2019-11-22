@@ -3,6 +3,8 @@ import axios from "axios";
 
 import NewsHighlight from "./NewsHighlight";
 import NewsOther from "./NewsOther";
+import FeaturedChannal from "../home/FeaturedChannel";
+import LatestNew from "../home/LatestNew";
 
 export default function Channel({ match }) {
   const [highlightNew, setHighlightNew] = React.useState({});
@@ -45,9 +47,14 @@ export default function Channel({ match }) {
         <div className="row">
           <div className="col-lg-8">
             <NewsHighlight highlightNew={highlightNew} />
-            <NewsOther tags={tags} newByTag={newByTag} />
+            <NewsOther tags={tags} newByTag={newByTag} newsHighlightId={highlightNew._id} highlightNew={highlightNew} />
           </div>
-          <div className="col-lg-4">show quang cao / fangage</div>
+          <div className="col-lg-4">
+            <FeaturedChannal />
+            <div className="mt-4">
+              <LatestNew />
+            </div>
+          </div>
         </div>
       </div>
     </React.Fragment>

@@ -5,6 +5,8 @@ import NewsDetail from "./NewsDetail";
 import NewsSimilar from "./NewsSimilar";
 import NewsOther from "../home/NewsOther";
 import NewsWatchMuch from "../home/FeaturedNew.js";
+import FeaturedChannel from "../home/FeaturedChannel.js";
+import LatestNew from "../home/LatestNew.js";
 
 export default function Detail({ match, location }) {
   const [ datas, setDatas ] = React.useState([]);
@@ -26,7 +28,10 @@ export default function Detail({ match, location }) {
         <div className="row">
           <NewsDetail datas={datas} />
           <div className="col-lg-4">
-            show quang cao
+            <FeaturedChannel />
+            <div className="mt-4">
+              <LatestNew />
+            </div>
           </div>
         </div>
         <div className="row">
