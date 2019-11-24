@@ -3,6 +3,24 @@ const router = express.Router();
 
 const FollowerModel = require("../models/Follow");
 
+router.get("/", async (req, res) => {
+  try {
+    const followers = await FollowerModel.find({});
+
+    if (followers) {
+      res.json({
+        code: 200,
+        data: followers
+      });
+    }
+  } catch (e) {
+    res.json({
+      code: 400,
+      message: e
+    });
+  }
+});
+
 router.post("/", async (req, res) => {
   try {
     const body = req.body;
@@ -47,24 +65,6 @@ router.delete("/", async (req, res) => {
       }
     }
 
-  } catch (e) {
-    res.json({
-      code: 400,
-      message: e
-    });
-  }
-});
-
-router.get("/", async (req, res) => {
-  try {
-    const followers = await FollowerModel.find({});
-
-    if (saveFollower) {
-      res.json({
-        code: 200,
-        data: followers
-      });
-    }
   } catch (e) {
     res.json({
       code: 400,

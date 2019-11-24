@@ -1,14 +1,21 @@
 const mongoose = require("mongoose");
-require("mongoose-double")(mongoose);
+const moment = require("moment");
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
+
+let timedate = moment().format();
+
 const schema = new Schema({
-  username: String,
-  content: String,
-  createdBy: { type: ObjectId, ref: "User" },
-  isDelete: { type: Boolean, default: false }
+  channel: { type: ObjectId, ref: 'User' },
+  followBy: { type: ObjectId, ref: "User" },
+  dateCreated: {
+    type: Date,
+    default: moment(timedate)
+      .add(7, "hour")
+      .format("YYYY-MM-DD HH:mm:ss Z")
+  }
 });
 
-const ContactModel = mongoose.model("Contact", schema);
+const FollowerModel = mongoose.model("Follower", schema);
 
-module.exports = ContactModel;
+module.exports = FollowerModel;

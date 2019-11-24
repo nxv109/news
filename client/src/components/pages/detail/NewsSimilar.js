@@ -32,7 +32,7 @@ export default function NewsSimilar(props) {
                 />
               </div>
               <div className="featured-new__info">
-                <h3 className="featured-new__title">{data.title}</h3>
+                <h4 className="featured-new__title">{data.title}</h4>
                 <p className="featured-new__createby text-secondary"><i className="mdi mdi-monitor" /> {data.createdBy.username} - <i className="mdi mdi-av-timer" /> {moment(data.dateCreate).format("DD-MM-YYYY")} - <i className="mdi mdi-eye" /> {data.view}</p>
               </div>
             </Link>

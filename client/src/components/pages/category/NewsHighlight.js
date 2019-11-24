@@ -27,7 +27,7 @@ export default function NewsHighlight(props) {
             </div>
           ) : (<Loading />)}
           <div className="featured-new__info">
-            <h3 className="featured-new__title">{highlightNew.title}</h3>
+            <h4 className="featured-new__title">{highlightNew.title}</h4>
           </div>
         </Link>
       ) : (

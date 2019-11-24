@@ -78,7 +78,7 @@ router.get("/:_idCate", auth, async function(req, res, next) {
 router.post("/", async function(req, res, next) {
   try {
     const { category, createdBy } = req.body;
-    console.log(createdBy);
+    // console.log(createdBy);
     const Category = new CateNewsModel({
       name: category,
       createdBy: createdBy

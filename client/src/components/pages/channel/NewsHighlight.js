@@ -28,9 +28,9 @@ export default function NewsHighlight(props) {
             (<Loading />)
           )}
           <div className="featured-new__info">
-            <h3 className="featured-new__title">
+            <h4 className="featured-new__title">
               {highlightNew.title}
-            </h3>
+            </h4>
           </div>
         </Link>
       ) : (<p className="text-secondary">Không có tin tức nổi bật nào!</p>)}

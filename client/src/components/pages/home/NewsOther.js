@@ -19,7 +19,7 @@ export default function NewsOther() {const [loading, setLoading] = React.useStat
   window.addEventListener("scroll", () => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
-    if (clientHeight + scrollTop >= scrollHeight) {
+    if (clientHeight + scrollTop >= scrollHeight - 5) {
       // show the loading animation
       showLoading();
     }
@@ -71,7 +71,7 @@ export default function NewsOther() {const [loading, setLoading] = React.useStat
                 />
               </div>
               <div className="featured-new__info">
-                <h3 className="featured-new__title">{item.title}</h3>
+                <h4 className="featured-new__title">{item.title}</h4>
                 <p className="featured-new__createby text-secondary">
                   <i className="mdi mdi-monitor" /> {item.createdBy.username} -{" "}
                   <i className="mdi mdi-av-timer" />{" "}
