@@ -23,7 +23,7 @@ router.get('/', async (req, res, next) => {
 
 /* GET channel. */
 router.get('/channels', async (req, res, next) => {
-  const users = await UserModel.find({ role: "journalist", follow: { $gt: 10 } });
+  const users = await UserModel.find({ role: "journalist" });
 
   try {
     res.json({

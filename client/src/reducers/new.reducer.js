@@ -1,4 +1,4 @@
-const initialState = { data: null, other: null };
+const initialState = { data: null, other: null, search: null };
 
 export default function newReducer(state = initialState, action) {
   switch (action.type) {

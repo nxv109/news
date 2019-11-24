@@ -33,8 +33,6 @@ export default function Dashboard() {
 
   const convertToArray = Object.entries(countView);
 
-  console.log(convertToArray);
-
   let arr = [];
   news.map(v => {
     convertToArray.forEach(([key, value]) => {
@@ -46,11 +44,23 @@ export default function Dashboard() {
     return arr;
   });
 
-  console.log("arr", arr);
+  // lấy tổng views theo thời gian
+  const arr1 = arr.reduce((prev, next) => {
+    prev[next.date] = prev[next.date] + 1 > 1 ? prev[next.date] + next.views : next.views;
 
+    return prev;
+  }, {});
+
+  let rs1 = [];
+
+  for (let key in arr1) {
+    rs1.push({date: key, views: arr1[key]});
+  }
+
+  console.log('rs1', rs1);
 
   // set views theo thoi diem
-  arr.map(v => {
+  rs1.map(v => {
     const time = moment(v.date).utc().format("H");
 
     if (labels.includes(time)) {

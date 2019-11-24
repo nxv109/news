@@ -62,6 +62,8 @@
 
   &__image {
     flex: 20%;
+    max-height: 5rem;
+    overflow: hidden;
     @extend %mr-1;
 
     &>img {
@@ -96,12 +98,16 @@
   &__image {
     flex: 50%;
     @extend %mr-1;
-    max-height: 8rem;
+    max-height: 4rem;
     overflow: hidden;
 
     &>img {
       width: 100%;
     }
+  }
+
+  &__title{
+    font-size: $text-size-sm;
   }
 
   &__info {
@@ -115,6 +121,7 @@
 
 // channel new
 .channel {
+  position: relative;
   @include disFlex(row nowrap, flex-start, center);
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
   cursor: pointer;
@@ -124,10 +131,30 @@
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   }
 
+  &:hover &__descriptions {
+    opacity: 1;
+    display: block;
+  }
+
+  &__descriptions {
+    position: absolute;
+    bottom: -2rem;
+    left: 50%;
+    display: none;
+    background: $color-white;
+    transform: translateX(-50%);
+    transition: .3s;
+    opacity: 0;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    z-index: 10000;
+  }
+
   &__image {
     flex: 20%;
     @extend %mr-1;
     overflow: hidden;
+    max-height: 2.5rem;
+
 
     &>img {
       width: 100%;

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 import Loading from "../../Loading";
 
@@ -66,7 +67,7 @@ export default function NewsOther(props) {
                         </div>
                         <div className="featured-new__info">
                           <h3 className="featured-new__title">{item.title}</h3>
-                          <p className="featured-new__createby text-secondary">Creator: {item.createdBy.username} | Time: {item.dateCreate} | <i className="mdi mdi-eye" /> {item.view}</p>
+                          <p className="featured-new__createby text-secondary"><i className="mdi mdi-monitor" /> {item.createdBy.username} - <i className="mdi mdi-av-timer" /> {moment(item.dateCreate).format("DD-MM-YYYY")} - <i className="mdi mdi-eye" /> {item.view}</p>
                         </div>
                       </Link>
                     )

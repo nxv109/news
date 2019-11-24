@@ -35,8 +35,6 @@ router.get("/q", async function(req, res, next) {
   }
 });
 
-
-
 // get latestnews
 router.get("/latestNews", async function(req, res, next) {
   try {
@@ -82,7 +80,7 @@ router.get("/other", async function(req, res, next) {
 // news ( status = "published" )
 router.get("/published", async function(req, res, next) {
   try {
-    const News = await NewsModel.find({ status: 'published', view: { $gt: 9 } }).limit(4).sort({ view: -1 })
+    const News = await NewsModel.find({ status: 'published', view: { $gt: 9 } }).limit(3).sort({ view: -1 })
       .populate("createdBy");
 
     return res.json({

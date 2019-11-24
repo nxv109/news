@@ -24,21 +24,31 @@ export default function FeaturedChannel() {
         <h3 className="mb-3">Kênh uy tín</h3>
         {users
           ? users.map((user, index) => (
-              <Link
+              <div
                 to={`/channel/${user._id}`}
                 key={index}
                 className="channel p-1 bg-white rounded text-decoration-none text-dark"
               >
-                <div className="channel__image">
+                <div className="channel__descriptions rounded p-2 border border-danger">
+                  asasddfjshdfk
+                  <a href="#">aaa</a>
+                  <div>
+                    <Link to={`/channel/${user._id}`}>Xem kênh</Link>
+                  </div>
+                </div>
+                <div className="channel__image rounded-sm">
                   <img
                     src={`/uploads/users/${user.image}`}
                     alt={user.username}
                   />
                 </div>
                 <div className="channel__info">
-                  <h4 className="channel__title">{user.username}</h4>
+                  <h5 className="channel__title m-0">{user.username.toUpperCase()}</h5>
+                  <p className="channel__follow text-secondary m-0">
+                    Followers: {user.follow}
+                  </p>
                 </div>
-              </Link>
+              </div>
             ))
           : (<Loading />)}
       </div>

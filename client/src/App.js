@@ -16,7 +16,9 @@ import "./App.css";
 const Home = React.lazy(() => import("./components/pages/home/Index"));
 const Login = React.lazy(() => import("./components/pages/account/Login"));
 const Profile = React.lazy(() => import("./components/pages/account/Profile"));
-const Register = React.lazy(() => import("./components/pages/account/Register"));
+const Register = React.lazy(() =>
+  import("./components/pages/account/Register")
+);
 const Contact = React.lazy(() => import("./components/pages/Contact"));
 const NotFound = React.lazy(() => import("./components/pages/404NotFound"));
 
@@ -39,13 +41,18 @@ function App() {
         <Navbar />
         <React.Suspense
           fallback={
-            <div className="box-loader"><div className="loader"></div></div>
+            <div className="box-loader">
+              <div className="loader"></div>
+            </div>
           }
         >
           <Switch>
             <Route path="/" component={Home} exact />
             <Route path="/contact" component={Contact} />
-            <Route path="/admin" component={() => WithAuth(Journalist, Editor, Sensor, Admin)} />
+            <Route
+              path="/admin"
+              component={() => WithAuth(Journalist, Editor, Sensor, Admin)}
+            />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
             <Route path="/profile" component={Profile} />

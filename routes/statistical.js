@@ -24,8 +24,8 @@ const endDay = new Date(
   .toDate()
 );
 
-// len lich cap nhap tong views ngay
-cron.schedule("0 30 9 * * *", async function(req, res) {
+// len lich thong ke views ngay
+cron.schedule("0 0 23 * * *", async function(req, res) {
   console.log("running...");
 
   try {
