@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const FollowerModel = require("../models/Follow");
+const UserModel = require("../models/User");
 
 router.get("/", async (req, res) => {
   try {
@@ -21,6 +22,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// follow
 router.post("/", async (req, res) => {
   try {
     const body = req.body;
@@ -34,8 +36,7 @@ router.post("/", async (req, res) => {
     if (saveFollower) {
       res.json({
         code: 200,
-        message: "Following",
-        data: saveFollower
+        message: "Following"
       });
     }
   } catch (e) {
@@ -46,29 +47,87 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.delete("/", async (req, res) => {
+router.put("/increase/:id", async (req, res) => {
   try {
-    const body = req.body;
-    const checkFollwer = await FollowerModel.findOne({ channel: body.channel, followBy: body.user });
+    const _id = req.params.id;
+    const userExist = await UserModel.findOne({ _id: _id });
 
-    if (checkFollwer) {
+    if (userExist) {
+      const body = req.body;
 
-      const removeFollower = await FollowerModel.findOneAndDelete({ channel: body.channel, followBy: body.user });
+      const updateFollow =  await UserModel.findOneAndUpdate({ _id: _id }, { follow: body.follow });
       const followers = await FollowerModel.find({});
 
-      if (saveFollower) {
-        res.json({
+      if (updateFollow) {
+        return res.json({
           code: 200,
-          message: "Huy Following thanh cong",
+          message: "Theo dõi thành công",
           data: followers
         });
       }
     }
+  } catch (err) {
+    console.log(err);
+    return res.json({
+      code: 400,
+      message: "Theo dõi thất bại",
+      err: err,
+      data: null
+    });
+  }
+});
 
+// unfollow
+router.delete("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const checkFollwer = await FollowerModel.findOne({ _id: id });
+
+    if (checkFollwer) {
+
+      const removeFollower = await FollowerModel.findOneAndDelete({ _id: id });
+      // const followers = await FollowerModel.find({});
+
+      if (removeFollower) {
+        res.json({
+          code: 200,
+          message: "Huy Following thanh cong"
+        });
+      }
+    }
   } catch (e) {
     res.json({
       code: 400,
       message: e
+    });
+  }
+});
+
+router.put("/decrease/:id", async (req, res) => {
+  try {
+    const _id = req.params.id;
+    const userExist = await UserModel.findOne({ _id: _id });
+
+    if (userExist) {
+      const body = req.body;
+
+      const updateFollow =  await UserModel.findOneAndUpdate({ _id: _id }, { follow: body.follow });
+      // const users = await userModel.find({ role: "journalist" });
+
+      if (updateFollow) {
+        return res.json({
+          code: 200,
+          message: "Bỏ theo dõi thành công",
+        });
+      }
+    }
+  } catch (err) {
+    console.log(err);
+    return res.json({
+      code: 400,
+      message: "Bỏ theo dõi thất bại",
+      err: err,
+      data: null
     });
   }
 });

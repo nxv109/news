@@ -5,9 +5,20 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getUsers } from "../../../actions/user.action";
 import Loading from "../../Loading";
+import { setMessage } from "../../../actions/message.action";
+import { closeMessage } from "../closeMessage";
+import Message from "../Message";
+
+// check nguoi dung da follow kenh chua
+function checkUserIsFollowing(userExist, data) {
+  if (userExist && data) {
+    const checkFollowing = data.find(v => v.followBy === userExist);
+
+    return checkFollowing;
+  }
+}
 
 export default function FeaturedChannel() {
-  const [follow, setFollow] = React.useState([]);
   const [following, setFollowing] = React.useState({});
   const appState = useSelector(state => state);
   const dispatch = useDispatch();
@@ -21,22 +32,75 @@ export default function FeaturedChannel() {
       const res = await axios.get("/followers");
       const { data } = res.data;
 
-      setFollow(data);
+      // console.log("following", data);
 
       // check nguoi dung da follow kenh chua
-      if (userExist && data) {
-        const checkUserIsFollowing = data.find(v => v.followBy === userExist);
-
-        console.log(checkUserIsFollowing);
-        if (checkUserIsFollowing) {
-          setFollowing(checkUserIsFollowing);
-        }
-      }
+      setFollowing(checkUserIsFollowing(userExist, data));
+      // setFollowing(data);
     };
 
     fetchFollows();
-
   }, [dispatch, userExist]);
+
+  // UnFollow
+  const hanldeUnFollow = (follow, userId, userFollowingId) => {
+    console.log("unFollow", follow - 1);
+
+    let decreaseFollow = follow - 1;
+    const decrease = async () => {
+      const res = await axios.put(`/followers/decrease/${userId}`, {
+        follow: decreaseFollow
+      });
+      const { code, message } = res.data;
+
+      setFollowing({});
+      dispatch(setMessage({ code, message }));
+      dispatch(closeMessage({ code, message }));
+      dispatch(getUsers());
+    };
+
+    const unFollow = async () => {
+      const res = await axios.delete(`/followers/${userFollowingId}`);
+
+      dispatch(getUsers());
+    };
+
+    decrease();
+    unFollow();
+  };
+
+  // Follow
+  const hanldeFollow = (follow, userId) => {
+    console.log("Follow", follow + 1);
+
+    let increaseFollow = follow + 1;
+    const increase = async () => {
+      const res = await axios.put(`/followers/increase/${userId}`, {
+        follow: increaseFollow
+      });
+      const { code, message, data } = res.data;
+
+      // check nguoi dung da follow kenh chua
+      setFollowing(checkUserIsFollowing(userExist, data));
+      // setFollowing(data);
+
+      dispatch(setMessage({ code, message }));
+      dispatch(closeMessage({ code, message }));
+      dispatch(getUsers());
+    };
+
+    const followChannel = async () => {
+      const res = await axios.post("/followers/", {
+        channel: userId,
+        user: userExist
+      });
+
+      dispatch(getUsers());
+    };
+
+    increase();
+    followChannel();
+  };
 
   const users = React.useMemo(() => {
     return appState.users.users;
@@ -45,6 +109,7 @@ export default function FeaturedChannel() {
   return (
     <React.Fragment>
       <div>
+        <Message />
         <h3 className="mb-3">Kênh uy tín</h3>
         {users ? (
           users.map((user, index) => (
@@ -55,14 +120,14 @@ export default function FeaturedChannel() {
             >
               <div className="channel__descriptions rounded p-2 border border-danger">
                 <div>
-                  {userExist ?
-                    following ?
-                      following.followBy === userExist && following.channel === user._id
-                      ? (<button type="button" className="btn btn-success p-1 mb-2">Following</button>)
-                      : (<button type="button" className="btn btn-outline-success p-1 mb-2">Follow</button>)
-                    : null
-                    : (
-                    <Link to="/login" className="font-weight-light mb-2">Login to follow</Link>
+                  {userExist ? (
+                    following.followBy === userExist && following.channel === user._id
+                    ? (<button onClick={() => hanldeUnFollow(user.follow, user._id, following._id)} type="button" className="btn btn-success p-1 mb-2">Following</button>)
+                    : (<button onClick={() => hanldeFollow(user.follow, user._id)} type="button" className="btn btn-outline-success p-1 mb-2">Follow</button>)
+                  ) : (
+                    <Link to="/login" className="font-weight-light mb-2">
+                      Follow
+                    </Link>
                   )}
                 </div>
                 <div>

@@ -5,20 +5,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { getSearchNews } from "../../actions/new.action";
 
 export default function Search() {
-  const [loading, setLoading] = React.useState(false);
+  // const [loading, setLoading] = React.useState(false);
   const textSearch = React.useRef("");
   const appState = useSelector(state => state);
   const dispatch = useDispatch();
 
   const hanldeChangeSearch = () => {
     if (textSearch.current.value.length >= 2) {
-      setLoading(true);
+      // setLoading(true);
 
       const text = textSearch.current.value;
 
       dispatch(getSearchNews(text.trim()));
     } else {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
