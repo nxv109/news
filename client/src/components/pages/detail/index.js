@@ -28,10 +28,10 @@ export default function Detail({ match, location }) {
         <div className="row">
           <NewsDetail datas={datas} />
           <div className="col-lg-4">
-            <FeaturedChannel />
-            <div className="mt-4">
+            <div className="mb-4">
               <LatestNew />
             </div>
+            <FeaturedChannel />
           </div>
         </div>
         <div className="row">

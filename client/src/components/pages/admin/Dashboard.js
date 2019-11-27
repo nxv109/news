@@ -20,8 +20,6 @@ export default function Dashboard() {
     }
   }, []);
 
-  console.log('news', news);
-
   const labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "0"];
   let rs = ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"];
 
@@ -56,8 +54,6 @@ export default function Dashboard() {
   for (let key in arr1) {
     rs1.push({date: key, views: arr1[key]});
   }
-
-  console.log('rs1', rs1);
 
   // set views theo thoi diem
   rs1.map(v => {

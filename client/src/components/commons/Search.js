@@ -39,16 +39,16 @@ export default function Search() {
               <Link
                 to={`/${item._id}`}
                 key={index}
-                className="latest-new p-1 bg-white rounded text-decoration-none text-dark"
+                className="search-new p-1 bg-white rounded text-decoration-none text-dark"
               >
-                <div className="latest-new__image">
+                <div className="search-new__image">
                   <img
                     src={`/uploads/news/${item.articlePicture}`}
                     alt={item.title}
                   />
                 </div>
-                <div className="latest-new__info">
-                  <h6 className="latest-new__title search__title">
+                <div className="search-new__info">
+                  <h6 className="search-new__title search__title">
                     {item.title}
                   </h6>
                 </div>

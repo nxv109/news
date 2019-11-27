@@ -61,8 +61,8 @@
   }
 
   &__image {
-    flex: 20%;
-    max-height: 5rem;
+    flex: 25%;
+    max-height: 8rem;
     overflow: hidden;
     @extend %mr-1;
 
@@ -96,9 +96,9 @@
   }
 
   &__image {
-    flex: 50%;
+    flex: 56.4%;
     @extend %mr-1;
-    max-height: 4rem;
+    max-height: 5rem;
     overflow: hidden;
 
     &>img {
@@ -163,9 +163,63 @@
 
   &__info {
     flex: 80%;
+    text-align: center;
   }
 
   &:not(:last-child){
     @extend %mb-1;
+  }
+}
+
+// search
+.search-new {
+  @include disFlex(row nowrap, flex-start, center);
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  cursor: pointer;
+  transition: .3s;
+
+  &:hover{
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+
+  &__image {
+    flex: 10%;
+    max-height: 3rem;
+    @extend %mr-1;
+    overflow: hidden;
+
+    &>img {
+      width: 100%;
+    }
+  }
+
+  &__title{
+    font-size: $text-size-sm;
+  }
+
+  &__info {
+    flex: 80%;
+  }
+
+  &:not(:last-child){
+    @extend %mb-1;
+  }
+}
+
+// selected-news
+.selected-news{
+  width: 100%;
+  max-height: 7rem;
+  overflow: hidden;
+}
+
+// Hover
+
+.hover-sm{
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  transition: .3s;
+
+  &:hover{
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   }
 }

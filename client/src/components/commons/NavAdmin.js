@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { addUser } from "../../actions/user.action";
 
-export default function NavAdmin() {
+export default function NavAdmin(props) {
   const appState = useSelector(state => state);
   const dispatch = useDispatch();
 
@@ -57,6 +57,7 @@ export default function NavAdmin() {
                 {appState.users.data ? (
                   <div className="account__avatar">
                     <img
+                      style={props.style}
                       src={`/uploads/users/${appState.users.data.image ||
                         "avatar-default.jpg"}`}
                       alt="avatar"

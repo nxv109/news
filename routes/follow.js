@@ -82,6 +82,7 @@ router.delete("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const checkFollwer = await FollowerModel.findOne({ _id: id });
+    console.log(id);
 
     if (checkFollwer) {
 
@@ -112,12 +113,13 @@ router.put("/decrease/:id", async (req, res) => {
       const body = req.body;
 
       const updateFollow =  await UserModel.findOneAndUpdate({ _id: _id }, { follow: body.follow });
-      // const users = await userModel.find({ role: "journalist" });
+      const followers = await FollowerModel.find({});
 
       if (updateFollow) {
         return res.json({
           code: 200,
           message: "Bỏ theo dõi thành công",
+          data: followers
         });
       }
     }

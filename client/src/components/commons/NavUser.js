@@ -7,7 +7,7 @@ import { getCategories } from "../../actions/category.action";
 
 import Search from "./Search";
 
-export default function NavUser() {
+export default function NavUser(props) {
   const appState = useSelector(state => state);
   const dispatch = useDispatch();
 
@@ -73,6 +73,7 @@ export default function NavUser() {
                 {appState.users.data ? (
                   <div className="account__avatar">
                     <img
+                      style={props.style}
                       src={`/uploads/users/${appState.users.data.image ||
                         "avatar-default.jpg"}`}
                       alt="avatar"

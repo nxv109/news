@@ -13,11 +13,54 @@ const authEditor = require("../middleware/checkEditor");
 const app = express();
 app.use(fileUpload());
 
+// get news entertainment
+router.get("/newsEntertainments", async function(req, res, next) {
+  try {
+    const newsId = req.query.newsId;
+    const News = await NewsModel.find({ status: 'published', cateNews: newsId }).limit(6).sort({ view: -1, dateCreate: -1 })
+      .populate("createdBy");
+
+    return res.json({
+      code: 200,
+      err: null,
+      data: News
+    });
+  } catch (err) {
+    return res.json({
+      code: 400,
+      err: err.messege,
+      data: null
+    });
+  }
+});
+
+// get news Reel
+router.get("/newsReels", async function(req, res, next) {
+  try {
+    const newsId = req.query.newsId;
+    console.log("newsId", newsId);
+    const News = await NewsModel.find({ status: 'published', cateNews: newsId }).limit(6).sort({ view: -1, dateCreate: -1 })
+      .populate("createdBy");
+
+    return res.json({
+      code: 200,
+      err: null,
+      data: News
+    });
+  } catch (err) {
+    return res.json({
+      code: 400,
+      err: err.messege,
+      data: null
+    });
+  }
+});
+
 // search
 router.get("/q", async function(req, res, next) {
   try {
     const textSearch = req.query.textSearch;
-    const News = await NewsModel.find({ title: { $regex: textSearch, $options: "i" }, isDelete: false, status: "published" }).limit(10).sort({ view: -1 });
+    const News = await NewsModel.find({ title: { $regex: textSearch, $options: "i" }, isDelete: false, status: "published" }).limit(10).sort({ view: -1, dateCreate: -1 });
 
     if (News) {
       return res.json({
@@ -38,7 +81,7 @@ router.get("/q", async function(req, res, next) {
 // get latestnews
 router.get("/latestNews", async function(req, res, next) {
   try {
-    const News = await NewsModel.find({ status: 'published' }).limit(8).sort({ dateCreate: -1 })
+    const News = await NewsModel.find({ status: 'published' }).limit(7).sort({ dateCreate: -1 })
       .populate("createdBy");
 
     return res.json({

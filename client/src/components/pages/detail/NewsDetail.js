@@ -53,14 +53,15 @@ export default function NewsDetail(props) {
             </p>
           ) : null}
           {datas.articlePicture ? (
-            <div className="featured-new__image border border-secondary my-4">
+            <div className="border border-secondary my-4" style={{ overflow: "hidden" }}>
               <img
                 src={`/uploads/news/${datas.articlePicture}`}
                 alt={datas.title}
+                width="100%"
               />
             </div>
           ) : (<Loading />)}
-          <div dangerouslySetInnerHTML={{ __html: datas.content }}></div>
+          <div className="text-justify" dangerouslySetInnerHTML={{ __html: datas.content }}></div>
         </div>
       ) : null}
     </React.Fragment>

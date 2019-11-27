@@ -5,6 +5,10 @@ import { addUser } from "../../actions/user.action";
 import NavAdmin from "./NavAdmin";
 import NavUser from "./NavUser";
 
+const style = {
+  transform: "translate(0px, -1px) scale(1.1)"
+};
+
 export default function Navbar() {
   const appState = useSelector(state => state);
   const dispatch = useDispatch();
@@ -26,8 +30,8 @@ export default function Navbar() {
   return (
     <React.Fragment>
       {appState.users.data ? (
-        appState.users.data.role === "customer" ? (<NavUser />) : (<NavAdmin />)
-      ) : (<NavUser />)}
+        appState.users.data.role === "customer" ? (<NavUser style={style} />) : (<NavAdmin style={style} />)
+      ) : (<NavUser style={style} />)}
     </React.Fragment>
   );
 }

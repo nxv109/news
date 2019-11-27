@@ -4,6 +4,12 @@ import LatestNew from "./LatestNew";
 import FeaturedNew from "./FeaturedNew";
 import FeaturedChannel from "./FeaturedChannel";
 import NewsOther from "./NewsOther";
+import AdditionalNew from "./AdditionalNew";
+
+const style = {
+  background: "#3e4a5b",
+  color: "#fff"
+}
 
 export default function Home() {
   return (
@@ -19,6 +25,9 @@ export default function Home() {
         <div className="col-lg-3">
           <FeaturedChannel />
         </div>
+      </div>
+      <div style={style} className="row border border-secondary rounded mt-5 p-1">
+        <AdditionalNew />
       </div>
       <div className="row">
         <div className="col-lg-9 main-featured-new">

@@ -14,6 +14,8 @@ export default function NewsOther(props) {
       const newByTag = props.newByTag.filter(v => v._id !== props.newsHighlightId);
 
       setNewByTag(newByTag);
+    } else {
+      setNewByTag(props.newByTag);
     }
 
     // xủ lý tin tức có tags giống với tin tức nỗi bật

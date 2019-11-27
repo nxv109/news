@@ -23,7 +23,7 @@ router.get('/', async (req, res, next) => {
 
 /* GET channel. */
 router.get('/channels', async (req, res, next) => {
-  const users = await UserModel.find({ role: "journalist" });
+  const users = await UserModel.find({ role: "journalist" }).limit(4).sort({ follow: -1 });
 
   try {
     res.json({
@@ -114,6 +114,23 @@ router.delete("/:id", async function(req, res, next) {
       message: "Xóa thất bại",
       data: null
     });
+  }
+});
+
+// get user
+router.get('/name/:id', async (req, res, next) => {
+  const users = await UserModel.find({ _id: req.params.id });
+
+  try {
+    res.json({
+      code: 200,
+      data: users
+    })
+  } catch (error) {
+    res.json({
+      code: 500,
+      error: TypeError,
+    })
   }
 });
 
