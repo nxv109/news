@@ -1,0 +1,77 @@
+[class*="box-"] {
+    height: 6px;
+    width: 400px;
+    background: #f6f7f9;
+    margin-bottom: 13px;
+    margin-right: 5px;
+}
+@mixin box-shadow($box_shadow) {
+    box-shadow: $box_shadow;
+    -o-box-shadow: $box_shadow;
+    -moz-box-shadow: $box_shadow;
+    -webkit-box-shadow: $box_shadow;
+}
+@mixin border-radius($border_radius) {
+    border-radius: $border_radius;
+    -o-border-radius: $border_radius;
+    -moz-border-radius: $border_radius;
+    -webkit-border-radius: $border_radius;
+}
+.box {
+    &-loading {
+        background: #fff;
+        height: 350px;
+        width: 100%;
+        padding: 10px;
+        display: block;
+        margin: 0 auto;
+        @include box-shadow(0 0 0 rgba(0,0,0,0.1));
+        @include border-radius(3px);
+    }
+    &-thumbnail {
+        height: 40px;
+        width: 40px;
+        float: left;
+        margin-right: 20px;
+        display: inline-block;
+    }
+}
+.box-line {
+    &-sm {
+        width: calc(100% - 100px);
+        margin-top: 10px;
+        margin-left: 50px;
+    }
+    &-xs {
+        width: calc(100% - 150px);
+        margin-left: 50px;
+    }
+    &-df {
+        margin-top: 30px;
+        width: calc(100% - 50px);
+    }
+    &-lg {
+        width: calc(100% - 70px);
+    }
+    &-lgx {
+        width: 100%;
+    }
+}
+
+[class*="box-line"],
+.box-thumbnail {
+    animation: timeline;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    background-size: 800px auto;
+    background-position: 100px 0;
+}
+@keyframes timeline {
+  0% {
+    background-position: -350px 0;
+}
+  100% {
+    background-position: 400px 0; }
+}

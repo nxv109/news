@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
-import Loading from "../../Loading";
+import BoxLoadingItem from "../../BoxLoadingItem";
 
 export default function NewsOther(props) {
   const [tags, setTags] = React.useState([]);
@@ -52,8 +52,8 @@ export default function NewsOther(props) {
         tags
         ? (
           tags.map((tag, index) => (
-            <div className="mt-5" key={index}>
-              <h3 className="mb-3">{tag}</h3>
+            <div className="" key={index}>
+              <h3 className="mb-3 mt-3">{tag}</h3>
               {
                 newByTag
                 ? (
@@ -76,7 +76,7 @@ export default function NewsOther(props) {
                     : null
                   ))
                 )
-                : (<Loading />)
+                : (<BoxLoadingItem />)
               }
             </div>
           ))

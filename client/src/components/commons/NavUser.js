@@ -60,80 +60,80 @@ export default function NavUser(props) {
                 CONTACT
               </Link>
             </li>
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle account text-danger"
-                href="#0"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
+          </ul>
+          <ul className="navbar-nav mr-auto" style={{ alignItems: "center" }}>
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle account text-danger"
+                  href="#0"
+                  id="navbarDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  {appState.users.data ? (
+                    <div className="account__avatar">
+                      <img
+                        style={props.style}
+                        src={`/uploads/users/${appState.users.data.image ||
+                          "avatar-default.jpg"}`}
+                        alt="avatar"
+                      />
+                    </div>
+                  ) : (
+                    "ACCOUNT"
+                  )}
+                </a>
                 {appState.users.data ? (
-                  <div className="account__avatar">
-                    <img
-                      style={props.style}
-                      src={`/uploads/users/${appState.users.data.image ||
-                        "avatar-default.jpg"}`}
-                      alt="avatar"
-                    />
+                  <div
+                    className="dropdown-menu shadow"
+                    aria-labelledby="navbarDropdown"
+                  >
+                    <Link className="dropdown-item" to="/profile">
+                      <i className="far fa-address-card mr-4"></i>
+                      <span>Profile</span>
+                    </Link>
+                    <div className="dropdown-divider" />
+                    <Link
+                      to="/login"
+                      className="dropdown-item"
+                      onClick={hanldLogout}
+                    >
+                      <i className="fas fa-sign-out-alt mr-4"></i>
+                      <span>Logout</span>
+                    </Link>
                   </div>
                 ) : (
-                  "ACCOUNT"
-                )}
-              </a>
-              {appState.users.data ? (
-                <div
-                  className="dropdown-menu shadow"
-                  aria-labelledby="navbarDropdown"
-                >
-                  <Link className="dropdown-item" to="/profile">
-                    <i className="far fa-address-card mr-4"></i>
-                    <span>Profile</span>
-                  </Link>
-                  <div className="dropdown-divider" />
-                  <Link
-                    to="/login"
-                    className="dropdown-item"
-                    onClick={hanldLogout}
+                  <div
+                    className="dropdown-menu shadow"
+                    aria-labelledby="navbarDropdown"
                   >
-                    <i className="fas fa-sign-out-alt mr-4"></i>
-                    <span>Logout</span>
-                  </Link>
+                    <Link className="dropdown-item" to="/login">
+                      <i className="fas fa-sign-in-alt mr-4"></i>
+                      <span>Login</span>
+                    </Link>
+                    <Link className="dropdown-item" to="/register">
+                      <i className="far fa-registered mr-4"></i>
+                      <span>Register</span>
+                    </Link>
+                  </div>
+                )}
+              </li>
+              <li className="nav-item dropdown">
+                <button type="button" className="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal">
+                  <i className="mdi mdi-magnify" />
+                </button>
+                {/* Modal */}
+                <div className="modal fade" id="exampleModal" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                      <Search />
+                    </div>
+                  </div>
                 </div>
-              ) : (
-                <div
-                  className="dropdown-menu shadow"
-                  aria-labelledby="navbarDropdown"
-                >
-                  <Link className="dropdown-item" to="/login">
-                    <i className="fas fa-sign-in-alt mr-4"></i>
-                    <span>Login</span>
-                  </Link>
-                  <Link className="dropdown-item" to="/register">
-                    <i className="far fa-registered mr-4"></i>
-                    <span>Register</span>
-                  </Link>
-                </div>
-              )}
-            </li>
-          </ul>
-
-          <div>
-            <button type="button" className="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal">
-              <i className="mdi mdi-magnify" />
-            </button>
-            {/* Modal */}
-            <div className="modal fade" id="exampleModal" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div className="modal-dialog" role="document">
-                <div className="modal-content">
-                  <Search />
-                </div>
-              </div>
-            </div>
-          </div>
-
+              </li>
+            </ul>
         </div>
       </div>
     </nav>

@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { addUser } from "../../actions/user.action";
 
+import CheckAdmin from "./CheckAdmin";
+
 export default function NavAdmin(props) {
   const appState = useSelector(state => state);
   const dispatch = useDispatch();
@@ -39,11 +41,11 @@ export default function NavAdmin(props) {
                 HOME <span className="sr-only">(current)</span>
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/contact">
-                CONTACT
-              </Link>
-            </li>
+
+            <CheckAdmin role={props.role} />
+          </ul>
+          <div>
+            <ul className="navbar-nav mr-auto">
             <li className="nav-item dropdown">
               <a
                 className="nav-link dropdown-toggle account"
@@ -106,7 +108,8 @@ export default function NavAdmin(props) {
                 </div>
               )}
             </li>
-          </ul>
+            </ul>
+          </div>
         </div>
       </div>
     </nav>

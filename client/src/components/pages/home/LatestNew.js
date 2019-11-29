@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getLatestNews } from "../../../actions/new.action";
-import Loading from "../../Loading";
+import BoxLoadingItem from "../../BoxLoadingItem";
 
 export default function LatestNew() {
   const appState = useSelector(state => state);
@@ -38,7 +38,7 @@ export default function LatestNew() {
             </Link>
           ))
         )
-        : (<Loading />)
+        : (<BoxLoadingItem />)
       }
     </div>
   );

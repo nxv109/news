@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 import axios from "axios";
 
-import Loading from "../../Loading";
+import BoxLoadingItem from "../../BoxLoadingItem";
 
 export default function NewsSimilar(props) {
   const [ datas, setDatas ] = React.useState([]);
@@ -21,7 +21,7 @@ export default function NewsSimilar(props) {
 
   return(
     <div className="col-lg-8 p-0">
-      <h3 className="mb-3 mt-5">Tin tức tương tự</h3>
+      <h3 className="mb-3 mt-3">Tin tức tương tự</h3>
       {datas
         ? datas.map((data, index) => (
             <Link to={`/${data._id}`} key={index} className="featured-new p-3 bg-white rounded text-decoration-none">
@@ -37,7 +37,7 @@ export default function NewsSimilar(props) {
               </div>
             </Link>
           ))
-        : (<Loading />)}
+        : (<BoxLoadingItem />)}
     </div>
   )
 }

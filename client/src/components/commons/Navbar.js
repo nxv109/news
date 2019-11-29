@@ -30,7 +30,7 @@ export default function Navbar() {
   return (
     <React.Fragment>
       {appState.users.data ? (
-        appState.users.data.role === "customer" ? (<NavUser style={style} />) : (<NavAdmin style={style} />)
+        appState.users.data.role === "customer" ? (<NavUser style={style} />) : (<NavAdmin role={appState.users.data.role} style={style} />)
       ) : (<NavUser style={style} />)}
     </React.Fragment>
   );

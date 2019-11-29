@@ -4,7 +4,7 @@ import moment from "moment";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getNewsOther } from "../../../actions/new.action";
-import Loading from "../../Loading";
+import BoxLoadingItem from "../../BoxLoadingItem";
 
 export default function NewsOther() {
   const [loading, setLoading] = React.useState(false);
@@ -66,7 +66,7 @@ export default function NewsOther() {
                 </div>
               </Link>
             ))
-          : (<Loading />)}
+          : (<BoxLoadingItem />)}
         <div className="text-center">
           <button className="btn btn-light text-dark" onClick={hanldeLoadMore}>Xem thêm { loading ? <i className="mdi mdi-loading mdi-spin" /> : null }</button>
         </div>

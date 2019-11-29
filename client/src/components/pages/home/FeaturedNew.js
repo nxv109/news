@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getNews } from "../../../actions/new.action";
 import moment from "moment";
-import Loading from "../../Loading";
+import BoxLoadingItem from "../../BoxLoadingItem";
 
 
 export default function FeaturedNew() {
@@ -36,7 +36,7 @@ export default function FeaturedNew() {
               </div>
             </Link>
           ))
-        : (<Loading />)}
+        : (<BoxLoadingItem />)}
     </React.Fragment>
   );
 }

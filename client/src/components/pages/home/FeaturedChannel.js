@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getUsers } from "../../../actions/user.action";
-import Loading from "../../Loading";
+import BoxLoadingItem from "../../BoxLoadingItem";
 
 export default function FeaturedChannel() {
   const appState = useSelector(state => state);
@@ -43,7 +43,7 @@ export default function FeaturedChannel() {
             </Link>
           ))
         ) : (
-          <Loading />
+          <BoxLoadingItem />
         )}
       </div>
 

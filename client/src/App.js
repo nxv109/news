@@ -41,7 +41,7 @@ function App() {
         <Navbar />
         <React.Suspense
           fallback={
-            <div className="box-loader">
+            <div className="main-loader">
               <div className="loader"></div>
             </div>
           }

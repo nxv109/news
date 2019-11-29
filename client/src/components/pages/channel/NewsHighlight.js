@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import Loading from "../../Loading";
+import BoxLoadingItem from "../../BoxLoadingItem";
 
 export default function NewsHighlight(props) {
   const [highlightNew, setHighlightNew] = React.useState({});
@@ -25,7 +25,7 @@ export default function NewsHighlight(props) {
               />
             </div>
           ) : (
-            (<Loading />)
+            (<BoxLoadingItem />)
           )}
           <div className="featured-new__info">
             <h4 className="featured-new__title">
