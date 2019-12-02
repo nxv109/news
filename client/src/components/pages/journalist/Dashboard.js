@@ -1,6 +1,21 @@
 import React from "react";
+import moment from "moment";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+import ViewsTotal from "./statisticals/ViewsTotal";
+import Follow from "./statisticals/Follow";
 
 export default function Dashboard() {
+  const [month, setMonth] = React.useState("");
+  const [startDate, setStartDate] = React.useState(new Date());
+
+  const handleChangeMonth = (date) => {
+    const month = moment(date).utc().format("YYYY-MM-DD");
+    setMonth(month);
+    setStartDate(date)
+  };
+
   return (
     <div className="content-wrapper">
       <div className="page-header">
@@ -21,7 +36,23 @@ export default function Dashboard() {
         </nav>
       </div>
       <div className="row">
-        <div className="col-xl-12 grid-margin stretch-card">Dashboard</div>
+        <div style={{ alignItems: "center" }} className="col-xl-12 grid-margin stretch-card font-weight-bold">Lượt xem theo tháng: 
+          <DatePicker
+            selected={startDate}
+            onChange={date => handleChangeMonth(date)}
+            dateFormat="yyyy/MM"
+            showMonthYearPicker
+            className="border border-white rounded-pill ml-1 p-1"
+          />
+        </div>
+        <div className="col-xl-12 grid-margin stretch-card">
+          <ViewsTotal month={month} />
+        </div>
+      </div>
+      <div className="row">
+        <div style={{ alignItems: "center" }} className="col-xl-12 grid-margin stretch-card font-weight-bold">Lượt follows: 
+          <Follow />
+        </div>
       </div>
     </div>
   );

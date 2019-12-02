@@ -2,14 +2,21 @@ import React from "react";
 import axios from "axios";
 import moment from "moment";
 import { Line } from "react-chartjs-2";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+import ViewsTotal from "./statisticals/ViewsTotal";
+import Follow from "./statisticals/Follow";
 
 export default function Dashboard() {
   const [news, setNews] = React.useState([]);
+  const [month, setMonth] = React.useState("");
+  const [startDate, setStartDate] = React.useState(new Date());
 
   React.useEffect(() => {
     try {
       const fetchData = async () => {
-        const res = await axios.get("/statisticals/news");
+        const res = await axios.get("/statisticals/viewsOfDay");
 
         setNews(res.data.data);
       };
@@ -49,11 +56,15 @@ export default function Dashboard() {
     return prev;
   }, {});
 
+  // console.log("arr1", arr1);
+
   let rs1 = [];
 
   for (let key in arr1) {
     rs1.push({date: key, views: arr1[key]});
   }
+
+  // console.log("rs1", rs1);
 
   // set views theo thoi diem
   rs1.map(v => {
@@ -77,6 +88,12 @@ export default function Dashboard() {
     ]
   }
 
+  const handleChangeMonth = (date) => {
+    const month = moment(date).utc().format("YYYY-MM-DD");
+    setMonth(month);
+    setStartDate(date)
+  };
+
   return (
     <div className="content-wrapper">
       <div className="page-header">
@@ -97,7 +114,7 @@ export default function Dashboard() {
         </nav>
       </div>
       <div className="row">
-        <p className="col-xl-12 grid-margin stretch-card font-weight-bold">Lượt views trong ngày:</p>
+        <div className="col-xl-12 grid-margin stretch-card font-weight-bold">Lượt xem trong ngày:</div>
         <div className="col-xl-12 grid-margin stretch-card">
           <Line
             data={data}
@@ -107,6 +124,26 @@ export default function Dashboard() {
               maintainAspectRatio: false
             }}
           />
+        </div>
+      </div>
+      <div className="row">
+        <div style={{ alignItems: "center" }} className="col-xl-12 grid-margin stretch-card font-weight-bold">Lượt xem theo tháng: 
+          <DatePicker
+            selected={startDate}
+            onChange={date => handleChangeMonth(date)}
+            dateFormat="yyyy/MM"
+            showMonthYearPicker
+            className="border border-white rounded-pill ml-1 p-1"
+          />
+        </div>
+        <div className="col-xl-12 grid-margin stretch-card">
+          <ViewsTotal month={month} />
+        </div>
+      </div>
+      <div className="row">
+        <div style={{ alignItems: "center" }} className="col-xl-12 grid-margin stretch-card font-weight-bold">Số users theo giỏi kênh:</div>
+        <div className="col-xl-12 grid-margin stretch-card">
+          <Follow />
         </div>
       </div>
     </div>

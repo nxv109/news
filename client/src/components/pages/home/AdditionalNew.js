@@ -4,6 +4,10 @@ import { Link } from "react-router-dom";
 
 import Loading from "../../Loading";
 
+const style = {
+  textDecoration: "underline"
+};
+
 export default function AdditionalNew() {
   const [ newsReel, setNewsReel ] = React.useState([]);
   const [ newsEntertainment, setNewsEntertainment ] = React.useState([]);
@@ -30,7 +34,7 @@ export default function AdditionalNew() {
   return (
     <React.Fragment>
       <div className="col-lg-6">
-        <h3 className="mb-3">Thời sự</h3>
+        <h3 className="mb-3" style={style}>Thời sự</h3>
         <div className="card-columns">
           {
             newsReel ?
@@ -52,7 +56,7 @@ export default function AdditionalNew() {
         </div>
       </div>
       <div className="col-lg-6">
-        <h3 className="mb-3">Giải trí</h3>
+        <h3 className="mb-3" style={style}>Giải trí</h3>
         <div className="card-columns">
           {
             newsEntertainment ?
