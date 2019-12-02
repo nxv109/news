@@ -9,7 +9,7 @@ import FeaturedChannel from "../home/FeaturedChannel.js";
 import LatestNew from "../home/LatestNew.js";
 
 export default function Detail({ match, location }) {
-  const [ datas, setDatas ] = React.useState([]);
+  const [ datas, setDatas ] = React.useState({});
   const id = match.params.id;
 
   React.useEffect(() => {

@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import ViewsTotal from "./statisticals/ViewsTotal";
 import Follow from "./statisticals/Follow";
+import BestNews from "./statisticals/BestNews";
 
 export default function Dashboard() {
   const [month, setMonth] = React.useState("");
@@ -50,8 +51,12 @@ export default function Dashboard() {
         </div>
       </div>
       <div className="row">
-        <div style={{ alignItems: "center" }} className="col-xl-12 grid-margin stretch-card font-weight-bold">Lượt follows: 
+        <div style={{ alignItems: "center" }} className="col-xl-6 grid-margin font-weight-bold">Lượt follows: 
           <Follow />
+        </div>
+        <div className="col-xl-6 grid-margin font-weight-bold"> 
+          <div>Top 5 bài viết nổi bật:</div>
+          <BestNews />
         </div>
       </div>
     </div>

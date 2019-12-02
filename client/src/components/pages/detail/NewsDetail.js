@@ -20,44 +20,46 @@ export default function NewsDetail(props) {
     const userId = sessionStorage.getItem("userId");
 
     React.useEffect(() => {
+      if(props.datas) {
         setDatas(props.datas);
 
         // increase views
-        if (props.datas) {
-            const id = props.datas._id;
+        const id = props.datas._id;
+        const createdBy = props.datas.createdBy;
+        
+        if(createdBy) {
+          const getIp = async () => {
+              const res = await axios.get("https://api.ipify.org/?format=json");
+              const ipExist = Cookies.get(`ip${id}`);
 
-            const getIp = async () => {
-                const res = await axios.get("https://api.ipify.org/?format=json");
-                const ipExist = Cookies.get(`ip${id}`);
+              if (ipExist) {
+                  return;
+              } else {
+                  Cookies.set(`ip${id}`, `${res.data.ip}-/${id}`, { expires: 1 });
 
-                if (ipExist) {
-                    return;
-                } else {
-                    Cookies.set(`ip${id}`, `${res.data.ip}-/${id}`, { expires: 1 });
+                  const resIncreaseViews = await axios.put(`/news/views/${id}`, {
+                      views: props.datas.view + 1
+                  });
 
-                    const resIncreaseViews = await axios.put(`/news/views/${id}`, {
-                        views: props.datas.view + 1
-                    });
+                  // thống kê lượt xem
+                  axios.post("/statisticals/news", { id: id, createdBy: createdBy._id });
 
-                    // thống kê lượt xem
-                    axios.post("/statisticals/news", { id: id });
+                  if (resIncreaseViews.data.data) {
+                      setDatas(resIncreaseViews.data.data[0]);
+                  }
+              }
+          };
 
-                    if (resIncreaseViews.data.data) {
-                        setDatas(resIncreaseViews.data.data[0]);
-                    }
-                }
-            };
+          const fetchComment = async () => {
+              const res = await axios.get(`/comments/${id}`);
 
-            const fetchComment = async () => {
-                const res = await axios.get(`/comments/${id}`);
+              setComments(res.data.data);
+          };
 
-                setComments(res.data.data);
-                console.log(res.data.data);
-            };
-
-            fetchComment()
-            getIp();
+          fetchComment()
+          getIp();
         }
+      }
     }, [props.datas]);
 
     const handleChange = (e) => {

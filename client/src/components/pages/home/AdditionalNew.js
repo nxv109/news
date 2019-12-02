@@ -41,12 +41,11 @@ export default function AdditionalNew() {
               (
                 newsReel.map((item, index) => (
                   <Link to={`/${item._id}`} key={index} className="card text-decoration-none hover-sm">
-                    <div className="selected-news"><img src={`/uploads/news/${item.articlePicture}`} className="card-img-top" alt={item.title} /></div>
-                    <div className="card-body p-1">
-                      <h5 className="card-title">{item.title}</h5>
-                      <p className="card-text">
-                        <small className="text-muted"><i className="mdi mdi-monitor" /> {item.createdBy.username}</small>
-                      </p>
+                    <div className="card bg-dark text-white">
+                      <div className="selected-news"><img src={`/uploads/news/${item.articlePicture}`} className="card-img-top" alt={item.title} /></div>
+                      <div className="card-img-overlay">
+                        <h6 className="card-title">{item.title}</h6>
+                      </div>
                     </div>
                   </Link>
                 ))
@@ -63,12 +62,11 @@ export default function AdditionalNew() {
               (
                 newsEntertainment.map((item, index) => (
                   <Link to={`/${item._id}`} key={index} className="card text-decoration-none hover-sm">
-                    <div className="selected-news"><img src={`/uploads/news/${item.articlePicture}`} className="card-img-top" alt={item.title} /></div>
-                    <div className="card-body p-1">
-                      <h5 className="card-title">{item.title}</h5>
-                      <p className="card-text">
-                        <small className="text-muted"><i className="mdi mdi-monitor" /> {item.createdBy.username}</small>
-                      </p>
+                    <div className="card bg-dark text-white">
+                      <div className="selected-news"><img src={`/uploads/news/${item.articlePicture}`} className="card-img-top" alt={item.title} /></div>
+                      <div className="card-img-overlay">
+                        <h6 className="card-title">{item.title}</h6>
+                      </div>
                     </div>
                   </Link>
                 ))

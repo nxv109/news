@@ -209,8 +209,27 @@
 // selected-news
 .selected-news{
   width: 100%;
-  max-height: 7rem;
+  max-height: 6rem;
   overflow: hidden;
+}
+
+.card-title{
+  font-size: $text-size-md !important;
+  color: $color-white !important;
+}
+
+.card{
+  background: $color-primary-2 !important;
+}
+
+.card-img-overlay{
+  opacity: 0 !important;
+  transition: .5s;
+}
+
+.card:hover .card-img-overlay{
+  opacity: 1 !important;
+  background: #3e4a5bc4;
 }
 
 // Hover

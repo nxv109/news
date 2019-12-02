@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 import useForm from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../../actions/user.action";
@@ -11,6 +12,8 @@ export default function Login({ history }) {
   const [remember, setRemember] = React.useState(false);
   const [user, setUser] = React.useState({});
   const { register, handleSubmit, errors } = useForm();
+
+  const userId = sessionStorage.getItem("userId");
 
   const dispatch = useDispatch();
 
@@ -55,42 +58,50 @@ export default function Login({ history }) {
   };
 
   return (
-    <div className="container">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Message />
-        <div className="form-group">
-          <input
-            type="text"
-            name="email"
-            style={{ border: `${errors.email ? "1px solid red" : ""}` }}
-            className="form-control"
-            placeholder="Enter email..."
-            ref={register({ required: true, pattern: /^\S+@\S+$/i })}
-          />
-          {errors.email && (
-            <small className="text-danger">
-              This field is required and that is an email address match (ex:
-              example123@gmail.com)
-            </small>
-          )}
-        </div>
-        <div className="form-group">
-          <input
-            type="password"
-            name="password"
-            style={{ border: `${errors.password ? "1px solid red" : ""}` }}
-            className="form-control"
-            placeholder="Password..."
-            ref={register({ required: true })}
-          />
-          {errors.password && (
-            <small className="text-danger">This field is required</small>
-          )}
-        </div>
-        <button type="submit" className="btn btn-danger mt-3">
-          Login
-        </button>
-      </form>
-    </div>
+    <>
+      {
+        !userId
+        ? (
+          <div className="container">
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Message />
+              <div className="form-group">
+                <input
+                  type="text"
+                  name="email"
+                  style={{ border: `${errors.email ? "1px solid red" : ""}` }}
+                  className="form-control"
+                  placeholder="Enter email..."
+                  ref={register({ required: true, pattern: /^\S+@\S+$/i })}
+                />
+                {errors.email && (
+                  <small className="text-danger">
+                    This field is required and that is an email address match (ex:
+                    example123@gmail.com)
+                  </small>
+                )}
+              </div>
+              <div className="form-group">
+                <input
+                  type="password"
+                  name="password"
+                  style={{ border: `${errors.password ? "1px solid red" : ""}` }}
+                  className="form-control"
+                  placeholder="Password..."
+                  ref={register({ required: true })}
+                />
+                {errors.password && (
+                  <small className="text-danger">This field is required</small>
+                )}
+              </div>
+              <button type="submit" className="btn btn-danger mt-3">
+                Login
+              </button>
+            </form>
+          </div>
+        )
+        : <Redirect to="/" />
+      }
+    </>
   );
 }

@@ -90,10 +90,11 @@ router.get("/channels", async (req, res) => {
 // ADD tin tuc trong ngay de thong ke thoi diem nguoi dung xem tin
 router.post("/news", async (req, res) => {
   try {
-    const id = req.body.id;
+    const { id, createdBy } = req.body;
     if (id) {
       const newsViews = new ViewModel({
-        news: id
+        news: id,
+        createdBy: createdBy
       });
 
       const saveNewsViews = await newsViews.save();
@@ -205,6 +206,30 @@ router.get("/channels/follows", async (req, res) => {
   }
 });
 
+// top 5 bai viet
+router.get("/channels/bestNews", async (req, res) => {
+  try {
+    const { channelId } = req.query;
+    const Users = await NewsModel.find({
+      isDelete: false,
+      createdBy: channelId
+    }).limit(5).sort({ view: -1 });
+
+    if (Users) {
+      return res.json({
+        code: 200,
+        err: null,
+        data: Users
+      });
+    }
+  } catch (error) {
+    return res.json({
+      code: 400,
+      err: error
+    });
+  }
+});
+
 router.get("/viewsOfMonthByChannel", async (req, res) => {
   try {
     const { month, channelId } = req.query;
@@ -228,7 +253,7 @@ router.get("/viewsOfMonthByChannel", async (req, res) => {
           $gte: startMonth,
           $lte: endMonth
         },
-        _id: channelId
+        createdBy: channelId
       }).sort({
         view: -1
       })
