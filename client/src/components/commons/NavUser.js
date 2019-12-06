@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { addUser } from "../../actions/user.action";
 import { getCategories } from "../../actions/category.action";
+import { hanldeUrlPretty } from "../mixin/UrlPretty";
 
 import Search from "./Search";
 
@@ -41,16 +42,11 @@ export default function NavUser(props) {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item active">
-              <Link className="nav-link" to="/">
-                HOME <span className="sr-only">(current)</span>
-              </Link>
-            </li>
             {appState.categories.data
               ? appState.categories.data.map((item, index) => (
                   <li key={index} className="nav-item">
-                    <Link className="nav-link" to={`/categories/${item._id}`}>
-                      {item.name.toUpperCase()}
+                    <Link className="nav-link" to={`/category/${item.name && hanldeUrlPretty(item.name)}/${item._id}`}>
+                      {item.name ? item.name.toUpperCase() : null}
                     </Link>
                   </li>
                 ))

@@ -1,0 +1,15 @@
+.comment{
+	&__user{
+		@include disFlex(row nowrap, center, flex-start);
+	}
+
+	&__photo{
+		width: 30px;
+		height: 30px;
+		overflow: hidden;
+
+		& > img{
+			width: 100%;
+		}
+	}
+}

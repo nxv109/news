@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getNews } from "../../../actions/new.action";
 import moment from "moment";
 import BoxLoadingItem from "../../BoxLoadingItem";
+import { hanldeUrlPretty } from "../../mixin/UrlPretty";
 
 
 export default function FeaturedNew() {
@@ -23,7 +24,7 @@ export default function FeaturedNew() {
     <React.Fragment>
       {featured
         ? featured.map((item, index) => (
-            <Link to={`/${item._id}`} key={index} className="featured-new p-3 bg-white rounded text-decoration-none">
+            <Link to={`/${hanldeUrlPretty(item.title)}/${item._id}`} key={index} className="featured-new p-3 bg-white rounded text-decoration-none">
               <div className="featured-new__image border border-secondary">
                 <img
                   src={`/uploads/news/${item.articlePicture}`}

@@ -15,7 +15,7 @@ export default function Edit({ match }) {
   const [file, setFile] = React.useState(null);
   const [categories, setCategories] = React.useState([]);
   const [newData, setNewData] = React.useState([]);
-  const [news, setNews] = React.useState({});
+  const [news, setNews] = React.useState({tag: ""});
 
   const dispatch = useDispatch();
 
@@ -49,13 +49,15 @@ export default function Edit({ match }) {
     if (news.tag === "") {
       setTagAlready("Bạn cần nhập tag");
     } else {
-      const tagExist = tags.filter(v => v.toLowerCase() === news.tag.toLowerCase());
+      if (tags) {
+        const tagExist = tags.filter(v => v.toLowerCase() === news.tag.toLowerCase());
 
-      if (tagExist.length > 0) {
-        setTagAlready("Tag đã tồn tại");
-      } else {
-        setTags([...tags, news.tag]);
-        setTagAlready("");
+        if (tagExist.length > 0) {
+          setTagAlready("Tag đã tồn tại");
+        } else {
+          setTags([...tags, news.tag]);
+          setTagAlready("");
+        }
       }
     }
   };

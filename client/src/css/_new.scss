@@ -62,7 +62,7 @@
 
   &__image {
     flex: 25%;
-    max-height: 8rem;
+    max-height: 5rem;
     overflow: hidden;
     @extend %mr-1;
 
@@ -96,8 +96,8 @@
   }
 
   &__image {
-    flex: 56.4%;
     @extend %mr-1;
+    flex: 73.4% 1;
     max-height: 5rem;
     overflow: hidden;
 
@@ -240,5 +240,129 @@
 
   &:hover{
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+}
+
+// other new
+.other-new:first-of-type {
+  @include disFlex(column nowrap, flex-start, center);
+
+  .other-new__info{
+    @extend %mt-1;
+  }
+
+  .other-new__image {
+    @extend %mr-0;
+    max-height: 20rem;
+    overflow: hidden;
+    @extend %w-100;
+
+    &>img {
+      @extend %w-100;
+    }
+  }
+}
+
+.other-new, .latest-new, .channel{
+  color: $color-black;
+
+  &:hover{
+    color: inherit;
+  }
+}
+
+.other-new {
+  @include disFlex(row nowrap, flex-start, center);
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  cursor: pointer;
+  transition: .3s;
+
+  &:hover{
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+
+  &__image {
+    flex: 25%;
+    max-height: 8rem;
+    overflow: hidden;
+    @extend %mr-1;
+
+    &>img {
+      width: 100%;
+    }
+  }
+
+  &__info {
+    flex: 80%;
+  }
+
+  &__createby{
+    @extend %mb-0;
+  }
+
+  &:not(:last-child){
+    @extend %mb-1;
+  }
+}
+
+// similar new
+.similar-new:first-of-type {
+  @include disFlex(column nowrap, flex-start, center);
+
+  .similar-new__info{
+    @extend %mt-1;
+  }
+
+  .similar-new__image {
+    @extend %mr-0;
+    max-height: 20rem;
+    overflow: hidden;
+    @extend %w-100;
+
+    &>img {
+      @extend %w-100;
+    }
+  }
+}
+
+.similar-new, .latest-new, .channel{
+  color: $color-black;
+
+  &:hover{
+    color: inherit;
+  }
+}
+
+.similar-new {
+  @include disFlex(row nowrap, flex-start, center);
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  cursor: pointer;
+  transition: .3s;
+
+  &:hover{
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+
+  &__image {
+    flex: 25%;
+    max-height: 7em;
+    overflow: hidden;
+    @extend %mr-1;
+
+    &>img {
+      width: 100%;
+    }
+  }
+
+  &__info {
+    flex: 80%;
+  }
+
+  &__createby{
+    @extend %mb-0;
+  }
+
+  &:not(:last-child){
+    @extend %mb-1;
   }
 }

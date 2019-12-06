@@ -4,6 +4,7 @@ import moment from "moment";
 import axios from "axios";
 
 import BoxLoadingItem from "../../BoxLoadingItem";
+import { hanldeUrlPretty } from "../../mixin/UrlPretty";
 
 export default function NewsSimilar(props) {
   const [ datas, setDatas ] = React.useState([]);
@@ -24,16 +25,16 @@ export default function NewsSimilar(props) {
       <h3 className="mb-3 mt-3">Tin tức tương tự</h3>
       {datas
         ? datas.map((data, index) => (
-            <Link to={`/${data._id}`} key={index} className="featured-new p-3 bg-white rounded text-decoration-none">
-              <div className="featured-new__image border border-secondary">
+            <Link to={`/${hanldeUrlPretty(data.title)}/${data._id}`} key={index} className="similar-new p-3 bg-white rounded text-decoration-none">
+              <div className="similar-new__image border border-secondary">
                 <img
                   src={`/uploads/news/${data.articlePicture}`}
                   alt={data.title}
                 />
               </div>
-              <div className="featured-new__info">
-                <h4 className="featured-new__title">{data.title}</h4>
-                <p className="featured-new__createby text-secondary"><i className="mdi mdi-monitor" /> {data.createdBy.username} - <i className="mdi mdi-av-timer" /> {moment(data.dateCreate).format("DD-MM-YYYY")} - <i className="mdi mdi-eye" /> {data.view}</p>
+              <div className="similar-new__info">
+                <h4 className="similar-new__title">{data.title}</h4>
+                <p className="similar-new__createby text-secondary"><i className="mdi mdi-monitor" /> {data.createdBy.username} - <i className="mdi mdi-av-timer" /> {moment(data.dateCreate).format("DD-MM-YYYY")} - <i className="mdi mdi-eye" /> {data.view}</p>
               </div>
             </Link>
           ))

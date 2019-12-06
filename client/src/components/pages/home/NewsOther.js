@@ -5,6 +5,7 @@ import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { getNewsOther } from "../../../actions/new.action";
 import BoxLoadingItem from "../../BoxLoadingItem";
+import { hanldeUrlPretty } from "../../mixin/UrlPretty";
 
 export default function NewsOther() {
   const [loading, setLoading] = React.useState(false);
@@ -45,19 +46,19 @@ export default function NewsOther() {
         {other
           ? other.map((item, index) => (
               <Link
-                to={`/${item._id}`}
+                to={`/${hanldeUrlPretty(item.title)}/${item._id}`}
                 key={index}
-                className="featured-new p-3 bg-white rounded text-decoration-none"
+                className="other-new p-3 bg-white rounded text-decoration-none"
               >
-                <div className="featured-new__image border border-secondary">
+                <div className="other-new__image border border-secondary">
                   <img
                     src={`/uploads/news/${item.articlePicture}`}
                     alt={item.title}
                   />
                 </div>
-                <div className="featured-new__info">
-                  <h4 className="featured-new__title">{item.title}</h4>
-                  <p className="featured-new__createby text-secondary">
+                <div className="other-new__info">
+                  <h4 className="other-new__title">{item.title}</h4>
+                  <p className="other-new__createby text-secondary">
                     <i className="mdi mdi-monitor" /> {item.createdBy.username}{" "}
                     - <i className="mdi mdi-av-timer" />{" "}
                     {moment(item.dateCreate).format("DD-MM-YYYY")} -{" "}

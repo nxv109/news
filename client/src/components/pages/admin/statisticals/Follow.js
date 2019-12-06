@@ -3,7 +3,7 @@ import axios from "axios";
 import { Pie } from "react-chartjs-2";
 
 export default function Follow() {
-	const [ channels, setChannels ] = React.useState([]);
+	// const [ channels, setChannels ] = React.useState([]);
 	const [ channelName, setChannelName ] = React.useState([]);
 	const [ follow, setFollow ] = React.useState(0);
 
@@ -13,7 +13,7 @@ export default function Follow() {
         const res = await axios.get("/statisticals/channels");
         const { data } = res.data;
 
-        setChannels(data);
+        // setChannels(data);
 
         const channelName = [];
         const follow = [];
@@ -41,8 +41,6 @@ export default function Follow() {
       console.log(e);
     }
   }, []);
-
-  console.log("channels", channels);
 
 	const data = {
 		labels: channelName,

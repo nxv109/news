@@ -63,41 +63,44 @@ export default function Login({ history }) {
         !userId
         ? (
           <div className="container">
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <Message />
-              <div className="form-group">
-                <input
-                  type="text"
-                  name="email"
-                  style={{ border: `${errors.email ? "1px solid red" : ""}` }}
-                  className="form-control"
-                  placeholder="Enter email..."
-                  ref={register({ required: true, pattern: /^\S+@\S+$/i })}
-                />
-                {errors.email && (
-                  <small className="text-danger">
-                    This field is required and that is an email address match (ex:
-                    example123@gmail.com)
-                  </small>
-                )}
-              </div>
-              <div className="form-group">
-                <input
-                  type="password"
-                  name="password"
-                  style={{ border: `${errors.password ? "1px solid red" : ""}` }}
-                  className="form-control"
-                  placeholder="Password..."
-                  ref={register({ required: true })}
-                />
-                {errors.password && (
-                  <small className="text-danger">This field is required</small>
-                )}
-              </div>
-              <button type="submit" className="btn btn-danger mt-3">
-                Login
-              </button>
-            </form>
+            <div className="row" style={{ height: "85vh" }}>
+              <form className="col-xl-6 m-auto" onSubmit={handleSubmit(onSubmit)}>
+                <Message />
+                <h1 className="mb-4">ĐĂNG NHẬP</h1>
+                <div className="form-group">
+                  <input
+                    type="text"
+                    name="email"
+                    style={{ border: `${errors.email ? "1px solid red" : ""}` }}
+                    className="form-control"
+                    placeholder="Enter email..."
+                    ref={register({ required: true, pattern: /^\S+@\S+$/i })}
+                  />
+                  {errors.email && (
+                    <small className="text-danger">
+                      This field is required and that is an email address match (ex:
+                      example123@gmail.com)
+                    </small>
+                  )}
+                </div>
+                <div className="form-group">
+                  <input
+                    type="password"
+                    name="password"
+                    style={{ border: `${errors.password ? "1px solid red" : ""}` }}
+                    className="form-control"
+                    placeholder="Password..."
+                    ref={register({ required: true })}
+                  />
+                  {errors.password && (
+                    <small className="text-danger">This field is required</small>
+                  )}
+                </div>
+                <button type="submit" className="btn btn-danger mt-3">
+                  Login
+                </button>
+              </form>
+            </div>
           </div>
         )
         : <Redirect to="/" />

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import BoxLoadingItem from "../../BoxLoadingItem";
+import { hanldeUrlPretty } from "../../mixin/UrlPretty";
 
 export default function NewsHighlight(props) {
   const [highlightNew, setHighlightNew] = React.useState({});
@@ -16,7 +17,7 @@ export default function NewsHighlight(props) {
     <div>
       <h3 className="mb-3">Tin tức nổi bật</h3>
       {highlightNew ? (
-        <Link to={`/${highlightNew._id}`} className="featured-new p-3 bg-white rounded text-decoration-none">
+        <Link to={`/${highlightNew.title && hanldeUrlPretty(highlightNew.title)}/${highlightNew._id}`} className="featured-new p-3 bg-white rounded text-decoration-none">
           {highlightNew.articlePicture ? (
             <div className="featured-new__image border border-secondary">
               <img

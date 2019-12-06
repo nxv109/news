@@ -82,10 +82,7 @@ export default function ViewsTotal(props) {
 			{
 				label: "Views",
 				data: rs,
-				backgroundColor: [
-				'rgba(255, 99, 132, 0.6)',
-				'rgba(255, 99, 133, 0.6)'
-				]
+				backgroundColor: 'rgba(255, 99, 132, 0.6)'
 			}
 		]
 	}

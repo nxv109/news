@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getLatestNews } from "../../../actions/new.action";
 import BoxLoadingItem from "../../BoxLoadingItem";
+import { hanldeUrlPretty } from "../../mixin/UrlPretty";
 
 export default function LatestNew() {
   const appState = useSelector(state => state);
@@ -25,7 +26,7 @@ export default function LatestNew() {
         latest
         ? (
           latest.map((item, index) => (
-            <Link to={`/${item._id}`} key={index} className="latest-new p-1 bg-white rounded text-decoration-none text-dark">
+            <Link to={`/${hanldeUrlPretty(item.title)}/${item._id}`} key={index} className="latest-new p-1 bg-white rounded text-decoration-none text-dark">
               <div className="latest-new__image">
                 <img
                   src={`/uploads/news/${item.articlePicture}`}

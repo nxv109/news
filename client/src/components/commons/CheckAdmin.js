@@ -18,6 +18,9 @@ export default function CheckAdmin(props) {
                       <Link to="/admin/manage-members" className="dropdown-item">
                         Manage Members
                       </Link>
+                      <Link to="/admin/manage-comments" className="dropdown-item">
+                        Manage Comments
+                      </Link>
                       <Link to="/admin/categories" className="dropdown-item">
                         Categories
                       </Link>

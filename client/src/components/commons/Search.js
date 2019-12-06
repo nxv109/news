@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getSearchNews } from "../../actions/new.action";
+import { hanldeUrlPretty } from "../mixin/UrlPretty";
 
 export default function Search() {
   // const [loading, setLoading] = React.useState(false);
@@ -37,7 +38,7 @@ export default function Search() {
           <div className="search__result w-100 p-1 rounded shadow-lg">
             {appState.news.search.map((item, index) => (
               <Link
-                to={`/${item._id}`}
+                to={`/${item.title && hanldeUrlPretty(item.title)}/${item._id}`}
                 key={index}
                 className="search-new p-1 bg-white rounded text-decoration-none text-dark"
               >

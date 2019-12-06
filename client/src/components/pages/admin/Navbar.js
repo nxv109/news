@@ -18,6 +18,12 @@ export default function Navbar() {
           </Link>
         </li>
         <li className="nav-item">
+          <Link to="/admin/manage-comments" className="nav-link" href="index.html">
+            <span className="menu-title">Manage Comments</span>
+            <i className="mdi mdi-account menu-icon" />
+          </Link>
+        </li>
+        <li className="nav-item">
           <Link to="/admin/categories" className="nav-link" href="index.html">
             <span className="menu-title">Categories</span>
             <i className="mdi mdi-format-list-bulleted menu-icon" />

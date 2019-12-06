@@ -131,7 +131,7 @@ export default function NewsDetail(props) {
                       <label htmlFor="exampleFormControlTextarea1">Nhận xét:</label>
                       <textarea name="comment" value={content || ""} onChange={handleChange} className="form-control" id="exampleFormControlTextarea1" rows={3} />
                     </div>
-                    <button className="btn btn-danger" type="submit">Gửi</button>
+                    <button className="btn btn-danger" type="submit">Nhận xét</button>
                   </form>
                 )
                 : (
@@ -143,10 +143,15 @@ export default function NewsDetail(props) {
                 ? comments.length > 0
                   ? 
                     comments.map((comment, index) => (
-                      <div key={index} className="mt-3">
-                        <p>{comment.content}</p>
-                        <small>Nhận xét bởi: {comment.createdBy.username} - Vào lúc: {moment(comment.date).format("DD-MM-YYYY HH:mm")} {comment.createdBy._id === userId ? (<span className="badge badge-pill badge-dark cursor-pointer" onClick={() => handleDelete(comment._id)}>Xóa</span>) : null}</small>
-                        <hr />
+                      <div key={index} className="comment mt-3 border-0 rounded p-2 bg-light">
+                        <div className="comment__user">
+                          <div className="comment__photo rounded">
+                            <img src={`/uploads/users/${comment.createdBy.image}`} alt={comment.createdBy.image} />
+                          </div>
+                          <div className="font-weight-bold ml-1">{comment.createdBy.username}</div>
+                        </div>
+                        <p className="my-2">{comment.content}</p>
+                        <small>Vào lúc: {moment(comment.date).format("HH:mm DD/MM/YYYY")} {comment.createdBy._id === userId ? (<span className="badge badge-pill badge-secondary cursor-pointer" onClick={() => handleDelete(comment._id)}>Xóa</span>) : null}</small>
                       </div>
                     )
                   )

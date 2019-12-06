@@ -56,10 +56,10 @@ function App() {
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
             <Route path="/profile" component={Profile} />
-            <Route path="/categories/:id" component={Category} />
-            <Route path="/channel/:id" component={Channel} />
-            <Route path="/:id" component={Detail} />
-            <Route path="*" component={NotFound} />
+            <Route path="/category/*/:id" component={Category} />
+            <Route path="/channel/*/:id" component={Channel} />
+            <Route path="/*/:id" component={Detail} />
+            <Route path="/*" component={NotFound} />
           </Switch>
         </React.Suspense>
       </div>

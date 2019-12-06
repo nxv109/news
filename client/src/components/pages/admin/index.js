@@ -6,6 +6,7 @@ import Member from "./Member";
 import Category from "./Category";
 import Trash from "./Trash";
 import AddNew from "./AddNew";
+import Comment from "./Comment";
 
 export default function Admin() {
   return (
@@ -19,6 +20,7 @@ export default function Admin() {
             <Route path="/admin/categories" component={Category} />
             <Route path="/admin/trash" component={Trash} />
             <Route path="/admin/add-new-category" component={AddNew} />
+            <Route path="/admin/manage-comments" component={Comment} />
           </Switch>
         </div>
       </div>

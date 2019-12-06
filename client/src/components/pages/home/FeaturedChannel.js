@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getUsers } from "../../../actions/user.action";
 import BoxLoadingItem from "../../BoxLoadingItem";
+import { hanldeUrlPretty } from "../../mixin/UrlPretty";
 
 export default function FeaturedChannel() {
   const appState = useSelector(state => state);
@@ -25,7 +26,7 @@ export default function FeaturedChannel() {
         {users ? (
           users.map((user, index) => (
             <Link
-              to={`/channel/${user._id}`}
+              to={`/channel/${hanldeUrlPretty(user.username)}/${user._id}`}
               key={index}
               className="channel p-1 bg-white rounded text-decoration-none text-dark"
             >

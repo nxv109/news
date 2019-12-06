@@ -10,7 +10,14 @@ export default function BoxLoading() {
 	);
   return(
     <>
-		<BoxItem />
+			<BoxItem />
+			<BoxItem />
+			<BoxItem />
+			<BoxItem />
+			<BoxItem />
+			<BoxItem />
+			<BoxItem />
+			<BoxItem />
     </>
   )
 }

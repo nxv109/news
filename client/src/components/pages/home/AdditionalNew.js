@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 import Loading from "../../Loading";
+import { hanldeUrlPretty } from "../../mixin/UrlPretty";
 
 const style = {
   textDecoration: "underline"
@@ -40,7 +41,7 @@ export default function AdditionalNew() {
             newsReel ?
               (
                 newsReel.map((item, index) => (
-                  <Link to={`/${item._id}`} key={index} className="card text-decoration-none hover-sm">
+                  <Link to={`/${hanldeUrlPretty(item.title)}/${item._id}`} key={index} className="card text-decoration-none hover-sm">
                     <div className="card bg-dark text-white">
                       <div className="selected-news"><img src={`/uploads/news/${item.articlePicture}`} className="card-img-top" alt={item.title} /></div>
                       <div className="card-img-overlay">
@@ -61,7 +62,7 @@ export default function AdditionalNew() {
             newsEntertainment ?
               (
                 newsEntertainment.map((item, index) => (
-                  <Link to={`/${item._id}`} key={index} className="card text-decoration-none hover-sm">
+                  <Link to={`/${hanldeUrlPretty(item.title)}/${item._id}`} key={index} className="card text-decoration-none hover-sm">
                     <div className="card bg-dark text-white">
                       <div className="selected-news"><img src={`/uploads/news/${item.articlePicture}`} className="card-img-top" alt={item.title} /></div>
                       <div className="card-img-overlay">
