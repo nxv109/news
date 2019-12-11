@@ -67,10 +67,7 @@ export default function Comment() {
 	        </nav>
 	      </div>
 	      <div className="row">
-	      	<div className="col-xl-6 grid-margin stretch-card">
-		      	show cai j do
-		      </div>
-	        <div className="col-xl-6 grid-margin">
+	        <div className="col-xl-12 grid-margin">
 		        <div className="font-weight-bold mb-4">Thêm từ vào ds đen:</div>
 	          <form onSubmit={handleSubmit(onSubmit)} className="w-100">
 	            <Message />

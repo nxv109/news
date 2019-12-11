@@ -15,6 +15,7 @@ export default function NewsOther() {
 
   React.useEffect(() => {
     dispatch(getNewsOther(8));
+
   }, [dispatch]);
 
   const hanldeLoadMore = () => {

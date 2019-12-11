@@ -1,4 +1,5 @@
 import React from "react";
+import {Helmet} from 'react-helmet'
 import { Route, Switch } from "react-router-dom";
 import NavbarRight from "./Navbar";
 import Dashboard from "./Dashboard";
@@ -10,20 +11,25 @@ import Comment from "./Comment";
 
 export default function Admin() {
   return (
-    <div className="container-scroller">
-      <div className="container-fluid page-body-wrapper">
-        <NavbarRight />
-        <div className="main-panel">
-          <Switch>
-            <Route exact path="/admin" component={Dashboard} />
-            <Route path="/admin/manage-members" component={Member} />
-            <Route path="/admin/categories" component={Category} />
-            <Route path="/admin/trash" component={Trash} />
-            <Route path="/admin/add-new-category" component={AddNew} />
-            <Route path="/admin/manage-comments" component={Comment} />
-          </Switch>
+    <>
+      <Helmet>
+        <title>Admin - Trang quản trị admin</title>
+      </Helmet>
+      <div className="container-scroller">
+        <div className="container-fluid page-body-wrapper">
+          <NavbarRight />
+          <div className="main-panel">
+            <Switch>
+              <Route exact path="/admin" component={Dashboard} />
+              <Route path="/admin/manage-members" component={Member} />
+              <Route path="/admin/categories" component={Category} />
+              <Route path="/admin/trash" component={Trash} />
+              <Route path="/admin/add-new-category" component={AddNew} />
+              <Route path="/admin/manage-comments" component={Comment} />
+            </Switch>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

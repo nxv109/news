@@ -91,20 +91,35 @@ router.post("/", async function(req, res, next) {
 });
 
 // get user
-router.get("/:id", async (req, res) => {
-  const user = await UserModel.findOne({ _id: req.params.id });
+router.get("/:token", async (req, res) => {
+  const userToken = req.params.token;
 
-  if (user) {
-    const { username, role, email, image, _id } = user;
+  try {
+    let decoded = jwt.decode(userToken);
 
-    res.json({
-      data: { username, role, email, image, _id }
-    });
-  } else {
-    res.json({
-      message: "khong tim thay user nao"
-    });
+    if (decoded) {
+      const id = decoded._id;
+      const user = await UserModel.findOne({ _id: id });
+      const { username, role, email, image, _id } = user;
+
+      return res.json({
+        code: 200,
+        data: { username, role, email, image, _id }
+      })
+
+    } else {
+      return res.json({
+        message: "Lỗi xác thực!"
+      })
+    }
+
+  } catch (err) {
+    return res.json({
+      code: 400,
+      message: err
+    })
   }
+
 });
 
 // update name, email, password, photo

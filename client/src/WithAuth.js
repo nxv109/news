@@ -2,36 +2,38 @@ import React from "react";
 import axios from "axios";
 import Message from "./components/Message";
 
-export default function WithAuth(
-  ComponentJournalist,
-  ComponentEditor,
-  ComponentSensor,
-  ComponentAdmin
-) {
+export default function WithAuth(...args) {
+  const ComponentJournalist = args[0];
+  const ComponentEditor = args[1];
+  const ComponentSensor = args[2];
+  const ComponentAdmin = args[3];
+
   const [role, setRole] = React.useState("asdasd");
   const msg = "Unauthorized: Bạn không được cấp phép vào trang này.";
 
-  const token = localStorage.getItem("auth-token") || "asdasd";
+  const token = localStorage.getItem("auth-token");
   const userId = sessionStorage.getItem("userId");
 
   React.useEffect(() => {
     async function fetchData() {
-      if (userId) {
-        const getRole = await axios.get(`/login/${userId}`);
+      if (token) {
+        const getRole = await axios.get(`/login/${token}`);
         const userRole = await getRole.data.data.role;
 
-        if (token && userRole) {
-          const checkToken = async () => {
-            const res = await axios.post("/login/checkToken", {
-              token: token,
-              role: userRole
-            });
+        setRole(userRole);
 
-            setRole(res.data.role);
-          };
+        // if (userRole) {
+        //   const checkToken = async () => {
+        //     const res = await axios.post("/login/checkToken", {
+        //       token: token,
+        //       role: userRole
+        //     });
 
-          checkToken();
-        }
+        //     setRole(res.data.role);
+        //   };
+
+        //   checkToken();
+        // }
       } else {
         setRole(null);
       }

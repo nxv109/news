@@ -1,4 +1,5 @@
 import React from "react";
+import {Helmet} from 'react-helmet'
 import axios from "axios";
 import { useDispatch } from "react-redux";
 
@@ -30,18 +31,19 @@ export default function Profile() {
 
   const dispatch = useDispatch();
   const userId = sessionStorage.getItem("userId");
+  const token = localStorage.getItem("auth-token") || "asdasd";
 
   React.useEffect(() => {
     dispatch(setMessage({ message: "" }));
     const fetchUser = async () => {
-      const res = await axios.get(`/login/${userId}`);
+      const res = await axios.get(`/login/${token}`);
       const rs = await res.data.data;
 
       dispatch(addUser(rs));
     };
 
     fetchUser();
-  }, [dispatch, userId]);
+  }, [dispatch, token]);
 
   const mer = "Không được để trống";
 
@@ -147,161 +149,167 @@ export default function Profile() {
   };
 
   return (
-    <div className="container bootstrap snippet">
-      <div className="row">
-        <div className="col-sm-4">
-          {/*left col*/}
-          <Avatar />
-          <br />
-          <Infomation />
-        </div>
-        {/*/col-3*/}
-        <div className="col-sm-8">
-          <Message />
-          <h3>Edit profile</h3>
-          <div className="tab-content">
-            <div className="tab-pane active">
-              <div className="form-group">
-                <div className="col-xs-6">
-                  {!userName ? (
-                    <div className="text-danger">{userNameErr}</div>
-                  ) : (
-                    ""
-                  )}
-                  <label htmlFor="first_name">
-                    <h5>Name</h5>
-                  </label>
-                  <input
-                    onChange={hanldeChangeName}
-                    value={userName || ""}
-                    type="text"
-                    className="form-control"
-                    name="username"
-                    placeholder="Enter your name"
-                  />
+    <>
+      <Helmet>
+        <title>Thông tin cá nhân - chỉnh sửa</title>
+        <meta name="description" content="BNews kênh tin tức hàng đầu Việt Nam, thời dự, bóng đá, tin trong ngày, giải trí, bất động sản,..." />
+      </Helmet>
+      <div className="container bootstrap snippet">
+        <div className="row">
+          <div className="col-sm-4">
+            {/*left col*/}
+            <Avatar />
+            <br />
+            <Infomation />
+          </div>
+          {/*/col-3*/}
+          <div className="col-sm-8">
+            <Message />
+            <h3>Edit profile</h3>
+            <div className="tab-content">
+              <div className="tab-pane active">
+                <div className="form-group">
+                  <div className="col-xs-6">
+                    {!userName ? (
+                      <div className="text-danger">{userNameErr}</div>
+                    ) : (
+                      ""
+                    )}
+                    <label htmlFor="first_name">
+                      <h5>Name</h5>
+                    </label>
+                    <input
+                      onChange={hanldeChangeName}
+                      value={userName || ""}
+                      type="text"
+                      className="form-control"
+                      name="username"
+                      placeholder="Enter your name"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <div className="col-xs-12">
+                      <button
+                        onClick={hanldeUpdateName}
+                        className="btn btn-danger btn-sm mt-3"
+                        type="submit"
+                      >
+                        <i className="glyphicon glyphicon-ok-sign" /> Update name
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div className="form-group">
+                  <div className="col-xs-6">
+                    {!userEmail ? (
+                      <div className="text-danger">{userEmailErr}</div>
+                    ) : (
+                      ""
+                    )}
+                    <label htmlFor="email">
+                      <h5>Email</h5>
+                    </label>
+                    <input
+                      onChange={hanldeChangeEmail}
+                      value={userEmail || ""}
+                      type="email"
+                      className="form-control"
+                      name="email"
+                      placeholder="you@email.com"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <div className="col-xs-12">
+                      <button
+                        onClick={hanldeUpdateEmail}
+                        className="btn btn-danger btn-sm mt-3"
+                        type="submit"
+                      >
+                        <i className="glyphicon glyphicon-ok-sign" /> Update email
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div className="form-group">
+                  <div className="col-xs-6">
+                    {!userPassword.currentPassword ? (
+                      <div className="text-danger">{userCurrentPasswordErr}</div>
+                    ) : (
+                      ""
+                    )}
+                    <label htmlFor="password">
+                      <h5>Current password</h5>
+                    </label>
+                    <input
+                      onChange={hanldeChangePassword}
+                      value={userPassword.currentPassword || ""}
+                      type="password"
+                      className="form-control"
+                      name="currentPassword"
+                      placeholder="Enter your current password"
+                    />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <div className="col-xs-6">
+                    {userPasswordErr ? (
+                      <div className="text-danger">{userPasswordErr}</div>
+                    ) : null}
+                    {!userPassword.newPassword ? (
+                      <div className="text-danger">{userNewPasswordErr}</div>
+                    ) : (
+                      ""
+                    )}
+                    <label htmlFor="password">
+                      <h5>New password</h5>
+                    </label>
+                    <input
+                      onChange={hanldeChangePassword}
+                      value={userPassword.newPassword || ""}
+                      type="password"
+                      className="form-control"
+                      name="newPassword"
+                      placeholder="Enter your new password"
+                    />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <div className="col-xs-6">
+                    {!userPassword.newPasswordAgain ? (
+                      <div className="text-danger">{userNewPasswordAgainErr}</div>
+                    ) : (
+                      ""
+                    )}
+                    <label htmlFor="password">
+                      <h5>New password again</h5>
+                    </label>
+                    <input
+                      onChange={hanldeChangePassword}
+                      value={userPassword.newPasswordAgain || ""}
+                      type="password"
+                      className="form-control"
+                      name="newPasswordAgain"
+                      placeholder="Enter your new password again"
+                    />
+                  </div>
                 </div>
                 <div className="form-group">
                   <div className="col-xs-12">
                     <button
-                      onClick={hanldeUpdateName}
-                      className="btn btn-danger btn-sm mt-3"
+                      onClick={hanldeUpdatePassword}
+                      className="btn btn-danger btn-sm"
                       type="submit"
                     >
-                      <i className="glyphicon glyphicon-ok-sign" /> Update name
+                      <i className="glyphicon glyphicon-ok-sign" /> Update
+                      password
                     </button>
                   </div>
-                </div>
-              </div>
-              <div className="form-group">
-                <div className="col-xs-6">
-                  {!userEmail ? (
-                    <div className="text-danger">{userEmailErr}</div>
-                  ) : (
-                    ""
-                  )}
-                  <label htmlFor="email">
-                    <h5>Email</h5>
-                  </label>
-                  <input
-                    onChange={hanldeChangeEmail}
-                    value={userEmail || ""}
-                    type="email"
-                    className="form-control"
-                    name="email"
-                    placeholder="you@email.com"
-                  />
-                </div>
-                <div className="form-group">
-                  <div className="col-xs-12">
-                    <button
-                      onClick={hanldeUpdateEmail}
-                      className="btn btn-danger btn-sm mt-3"
-                      type="submit"
-                    >
-                      <i className="glyphicon glyphicon-ok-sign" /> Update email
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div className="form-group">
-                <div className="col-xs-6">
-                  {!userPassword.currentPassword ? (
-                    <div className="text-danger">{userCurrentPasswordErr}</div>
-                  ) : (
-                    ""
-                  )}
-                  <label htmlFor="password">
-                    <h5>Current password</h5>
-                  </label>
-                  <input
-                    onChange={hanldeChangePassword}
-                    value={userPassword.currentPassword || ""}
-                    type="password"
-                    className="form-control"
-                    name="currentPassword"
-                    placeholder="Enter your current password"
-                  />
-                </div>
-              </div>
-              <div className="form-group">
-                <div className="col-xs-6">
-                  {userPasswordErr ? (
-                    <div className="text-danger">{userPasswordErr}</div>
-                  ) : null}
-                  {!userPassword.newPassword ? (
-                    <div className="text-danger">{userNewPasswordErr}</div>
-                  ) : (
-                    ""
-                  )}
-                  <label htmlFor="password">
-                    <h5>New password</h5>
-                  </label>
-                  <input
-                    onChange={hanldeChangePassword}
-                    value={userPassword.newPassword || ""}
-                    type="password"
-                    className="form-control"
-                    name="newPassword"
-                    placeholder="Enter your new password"
-                  />
-                </div>
-              </div>
-              <div className="form-group">
-                <div className="col-xs-6">
-                  {!userPassword.newPasswordAgain ? (
-                    <div className="text-danger">{userNewPasswordAgainErr}</div>
-                  ) : (
-                    ""
-                  )}
-                  <label htmlFor="password">
-                    <h5>New password again</h5>
-                  </label>
-                  <input
-                    onChange={hanldeChangePassword}
-                    value={userPassword.newPasswordAgain || ""}
-                    type="password"
-                    className="form-control"
-                    name="newPasswordAgain"
-                    placeholder="Enter your new password again"
-                  />
-                </div>
-              </div>
-              <div className="form-group">
-                <div className="col-xs-12">
-                  <button
-                    onClick={hanldeUpdatePassword}
-                    className="btn btn-danger btn-sm"
-                    type="submit"
-                  >
-                    <i className="glyphicon glyphicon-ok-sign" /> Update
-                    password
-                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

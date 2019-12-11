@@ -45,7 +45,7 @@ export default function Category({ match }) {
     <React.Fragment>
       <div className="container">
         <div className="row">
-          <div className="col-lg-8 col-md-8">
+          <div className="col-xl-9 col-lg-9 col-sm-12">
             <NewsHighlight highlightNew={highlightNew} />
             {
               highlightNew
@@ -53,7 +53,7 @@ export default function Category({ match }) {
               : null
             }
           </div>
-          <div className="col-lg-4 col-md-4">
+          <div className="col-xl-3 col-lg-3 col-sm-12">
             <div className="mb-4">
               <LatestNew />
             </div>

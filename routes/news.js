@@ -4,6 +4,7 @@ const NewsModel = require("../models/News");
 const RateModel = require("../models/Rate");
 const LikeModel = require("../models/Like");
 const ViewModel = require("../models/View");
+const FollowModel = require("../models/Follow");
 const router = express.Router();
 const auth = require("../middleware/auth");
 const authJour = require("../middleware/checkJournalist");
@@ -111,6 +112,41 @@ router.get("/other", async function(req, res, next) {
       err: null,
       data: News
     });
+  } catch (err) {
+    return res.json({
+      code: 400,
+      err: err.messege,
+      data: null
+    });
+  }
+});
+
+// News For You
+router.get("/newsForYou", async function(req, res, next) {
+  try {
+    const userId = req.query.userId;
+
+    if (userId) {
+      const getChannelUserFollow = await FollowModel.find({ followBy: userId });
+
+      const channels = [];
+
+      getChannelUserFollow.forEach(v => channels.push(`${v.channel}`));
+
+      const news = await NewsModel.find({ status: 'published' }).limit(8).sort({ dateCreate: -1 })
+        .populate("createdBy");
+
+      const getNews = [ ...news ];
+
+      const getNewsUserFollow = await getNews.filter(v => channels.includes(`${v.createdBy._id}`));
+
+      return res.json({
+        code: 200,
+        err: null,
+        data: getNewsUserFollow
+      });
+    }
+
   } catch (err) {
     return res.json({
       code: 400,

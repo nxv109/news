@@ -17,6 +17,12 @@
   }
 }
 
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 // load more
 .load-more{
   @include disFlex(column nowrap, center, center);
@@ -38,6 +44,7 @@
 
     &>img {
       @extend %w-100;
+      height: auto;
     }
   }
 }
@@ -62,7 +69,7 @@
 
   &__image {
     flex: 25%;
-    max-height: 5rem;
+    height: 5rem;
     overflow: hidden;
     @extend %mr-1;
 
@@ -97,8 +104,8 @@
 
   &__image {
     @extend %mr-1;
-    flex: 73.4% 1;
-    max-height: 5rem;
+    flex: 70.4% 1;
+    height: 4.68rem;
     overflow: hidden;
 
     &>img {
@@ -153,7 +160,7 @@
     flex: 20%;
     @extend %mr-1;
     overflow: hidden;
-    max-height: 2.5rem;
+    height: 2.5rem;
 
 
     &>img {
@@ -184,7 +191,7 @@
 
   &__image {
     flex: 10%;
-    max-height: 3rem;
+    height: 3rem;
     @extend %mr-1;
     overflow: hidden;
 
@@ -209,7 +216,7 @@
 // selected-news
 .selected-news{
   width: 100%;
-  max-height: 6rem;
+  height: 6rem;
   overflow: hidden;
 }
 
@@ -253,7 +260,7 @@
 
   .other-new__image {
     @extend %mr-0;
-    max-height: 20rem;
+    height: 20rem;
     overflow: hidden;
     @extend %w-100;
 
@@ -283,7 +290,7 @@
 
   &__image {
     flex: 25%;
-    max-height: 8rem;
+    height: 7rem;
     overflow: hidden;
     @extend %mr-1;
 
@@ -315,7 +322,7 @@
 
   .similar-new__image {
     @extend %mr-0;
-    max-height: 20rem;
+    height: 20rem;
     overflow: hidden;
     @extend %w-100;
 
@@ -330,39 +337,5 @@
 
   &:hover{
     color: inherit;
-  }
-}
-
-.similar-new {
-  @include disFlex(row nowrap, flex-start, center);
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-  cursor: pointer;
-  transition: .3s;
-
-  &:hover{
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  }
-
-  &__image {
-    flex: 25%;
-    max-height: 7em;
-    overflow: hidden;
-    @extend %mr-1;
-
-    &>img {
-      width: 100%;
-    }
-  }
-
-  &__info {
-    flex: 80%;
-  }
-
-  &__createby{
-    @extend %mb-0;
-  }
-
-  &:not(:last-child){
-    @extend %mb-1;
   }
 }

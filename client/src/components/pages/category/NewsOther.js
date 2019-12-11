@@ -58,16 +58,16 @@ export default function NewsOther(props) {
                   newByTag.map((item, index) => (
                     item.tag.includes(tag)
                     ? (
-                      <Link to={`/${hanldeUrlPretty(item.title)}/${item._id}`} key={index} className="featured-new p-3 bg-white rounded text-decoration-none">
-                        <div className="featured-new__image border border-secondary">
+                      <Link to={`/${hanldeUrlPretty(item.title)}/${item._id}`} key={index} className="other-new p-3 bg-white rounded text-decoration-none">
+                        <div className="other-new__image border border-secondary">
                           <img
                             src={`/uploads/news/${item.articlePicture}`}
                             alt={item.title}
                           />
                         </div>
-                        <div className="featured-new__info">
-                          <h4 className="featured-new__title">{item.title}</h4>
-                          <p className="featured-new__createby text-secondary"><i className="mdi mdi-monitor" /> {item.createdBy.username} - <i className="mdi mdi-av-timer" /> {moment(item.dateCreate).format("DD-MM-YYYY")} - <i className="mdi mdi-eye" /> {item.view}</p>
+                        <div className="other-new__info">
+                          <h4 className="other-new__title">{item.title}</h4>
+                          <p className="other-new__createby text-secondary"><i className="mdi mdi-monitor" /> {item.createdBy.username} - <i className="mdi mdi-av-timer" /> {moment(item.dateCreate).format("DD-MM-YYYY")} - <i className="mdi mdi-eye" /> {item.view}</p>
                         </div>
                       </Link>
                     )

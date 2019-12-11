@@ -103,7 +103,7 @@ export default function NewsDetail(props) {
         <React.Fragment>
           <Message />
           {datas ? (
-            <div className="col-lg-8 col-md-8 p-2 bg-white rounded shadow-sm">
+            <div className="col-xl-9 col-lg-9 col-sm-12 p-2 bg-white rounded shadow-sm">
               <h1>{datas.title}</h1>
               {datas.createdBy ? (
                 <p className="featured-new__createby text-secondary">

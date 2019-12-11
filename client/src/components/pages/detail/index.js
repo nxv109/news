@@ -34,7 +34,7 @@ export default function Detail({ match, location }) {
       <div className="container">
         <div className="row">
           <NewsDetail datas={datas} />
-          <div className="col-lg-4 col-md-4">
+          <div className="col-xl-3 col-lg-3 col-sm-12">
             <div className="mb-4">
               <LatestNew />
             </div>

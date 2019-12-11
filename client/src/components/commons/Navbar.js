@@ -12,12 +12,15 @@ const style = {
 export default function Navbar() {
   const appState = useSelector(state => state);
   const dispatch = useDispatch();
-  const userId = sessionStorage.getItem("userId");
+  // const userId = sessionStorage.getItem("userId");
+  const token = localStorage.getItem("auth-token") || "asdasd";
+
+  // xác thực thêm cái token nữa
 
   React.useEffect(() => {
-    if (userId) {
+    if (token) {
       const fetchUser = async () => {
-        const res = await axios.get(`/login/${userId}`);
+        const res = await axios.get(`/login/${token}`);
         const rs = await res.data.data;
 
         dispatch(addUser(rs));
@@ -25,7 +28,7 @@ export default function Navbar() {
 
       fetchUser();
     }
-  }, [dispatch, userId]);
+  }, [dispatch, token]);
 
   return (
     <React.Fragment>

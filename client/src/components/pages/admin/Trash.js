@@ -85,7 +85,7 @@ export default function Trash() {
           <span className="page-title-icon bg-gradient-danger text-white mr-2">
             <i className="mdi mdi-format-list-bulleted" />
           </span>
-          Categories
+          Trash
         </h3>
         <nav aria-label="breadcrumb">
           <ul className="breadcrumb">

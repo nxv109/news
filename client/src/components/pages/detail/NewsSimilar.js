@@ -25,16 +25,16 @@ export default function NewsSimilar(props) {
       <h3 className="mb-3 mt-3">Tin tức tương tự</h3>
       {datas
         ? datas.map((data, index) => (
-            <Link to={`/${hanldeUrlPretty(data.title)}/${data._id}`} key={index} className="similar-new p-3 bg-white rounded text-decoration-none">
-              <div className="similar-new__image border border-secondary">
+            <Link to={`/${hanldeUrlPretty(data.title)}/${data._id}`} key={index} className="other-new p-3 bg-white rounded text-decoration-none">
+              <div className="other-new__image border border-secondary">
                 <img
                   src={`/uploads/news/${data.articlePicture}`}
                   alt={data.title}
                 />
               </div>
-              <div className="similar-new__info">
-                <h4 className="similar-new__title">{data.title}</h4>
-                <p className="similar-new__createby text-secondary"><i className="mdi mdi-monitor" /> {data.createdBy.username} - <i className="mdi mdi-av-timer" /> {moment(data.dateCreate).format("DD-MM-YYYY")} - <i className="mdi mdi-eye" /> {data.view}</p>
+              <div className="other-new__info">
+                <h4 className="other-new__title">{data.title}</h4>
+                <p className="other-new__createby text-secondary"><i className="mdi mdi-monitor" /> {data.createdBy.username} - <i className="mdi mdi-av-timer" /> {moment(data.dateCreate).format("DD-MM-YYYY")} - <i className="mdi mdi-eye" /> {data.view}</p>
               </div>
             </Link>
           ))

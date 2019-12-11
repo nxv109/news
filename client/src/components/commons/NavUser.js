@@ -51,11 +51,6 @@ export default function NavUser(props) {
                   </li>
                 ))
               : null}
-            <li className="nav-item">
-              <Link className="nav-link" to="/contact">
-                CONTACT
-              </Link>
-            </li>
           </ul>
           <ul className="navbar-nav mr-auto" style={{ alignItems: "center" }}>
               <li className="nav-item dropdown">
@@ -117,7 +112,7 @@ export default function NavUser(props) {
                 )}
               </li>
               <li className="nav-item dropdown">
-                <button type="button" className="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal">
+                <button type="button" className="btn btn-sm btn-dark" data-toggle="modal" data-target="#exampleModal">
                   <i className="mdi mdi-magnify" />
                 </button>
                 {/* Modal */}

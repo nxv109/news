@@ -78,9 +78,8 @@ export default function Channel({ match }) {
 
   // UnFollow
   const hanldeUnFollow = (follow, userId, userFollowingId) => {
-    console.log("unFollow", follow - 1);
-
     let decreaseFollow = follow - 1;
+    
     const decrease = async () => {
       const res = await axios.put(`/followers/decrease/${userId}`, {
         follow: decreaseFollow
@@ -102,9 +101,8 @@ export default function Channel({ match }) {
 
   // Follow
   const hanldeFollow = (follow, userId) => {
-    console.log("Follow", follow + 1);
-
     let increaseFollow = follow + 1;
+
     const increase = async () => {
       const res = await axios.put(`/followers/increase/${userId}`, {
         follow: increaseFollow
@@ -133,8 +131,8 @@ export default function Channel({ match }) {
     <React.Fragment>
       <Message />
       <div className="container">
-        <div className="row mb-5" style={{ alignItems: "center" }}>
-          <h1 className="mr-2">CHANNEL: {channel.username}</h1>
+        <div className="row mb-3" style={{ alignItems: "center" }}>
+          <h1 className="mr-2">{channel.username}</h1>
           <div className="mb-2">
             {userExist ? (
               following ? (

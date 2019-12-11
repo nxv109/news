@@ -48,7 +48,7 @@ export default function FeaturedChannel() {
         )}
       </div>
 
-      <div id="sticky" className="w-100">
+      <div className="w-100 fanpage">
         <h3 className="mb-3 mt-4">Fanpage</h3>
         <iframe
           src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fnxvdesigners%2F&tabs&width=340&height=130&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId=1732530280376802"

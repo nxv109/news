@@ -1,4 +1,5 @@
 import React from "react";
+import {Helmet} from 'react-helmet'
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 import useForm from "react-hook-form";
@@ -14,6 +15,7 @@ export default function Login({ history }) {
   const { register, handleSubmit, errors } = useForm();
 
   const userId = sessionStorage.getItem("userId");
+  const token = localStorage.getItem("auth-token");
 
   const dispatch = useDispatch();
 
@@ -59,8 +61,12 @@ export default function Login({ history }) {
 
   return (
     <>
+      <Helmet>
+        <title>Đăng nhập - BNews kênh tin tức hàng đầu Việt Nam</title>
+        <meta name="description" content="BNews kênh tin tức hàng đầu Việt Nam, thời dự, bóng đá, tin trong ngày, giải trí, bất động sản,..." />
+      </Helmet>
       {
-        !userId
+        !token
         ? (
           <div className="container">
             <div className="row" style={{ height: "85vh" }}>
