@@ -1,4 +1,5 @@
 import React from "react";
+import {Helmet} from 'react-helmet';
 import axios from "axios";
 
 import NewsHighlight from "./NewsHighlight";
@@ -8,6 +9,7 @@ import LatestNew from "../home/LatestNew";
 
 export default function Category({ match }) {
   const [highlightNew, setHighlightNew] = React.useState({});
+  const [channelName, setChannelName] = React.useState("");
   const [tags, setTags] = React.useState([]);
   const [newByTag, setNewByTag] = React.useState([]);
   const id = match.params.id;
@@ -36,31 +38,39 @@ export default function Category({ match }) {
       setTags(getTags());
       setHighlightNew(highlightNew);
       setNewByTag(res.data.data)
+
+      setChannelName(highlightNew.cateNews.name);
     };
 
     fetchData();
   }, [id]);
 
   return (
-    <React.Fragment>
-      <div className="container">
-        <div className="row">
-          <div className="col-xl-9 col-lg-9 col-sm-12">
-            <NewsHighlight highlightNew={highlightNew} />
-            {
-              highlightNew
-              ? (<NewsOther tags={tags} newByTag={newByTag} newsHighlightId={highlightNew._id} highlightNew={highlightNew} />)
-              : null
-            }
-          </div>
-          <div className="col-xl-3 col-lg-3 col-sm-12">
-            <div className="mb-4">
-              <LatestNew />
+    <>
+      <Helmet>
+        <title>{` ${ channelName ? channelName + ' - BNews kênh tin tức hàng đầu Việt Nam' : "Loading..." } `}</title>
+        <meta name="description" content="BNews kênh tin tức hàng đầu Việt Nam, thời dự, bóng đá, tin trong ngày, giải trí, bất động sản,..." />
+      </Helmet>
+      <React.Fragment>
+        <div className="container">
+          <div className="row">
+            <div className="col-xl-9 col-lg-9 col-sm-12">
+              <NewsHighlight highlightNew={highlightNew} />
+              {
+                highlightNew
+                ? (<NewsOther tags={tags} newByTag={newByTag} newsHighlightId={highlightNew._id} highlightNew={highlightNew} />)
+                : null
+              }
             </div>
-            <FeaturedChannel />
+            <div className="col-xl-3 col-lg-3 col-sm-12">
+              <div className="mb-4">
+                <LatestNew />
+              </div>
+              <FeaturedChannel />
+            </div>
           </div>
         </div>
-      </div>
     </React.Fragment>
+  </>
   );
 }

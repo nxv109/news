@@ -54,7 +54,7 @@ export default function NewsOther() {
                       </div>
                     </Link>
                   ))
-                : (<BoxLoadingItem />)
+                : <p className="text-secondary">Chưa có tin nào!</p>
               : <p className="text-secondary">Đăng nhập để xem tin dành riêng cho bạn <Link to="/login" className="text-info">Login</Link></p>
             }
           </div>

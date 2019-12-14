@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { hanldeUrlPretty } from "../mixin/UrlPretty";
@@ -45,19 +46,19 @@ export default function Footer() {
   return (
     <footer className="page-footer font-small indigo bg-dark text-white mt-7">
       {/* Footer Links */}
-      <div className="container text-center text-md-left">
+      <div className="container text-md-left">
         {/* Grid row */}
         <div className="row">
           {/* Grid column */}
-          <div className="col-md-3 mx-auto">
+          <div className="col-md-4 mx-auto">
             {/* Links */}
-            <h5 className="font-weight-bold text-uppercase mt-3 mb-4 text-center">Tin mới</h5>
+            <h5 className="font-weight-bold text-uppercase mt-3 mb-4">Tin mới</h5>
             <ul>
               {
                 latest
                   ? (
                     latest.map((item, index) => (
-                      <li className="text-secondary" key={index}>
+                      <li className="list-style-none text-secondary" key={index}>
                         <Link to={`/${hanldeUrlPretty(item.title)}/${item._id}`} className="text-secondary">
                           {item.title}
                         </Link>
@@ -71,15 +72,15 @@ export default function Footer() {
           {/* Grid column */}
           <hr className="clearfix w-100 d-md-none" />
           {/* Grid column */}
-          <div className="col-md-3 mx-auto">
+          <div className="col-md-4 mx-auto">
             {/* Links */}
-            <h5 className="font-weight-bold text-uppercase mt-3 mb-4 text-center">Nổi bật</h5>
+            <h5 className="font-weight-bold text-uppercase mt-3 mb-4">Nổi bật</h5>
             <ul>
               {
                 featured
                   ? (
                     featured.map((item, index) => (
-                      <li className="text-secondary" key={index}>
+                      <li className="list-style-none text-secondary" key={index}>
                         <Link to={`/${hanldeUrlPretty(item.title)}/${item._id}`} className="text-secondary">
                           {item.title}
                         </Link>
@@ -93,15 +94,15 @@ export default function Footer() {
           {/* Grid column */}
           <hr className="clearfix w-100 d-md-none" />
           {/* Grid column */}
-          <div className="col-md-3 mx-auto">
+          <div className="col-md-4 mx-auto">
             {/* Links */}
-            <h5 className="font-weight-bold text-uppercase mt-3 mb-4 text-center">Nhiều hơn</h5>
+            <h5 className="font-weight-bold text-uppercase mt-3 mb-4">Nhiều hơn</h5>
             <ul>
               {
                 other
                   ? (
                     other.map((item, index) => (
-                      <li className="text-secondary" key={index}>
+                      <li className="list-style-none text-secondary" key={index}>
                         <Link to={`/${hanldeUrlPretty(item.title)}/${item._id}`} className="text-secondary">
                           {item.title}
                         </Link>
@@ -115,9 +116,29 @@ export default function Footer() {
           {/* Grid column */}
           <hr className="clearfix w-100 d-md-none" />
           {/* Grid column */}
-          <div className="col-md-3 mx-auto">
-            {/* Links */}
-            <h5 className="font-weight-bold text-uppercase mt-3 mb-4 text-center">Fanpage</h5>
+        </div>
+        {/* Grid row */}
+      </div>
+      {/* Footer Links */}
+      <hr />
+      <div className="container">
+        <div className="row">
+          <div className="col-md-6 mx-auto">
+            <h5 className="font-weight-bold text-uppercase mt-3 mb-4">CÔNG TY TRUYỀN THÔNG POLY</h5>
+            <ul>
+              <li className="list-style-none bg-dark border-0">
+                <p><span className="font-weight-bold">ĐỊA CHỈ: </span>137 Nguyễn Thị Thập, Q.Liên Chiểu, TP.Đà Nẵng</p>
+              </li>
+              <li className="list-style-none bg-dark border-0">
+                <p><span className="font-weight-bold">ĐIỆN THOẠI: </span>0337892690</p>
+              </li>
+              <li className="list-style-none bg-dark border-0">
+                <p><span className="font-weight-bold">EMAIL: </span>contact@gmail.com</p>
+              </li>
+            </ul>
+          </div>
+          <div className="col-md-6 mx-auto">
+            <h5 className="font-weight-bold text-uppercase mt-3 mb-4">Fanpage</h5>
             <iframe
               src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fnxvdesigners%2F&tabs&width=340&height=130&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId=1732530280376802"
               width="100%"
@@ -129,14 +150,11 @@ export default function Footer() {
               title="fanpage"
             />
           </div>
-          {/* Grid column */}
         </div>
-        {/* Grid row */}
       </div>
-      {/* Footer Links */}
       {/* Copyright */}
       <div style={{ background: "#435165" }} className="footer-copyright text-center py-3 text-white">
-        © 2020 Copyright:
+        © {moment().format("YYYY")} Copyright:
         <a href="https://fb.com/nguyenxuanvinh109">
           {" "}
           Bái Chàng Tron

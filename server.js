@@ -19,7 +19,6 @@ const commentRouter = require('./routes/comment');
 // const viewRouter = require('./routes/view')
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-
 const app = express();
 
 app.use(fileUpload());
@@ -27,16 +26,16 @@ dotenv.config();
 
 let urlData = process.env.DATABASE_URL;
 const connectMongoDB = async () => {
-  try {
-    await mongoose.connect(urlData, {
-      useNewUrlParser: true,
-      useCreateIndex: true,
-      useUnifiedTopology: true
-    });
-    console.log("connect successful!");
-  } catch (error) {
-    console.error("connect MongoDb has error: " + error);
-  }
+   try {
+	  await mongoose.connect(urlData, {
+		 useNewUrlParser: true,
+		 useCreateIndex: true,
+		 useUnifiedTopology: true
+	  });
+	  console.log("connect successful!");
+   } catch (error) {
+	  console.error("connect MongoDb has error: " + error);
+   }
 };
 
 connectMongoDB();
@@ -53,14 +52,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "/")));
 
 app.use(function(req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Cache-Control, Pragma, Origin, Authorization, token, Access-Control-Allow-Headers,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
-  );
-  return next();
+   res.setHeader("Access-Control-Allow-Origin", "*");
+   res.setHeader("Access-Control-Allow-Credentials", "true");
+   res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+   res.setHeader(
+	  "Access-Control-Allow-Headers",
+	  "Cache-Control, Pragma, Origin, Authorization, token, Access-Control-Allow-Headers,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
+   );
+   return next();
 });
 
 app.use('/users', usersRouter);
@@ -77,7 +76,7 @@ app.use('/comments', commentRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+   next(createError(404));
 });
 
 // var publicDir = require('path').join(__dirname);
@@ -85,13 +84,13 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+   // set locals, only providing error in development
+   res.locals.message = err.message;
+   res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
+   // render the error page
+   res.status(err.status || 500);
+   res.render("error");
 });
 
 module.exports = app;

@@ -1,4 +1,5 @@
 import React from "react";
+import {Helmet} from 'react-helmet';
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -128,24 +129,37 @@ export default function Channel({ match }) {
   };
 
   return (
-    <React.Fragment>
-      <Message />
-      <div className="container">
-        <div className="row mb-3" style={{ alignItems: "center" }}>
-          <h1 className="mr-2">{channel.username}</h1>
-          <div className="mb-2">
-            {userExist ? (
-              following ? (
-                following.channel === channel._id &&
-                following.followBy === userExist ? (
-                  <span
-                    onClick={() =>
-                      hanldeUnFollow(channel.follow, channel._id, following._id)
-                    }
-                    className="badge badge-success cursor-pointer"
-                  >
-                    Following
-                  </span>
+    <>
+      <Helmet>
+        <title>{` ${ channel ? channel.username + ' - BNews kênh tin tức hàng đầu Việt Nam' : "Loading..." } `}</title>
+        <meta name="description" content="BNews kênh tin tức hàng đầu Việt Nam, thời dự, bóng đá, tin trong ngày, giải trí, bất động sản,..." />
+      </Helmet>
+      <React.Fragment>
+        <Message />
+        <div className="container">
+          <div className="row mb-3" style={{ alignItems: "center" }}>
+            <h1 className="mr-2">{channel ? channel.username.toUpperCase() : "Loading..."}</h1>
+            <div className="mb-2">
+              {userExist ? (
+                following ? (
+                  following.channel === channel._id &&
+                  following.followBy === userExist ? (
+                    <span
+                      onClick={() =>
+                        hanldeUnFollow(channel.follow, channel._id, following._id)
+                      }
+                      className="badge badge-success cursor-pointer"
+                    >
+                      Following
+                    </span>
+                  ) : (
+                    <span
+                      onClick={() => hanldeFollow(channel.follow, channel._id)}
+                      className="badge badge-info cursor-pointer"
+                    >
+                      Follow
+                    </span>
+                  )
                 ) : (
                   <span
                     onClick={() => hanldeFollow(channel.follow, channel._id)}
@@ -155,38 +169,31 @@ export default function Channel({ match }) {
                   </span>
                 )
               ) : (
-                <span
-                  onClick={() => hanldeFollow(channel.follow, channel._id)}
-                  className="badge badge-info cursor-pointer"
-                >
+                <Link to="/login" className="badge badge-info">
                   Follow
-                </span>
-              )
-            ) : (
-              <Link to="/login" className="badge badge-info">
-                Follow
-              </Link>
-            )}
+                </Link>
+              )}
+            </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-lg-8">
-            <NewsHighlight highlightNew={highlightNew ? highlightNew : null} />
-            <NewsOther
-              tags={tags}
-              newByTag={newByTag}
-              newsHighlightId={highlightNew ? highlightNew._id : null}
-              highlightNew={highlightNew}
-            />
-          </div>
-          <div className="col-lg-4">
-            <FeaturedChannal />
-            <div className="mt-4">
-              <LatestNew />
+          <div className="row">
+            <div className="col-lg-8">
+              <NewsHighlight highlightNew={highlightNew ? highlightNew : null} />
+              <NewsOther
+                tags={tags}
+                newByTag={newByTag}
+                newsHighlightId={highlightNew ? highlightNew._id : null}
+                highlightNew={highlightNew}
+              />
+            </div>
+            <div className="col-lg-4">
+              <FeaturedChannal />
+              <div className="mt-4">
+                <LatestNew />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </React.Fragment>
+      </React.Fragment>
+    </>
   );
 }

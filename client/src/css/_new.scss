@@ -311,31 +311,3 @@ img {
     @extend %mb-1;
   }
 }
-
-// similar new
-.similar-new:first-of-type {
-  @include disFlex(column nowrap, flex-start, center);
-
-  .similar-new__info{
-    @extend %mt-1;
-  }
-
-  .similar-new__image {
-    @extend %mr-0;
-    height: 20rem;
-    overflow: hidden;
-    @extend %w-100;
-
-    &>img {
-      @extend %w-100;
-    }
-  }
-}
-
-.similar-new, .latest-new, .channel{
-  color: $color-black;
-
-  &:hover{
-    color: inherit;
-  }
-}

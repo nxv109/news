@@ -9,6 +9,7 @@ export default function NewsHighlight(props) {
 
   React.useEffect(() => {
     setHighlightNew(props.highlightNew);
+    
   }, [props.highlightNew]);
 
   return (

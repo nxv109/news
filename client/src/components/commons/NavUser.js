@@ -24,7 +24,7 @@ export default function NavUser(props) {
   };
 
   return (
-    <nav style={{ zIndex: 1041 }} className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark shadow-sm py-0 px-2">
+    <nav style={{ zIndex: 1041 }} className="navbar fixed-top navbar-expand-xl navbar-dark bg-dark shadow-sm py-0 px-2">
       <div className="container">
         <Link to="/" className="navbar-brand">
           <img width="100%" src="/Logo-news.png" alt="Logo news" />
@@ -52,7 +52,7 @@ export default function NavUser(props) {
                 ))
               : null}
           </ul>
-          <ul className="navbar-nav mr-auto" style={{ alignItems: "center" }}>
+          <ul className="navbar-nav mr-0" style={{ alignItems: "center" }}>
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle account text-danger"
@@ -73,7 +73,7 @@ export default function NavUser(props) {
                       />
                     </div>
                   ) : (
-                    "ACCOUNT"
+                    "TÀI KHOẢN"
                   )}
                 </a>
                 {appState.users.data ? (
@@ -83,7 +83,7 @@ export default function NavUser(props) {
                   >
                     <Link className="dropdown-item" to="/profile">
                       <i className="far fa-address-card mr-4"></i>
-                      <span>Profile</span>
+                      <span>Thông tin</span>
                     </Link>
                     <div className="dropdown-divider" />
                     <Link
@@ -92,7 +92,7 @@ export default function NavUser(props) {
                       onClick={hanldLogout}
                     >
                       <i className="fas fa-sign-out-alt mr-4"></i>
-                      <span>Logout</span>
+                      <span>Đăng xuất</span>
                     </Link>
                   </div>
                 ) : (
@@ -102,11 +102,11 @@ export default function NavUser(props) {
                   >
                     <Link className="dropdown-item" to="/login">
                       <i className="fas fa-sign-in-alt mr-4"></i>
-                      <span>Login</span>
+                      <span>Đăng nhập</span>
                     </Link>
                     <Link className="dropdown-item" to="/register">
                       <i className="far fa-registered mr-4"></i>
-                      <span>Register</span>
+                      <span>Đăng ký</span>
                     </Link>
                   </div>
                 )}
@@ -124,7 +124,7 @@ export default function NavUser(props) {
                   </div>
                 </div>
               </li>
-            </ul>
+          </ul>
         </div>
       </div>
     </nav>

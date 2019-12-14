@@ -36,6 +36,11 @@
 	h3{
 		margin-top: 1rem !important;
 	}
+
+	.navbar-collapse{
+		flex-flow: column !important;
+		text-align: left !important;
+	}
 }
 
 @media only screen and (max-width: "768px") {

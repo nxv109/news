@@ -1,5 +1,5 @@
 import React from "react";
-import {Helmet} from 'react-helmet'
+import {Helmet} from 'react-helmet';
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 import useForm from "react-hook-form";
