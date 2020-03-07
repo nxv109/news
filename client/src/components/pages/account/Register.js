@@ -123,7 +123,7 @@ export default function Register({ history }) {
                   )}
                 </div>
                 <button type="submit" className="btn btn-danger mt-3">
-                  Register
+                  Đăng ký
                 </button>
               </form>
             </div>

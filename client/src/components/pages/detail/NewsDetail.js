@@ -107,8 +107,8 @@ export default function NewsDetail(props) {
               <h1>{datas.title}</h1>
               {datas.createdBy ? (
                 <p className="featured-new__createby text-secondary">
-                  <i className="mdi mdi-monitor" /> {datas.createdBy.username} | <i className="mdi mdi-av-timer" />{" "}
-                  {moment(datas.dateCreate).format("DD-MM-YYYY")} |{" "}
+                  <i className="mdi mdi-monitor" /> {datas.createdBy.username} - <i className="mdi mdi-av-timer" />{" "}
+                  {moment(datas.dateCreate).format("DD-MM-YYYY")} -{" "}
                   <i className="mdi mdi-eye" /> {datas.view}
                 </p>
               ) : null}
@@ -135,7 +135,7 @@ export default function NewsDetail(props) {
                   </form>
                 )
                 : (
-                  <p className="text-danger">Nhận xét: <span className="text-muted">bạn cần đăng nhập để thực hiện chức năng này! <Link to="/login" className="text-info">login</Link></span></p>
+                  <p className="text-danger">Nhận xét: <span className="text-muted">bạn cần đăng nhập để thực hiện chức năng này! <Link to="/login" className="text-info">Đăng nhập</Link></span></p>
                 )
               }
               {

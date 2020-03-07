@@ -222,7 +222,7 @@ export default function Edit({ match }) {
               </div>
             </div>
             <button type="submit" className="btn btn-danger">
-              GỬI YÊU CẦU PHÊ DUYỆT LÊN SENSOR
+              YÊU CẦU PHÊ DUYỆT
             </button>
           </form>
         </div>

@@ -33,7 +33,7 @@ export default function NewsHighlight(props) {
           </div>
         </Link>
       ) : (
-        <p className="text-secondary">Loading...</p>
+        <p className="text-secondary">Chưa có tin nào</p>
       )}
     </div>
   );

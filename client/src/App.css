@@ -52,8 +52,7 @@
 }
 
 body {
-  background-image: url("http://localhost:3000/public/dotted-bg.png");
-  background-repeat: repeat;
+  background: #f7f7f7;
   font-family: "Quicksand", sans-serif;
 }
 

@@ -15,185 +15,186 @@ import Message from "../Message";
 
 // check nguoi dung da follow kenh chua
 function checkUserIsFollowing(userExist, id, data) {
-  if (userExist && data) {
-    const checkFollowing = data.find(v => v.followBy === userExist && v.channel === id);
+   if (userExist && data) {
+	  const checkFollowing = data.find(v => v.followBy === userExist && v.channel === id);
 
-    return checkFollowing;
-  }
+	  return checkFollowing;
+   }
 }
 
 export default function Channel({ match }) {
-  const [following, setFollowing] = React.useState({});
-  const [highlightNew, setHighlightNew] = React.useState({});
-  const [channel, setChannel] = React.useState("");
-  const [tags, setTags] = React.useState([]);
-  const [newByTag, setNewByTag] = React.useState([]);
-  const id = match.params.id;
-  const userExist = sessionStorage.getItem("userId");
-  const dispatch = useDispatch();
+   const [following, setFollowing] = React.useState({});
+   const [highlightNew, setHighlightNew] = React.useState({});
+   const [channel, setChannel] = React.useState("");
+   const [tags, setTags] = React.useState([]);
+   const [newByTag, setNewByTag] = React.useState([]);
+   const id = match.params.id;
+   const userExist = sessionStorage.getItem("userId");
+   const token = localStorage.getItem("auth-token");
+   const dispatch = useDispatch();
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const res = await axios.get(`/news/users/${id}`);
+   React.useEffect(() => {
+	  const fetchData = async () => {
+		 const res = await axios.get(`/news/users/${id}`);
 
-      function getTags() {
-        let tagArr = [];
+		 function getTags() {
+			let tagArr = [];
 
-        res.data.data.map(item => tagArr.push(item.tag));
+			res.data.data.map(item => tagArr.push(item.tag));
 
-        const newTagArr = tagArr.flat(1);
+			const newTagArr = tagArr.flat(1);
 
-        const result = [...new Set(newTagArr)];
-        return result;
-      }
+			const result = [...new Set(newTagArr)];
+			return result;
+		 }
 
-      function getDataByView(view) {
-        return res.data.data.find(item => item.view > view);
-      }
+		 function getDataByView(view) {
+			return res.data.data.find(item => item.view > view);
+		 }
 
-      const highlightNew = getDataByView(9);
+		 const highlightNew = getDataByView(9);
 
-      setTags(getTags());
-      setHighlightNew(highlightNew);
-      setNewByTag(res.data.data);
-    };
+		 setTags(getTags());
+		 setHighlightNew(highlightNew);
+		 setNewByTag(res.data.data);
+	  };
 
-    const fetchUser = async () => {
-      const res = await axios.get(`/users/name/${id}`);
+	  const fetchUser = async () => {
+		 const res = await axios.get(`/users/name/${id}`);
 
-      setChannel(res.data.data[0]);
-    };
+		 setChannel(res.data.data[0]);
+	  };
 
-    const fetchFollows = async () => {
-      const res = await axios.get("/followers");
-      const { data } = res.data;
+	  const fetchFollows = async () => {
+		 const res = await axios.get("/followers");
+		 const { data } = res.data;
 
-      // check nguoi dung da follow kenh chua
-      setFollowing(checkUserIsFollowing(userExist, id, data));
-    };
+		 // check nguoi dung da follow kenh chua
+		 setFollowing(checkUserIsFollowing(userExist, id, data));
+	  };
 
-    fetchUser();
-    fetchFollows();
-    fetchData();
-  }, [id, userExist]);
+	  fetchUser();
+	  fetchFollows();
+	  fetchData();
+   }, [id, userExist]);
 
-  // UnFollow
-  const hanldeUnFollow = (follow, userId, userFollowingId) => {
-    let decreaseFollow = follow - 1;
-    
-    const decrease = async () => {
-      const res = await axios.put(`/followers/decrease/${userId}`, {
-        follow: decreaseFollow
-      });
-      const { code, message, data } = res.data;
+   // UnFollow
+   const hanldeUnFollow = (follow, userId, userFollowingId) => {
+	  let decreaseFollow = follow - 1;
 
-      setFollowing(checkUserIsFollowing(userExist, id, data));
-      dispatch(setMessage({ code, message }));
-      dispatch(closeMessage({ code, message }));
-    };
+	  const decrease = async () => {
+		 const res = await axios.put(`/followers/decrease/${userId}`, {
+			follow: decreaseFollow
+		 });
+		 const { code, message, data } = res.data;
 
-    const unFollow = () => {
-      axios.delete(`/followers/${userFollowingId}`);
-    };
+		 setFollowing(checkUserIsFollowing(userExist, id, data));
+		 dispatch(setMessage({ code, message }));
+		 dispatch(closeMessage({ code, message }));
+	  };
 
-    decrease();
-    unFollow();
-  };
+	  const unFollow = () => {
+		 axios.delete(`/followers/${userFollowingId}`);
+	  };
 
-  // Follow
-  const hanldeFollow = (follow, userId) => {
-    let increaseFollow = follow + 1;
+	  decrease();
+	  unFollow();
+   };
 
-    const increase = async () => {
-      const res = await axios.put(`/followers/increase/${userId}`, {
-        follow: increaseFollow
-      });
-      const { code, message, data } = res.data;
+   // Follow
+   const hanldeFollow = (follow, userId) => {
+	  let increaseFollow = follow + 1;
 
-      // check nguoi dung da follow kenh chua
-      setFollowing(checkUserIsFollowing(userExist, id, data));
+	  const increase = async () => {
+		 const res = await axios.put(`/followers/increase/${userId}`, {
+			follow: increaseFollow
+		 });
+		 const { code, message, data } = res.data;
 
-      dispatch(setMessage({ code, message }));
-      dispatch(closeMessage({ code, message }));
-    };
+		 // check nguoi dung da follow kenh chua
+		 setFollowing(checkUserIsFollowing(userExist, id, data));
 
-    const followChannel = async () => {
-      await axios.post("/followers/", {
-        channel: userId,
-        user: userExist
-      });
-    };
+		 dispatch(setMessage({ code, message }));
+		 dispatch(closeMessage({ code, message }));
+	  };
 
-    increase();
-    followChannel();
-  };
+	  const followChannel = async () => {
+		 await axios.post("/followers/", {
+			channel: userId,
+			user: userExist
+		 });
+	  };
 
-  return (
-    <>
-      <Helmet>
-        <title>{` ${ channel ? channel.username + ' - BNews kênh tin tức hàng đầu Việt Nam' : "Loading..." } `}</title>
-        <meta name="description" content="BNews kênh tin tức hàng đầu Việt Nam, thời dự, bóng đá, tin trong ngày, giải trí, bất động sản,..." />
-      </Helmet>
-      <React.Fragment>
-        <Message />
-        <div className="container">
-          <div className="row mb-3" style={{ alignItems: "center" }}>
-            <h1 className="mr-2">{channel ? channel.username.toUpperCase() : "Loading..."}</h1>
-            <div className="mb-2">
-              {userExist ? (
-                following ? (
-                  following.channel === channel._id &&
-                  following.followBy === userExist ? (
-                    <span
-                      onClick={() =>
-                        hanldeUnFollow(channel.follow, channel._id, following._id)
-                      }
-                      className="badge badge-success cursor-pointer"
-                    >
-                      Following
-                    </span>
-                  ) : (
-                    <span
-                      onClick={() => hanldeFollow(channel.follow, channel._id)}
-                      className="badge badge-info cursor-pointer"
-                    >
-                      Follow
-                    </span>
-                  )
-                ) : (
-                  <span
-                    onClick={() => hanldeFollow(channel.follow, channel._id)}
-                    className="badge badge-info cursor-pointer"
-                  >
-                    Follow
-                  </span>
-                )
-              ) : (
-                <Link to="/login" className="badge badge-info">
-                  Follow
-                </Link>
-              )}
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-8">
-              <NewsHighlight highlightNew={highlightNew ? highlightNew : null} />
-              <NewsOther
-                tags={tags}
-                newByTag={newByTag}
-                newsHighlightId={highlightNew ? highlightNew._id : null}
-                highlightNew={highlightNew}
-              />
-            </div>
-            <div className="col-lg-4">
-              <FeaturedChannal />
-              <div className="mt-4">
-                <LatestNew />
-              </div>
-            </div>
-          </div>
-        </div>
-      </React.Fragment>
-    </>
-  );
+	  increase();
+	  followChannel();
+   };
+
+   return (
+	  <>
+		 <Helmet>
+			<title>{` ${ channel ? channel.username + ' - BNews kênh tin tức hàng đầu Việt Nam' : "Loading..." } `}</title>
+			<meta name="description" content="BNews kênh tin tức hàng đầu Việt Nam, thời dự, bóng đá, tin trong ngày, giải trí, bất động sản,..." />
+		 </Helmet>
+		 <React.Fragment>
+			<Message />
+			<div className="container">
+			   <div className="row mb-3" style={{ alignItems: "center" }}>
+				  <h1 className="mr-2">{channel ? channel.username.toUpperCase() : "Loading..."}</h1>
+				  <div className="mb-2">
+					 {userExist && token ? (
+						following ? (
+						   following.channel === channel._id &&
+						   following.followBy === userExist ? (
+							  <span
+								 onClick={() =>
+									   hanldeUnFollow(channel.follow, channel._id, following._id)
+								 }
+								 className="badge badge-success cursor-pointer"
+							  >
+								 Following
+							  </span>
+						   ) : (
+							  <span
+								 onClick={() => hanldeFollow(channel.follow, channel._id)}
+								 className="badge badge-info cursor-pointer"
+							  >
+								 Follow
+							  </span>
+						   )
+						) : (
+						   <span
+							  onClick={() => hanldeFollow(channel.follow, channel._id)}
+							  className="badge badge-info cursor-pointer"
+						   >
+							  Follow
+						   </span>
+						)
+					 ) : (
+						<Link to="/login" className="badge badge-info">
+						   Follow
+						</Link>
+					 )}
+				  </div>
+			   </div>
+			   <div className="row">
+				  <div className="col-lg-8">
+					 <NewsHighlight highlightNew={highlightNew ? highlightNew : null} />
+					 <NewsOther
+						tags={tags}
+						newByTag={newByTag}
+						newsHighlightId={highlightNew ? highlightNew._id : null}
+						highlightNew={highlightNew}
+					 />
+				  </div>
+				  <div className="col-lg-4">
+					 <FeaturedChannal />
+					 <div className="mt-4">
+						<LatestNew />
+					 </div>
+				  </div>
+			   </div>
+			</div>
+		 </React.Fragment>
+	  </>
+   );
 }

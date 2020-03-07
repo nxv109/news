@@ -17,7 +17,7 @@ const Home = React.lazy(() => import("./components/pages/home/Index"));
 const Login = React.lazy(() => import("./components/pages/account/Login"));
 const Profile = React.lazy(() => import("./components/pages/account/Profile"));
 const Register = React.lazy(() =>
-  import("./components/pages/account/Register")
+   import("./components/pages/account/Register")
 );
 const Contact = React.lazy(() => import("./components/pages/Contact"));
 const NotFound = React.lazy(() => import("./components/pages/404NotFound"));
@@ -34,38 +34,39 @@ const Channel = React.lazy(() => import("./components/pages/channel"));
 const Detail = React.lazy(() => import("./components/pages/detail"));
 
 function App() {
-  return (
-    <Router className="App">
-      <ScrollToTop />
-      <div className="container-fluid mt-6 mb-3 min-h-100vh">
-        <Navbar />
-        <React.Suspense
-          fallback={
-            <div className="main-loader">
-              <div className="loader"></div>
-            </div>
-          }
-        >
-          <Switch>
-            <Route path="/" component={Home} exact />
-            <Route path="/contact" component={Contact} />
-            <Route
-              path="/admin"
-              component={() => WithAuth(Journalist, Editor, Sensor, Admin)}
-            />
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
-            <Route path="/profile" component={Profile} />
-            <Route path="/category/*/:id" component={Category} />
-            <Route path="/channel/*/:id" component={Channel} />
-            <Route path="/*/:id" component={Detail} />
-            <Route path="/*" component={NotFound} />
-          </Switch>
-        </React.Suspense>
-      </div>
-      <Footer />
-    </Router>
-  );
+   return (
+	  <Router className="App">
+		 <ScrollToTop />
+		 <div className="container-fluid mt-6 mb-3 min-h-100vh">
+			<Navbar />
+			<React.Suspense
+			   fallback={
+				  <div className="main-loader">
+					 <div className="loader"></div>
+				  </div>
+			   }
+			>
+			   <Switch>
+				  <Route path="/" component={Home} exact />
+				  <Route path="/contact" component={Contact} />
+				  <Route
+					 path="/admin"
+					 component={() => WithAuth(Journalist, Editor, Sensor, Admin)}
+				  />
+				  <Route path="/login" component={Login} />
+				  <Route path="/register" component={Register} />
+				  <Route path="/profile" component={Profile} />
+				  <Route path="/category/*/:id" component={Category} />
+				  <Route path="/channel/*/:id" component={Channel} />
+				  <Route path="/*/:id" component={Detail} />
+				  <Route path="/*" component={NotFound} />
+			   </Switch>
+			</React.Suspense>
+			<div></div>
+		 </div>
+		 <Footer />
+	  </Router>
+   );
 }
 
 export default App;
