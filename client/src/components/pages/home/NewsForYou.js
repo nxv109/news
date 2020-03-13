@@ -24,8 +24,6 @@ export default function NewsOther() {
 
    }, [userId]);
 
-   console.log('new', news);
-
    return (
 	  <React.Fragment>
 		 <div className="position-relative">

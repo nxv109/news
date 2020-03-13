@@ -4,7 +4,6 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const logger = require("morgan");
-
 const cateNewsRouter = require("./routes/cateNews");
 const newsRouter = require("./routes/news");
 const loginRouter = require("./routes/login");
@@ -16,40 +15,18 @@ const usersRouter = require('./routes/users');
 const followersRouter = require('./routes/follow');
 const statisticalRouter = require('./routes/statistical');
 const commentRouter = require('./routes/comment');
-// const viewRouter = require('./routes/view')
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const app = express();
 rateRouter
 app.use(fileUpload());
 dotenv.config();
-
-let urlData = process.env.DATABASE_URL;
-const connectMongoDB = async () => {
-  try {
-    await mongoose.connect(urlData, {
-      useNewUrlParser: true,
-      useCreateIndex: true,
-      useUnifiedTopology: true
-    });
-    console.log("connect successful!");
-  } catch (error) {
-    console.error("connect MongoDb has error: " + error);
-  }
-};
-
-connectMongoDB();
-
 app.use(cookieParser());
 // view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
-
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "/")));
 
 app.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -61,6 +38,22 @@ app.use(function(req, res, next) {
   );
   return next();
 });
+
+// connect to mongoDB
+let urlData = process.env.DATABASE_URL;
+const connectMongoDB = async () => {
+  try {
+    await mongoose.connect(urlData, {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useUnifiedTopology: true
+    });
+    console.log("connect successfuly to mongoDB!");
+  } catch (error) {
+    console.error("connect MongoDB has error: " + error);
+  }
+};
+connectMongoDB();
 
 app.use('/users', usersRouter);
 app.use("/cateNews", cateNewsRouter);
@@ -79,26 +72,13 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// var publicDir = require('path').join(__dirname);
-// app.use(express.static(publicDir));
-
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')); 
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
-});
-
-module.exports = app;
+const port  = process.env.PORT || 5000;
+app.listen(port, () => console.log(`Server started at port: ${port}`));
