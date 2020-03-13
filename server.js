@@ -82,6 +82,14 @@ app.use(function(req, res, next) {
 // var publicDir = require('path').join(__dirname);
 // app.use(express.static(publicDir));
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html')); // relative path
+  });
+}
+
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
