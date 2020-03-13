@@ -1,7 +1,8 @@
 {
   "name": "backend",
   "version": "0.0.0",
-  "private": true,
+  "description": "",
+  "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",
     "server": "nodemon server.js",
@@ -16,7 +17,7 @@
     "cookie-parser": "^1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
-    "ejs": "~2.6.1",  
+    "ejs": "~2.6.1",
     "express": "~4.16.1",
     "express-fileupload": "^1.1.6-alpha.6",
     "formidable": "^1.2.1",
