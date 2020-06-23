@@ -13,25 +13,25 @@ import ScrollToTop from "./ScrollToTop";
 import "./App.css";
 
 // component lazy load
-const Home = React.lazy(() => import("./components/pages/home/Index"));
-const Login = React.lazy(() => import("./components/pages/account/Login"));
-const Profile = React.lazy(() => import("./components/pages/account/Profile"));
+const Home = React.lazy(() => import("./scenes/home/Index"));
+const Login = React.lazy(() => import("./scenes/account/Login"));
+const Profile = React.lazy(() => import("./scenes/account/Profile"));
 const Register = React.lazy(() =>
-   import("./components/pages/account/Register")
+   import("./scenes/account/Register")
 );
-const Contact = React.lazy(() => import("./components/pages/Contact"));
-const NotFound = React.lazy(() => import("./components/pages/404NotFound"));
+const Contact = React.lazy(() => import("./scenes/Contact"));
+const NotFound = React.lazy(() => import("./scenes/404NotFound"));
 
 // admin
-const Journalist = React.lazy(() => import("./components/pages/journalist"));
-const Editor = React.lazy(() => import("./components/pages/editor"));
-const Sensor = React.lazy(() => import("./components/pages/sensor"));
-const Admin = React.lazy(() => import("./components/pages/admin"));
+const Journalist = React.lazy(() => import("./scenes/journalist"));
+const Editor = React.lazy(() => import("./scenes/editor"));
+const Sensor = React.lazy(() => import("./scenes/sensor"));
+const Admin = React.lazy(() => import("./scenes/admin"));
 
 // news page
-const Category = React.lazy(() => import("./components/pages/category"));
-const Channel = React.lazy(() => import("./components/pages/channel"));
-const Detail = React.lazy(() => import("./components/pages/detail"));
+const Category = React.lazy(() => import("./scenes/category"));
+const Channel = React.lazy(() => import("./scenes/channel"));
+const Detail = React.lazy(() => import("./scenes/detail"));
 
 function App() {
    return (

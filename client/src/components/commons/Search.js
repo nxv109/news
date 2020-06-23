@@ -3,23 +3,19 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getSearchNews } from "../../actions/new.action";
-import { hanldeUrlPretty } from "../mixin/UrlPretty";
+ import { urlPretty } from "../../helpers";
 
 export default function Search() {
-  // const [loading, setLoading] = React.useState(false);
   const textSearch = React.useRef("");
   const appState = useSelector(state => state);
   const dispatch = useDispatch();
 
   const hanldeChangeSearch = () => {
     if (textSearch.current.value.length >= 2) {
-      // setLoading(true);
 
       const text = textSearch.current.value;
 
       dispatch(getSearchNews(text.trim()));
-    } else {
-      // setLoading(false);
     }
   };
 
@@ -38,7 +34,7 @@ export default function Search() {
           <div className="search__result w-100 p-1 rounded shadow-lg">
             {appState.news.search.map((item, index) => (
               <Link
-                to={`/${item.title && hanldeUrlPretty(item.title)}/${item._id}`}
+                to={`/${item.title && urlPretty(item.title)}/${item._id}`}
                 key={index}
                 className="search-new p-1 bg-white rounded text-decoration-none text-dark"
               >

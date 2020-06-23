@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import Message from "./components/Message";
+import Message from "./components/Message/";
 
 export default function WithAuth(...args) {
   const ComponentJournalist = args[0];

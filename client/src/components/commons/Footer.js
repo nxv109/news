@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { hanldeUrlPretty } from "../mixin/UrlPretty";
+ import { urlPretty } from "../../helpers";
 
 export default function Footer() {
   const appState = useSelector(state => state);
@@ -59,7 +59,7 @@ export default function Footer() {
                   ? (
                     latest.map((item, index) => (
                       <li className="list-style-none text-secondary" key={index}>
-                        <Link to={`/${hanldeUrlPretty(item.title)}/${item._id}`} className="text-secondary">
+                        <Link to={`/${urlPretty(item.title)}/${item._id}`} className="text-secondary">
                           {item.title}
                         </Link>
                       </li>
@@ -81,7 +81,7 @@ export default function Footer() {
                   ? (
                     featured.map((item, index) => (
                       <li className="list-style-none text-secondary" key={index}>
-                        <Link to={`/${hanldeUrlPretty(item.title)}/${item._id}`} className="text-secondary">
+                        <Link to={`/${urlPretty(item.title)}/${item._id}`} className="text-secondary">
                           {item.title}
                         </Link>
                       </li>
@@ -103,7 +103,7 @@ export default function Footer() {
                   ? (
                     other.map((item, index) => (
                       <li className="list-style-none text-secondary" key={index}>
-                        <Link to={`/${hanldeUrlPretty(item.title)}/${item._id}`} className="text-secondary">
+                        <Link to={`/${urlPretty(item.title)}/${item._id}`} className="text-secondary">
                           {item.title}
                         </Link>
                       </li>

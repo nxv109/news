@@ -8,10 +8,10 @@
     height: 3.5rem;
 	}
 
-		.other-new__image {
-	    flex: 25% 1;
-	    height: 6rem;
-		}
+	.other-new__image {
+		flex: 25% 1;
+		height: 6rem;
+	}
 }
 
 @media only screen and (max-width: "992px") {
@@ -59,16 +59,12 @@
 	}
 
 	.other-new__image {
-    flex: 30% 1;
-    height: 5.1rem;
+		flex: 30% 1;
+		height: 5.1rem;
 	}
 
 	h3{
 		margin-top: 1rem !important;
-	}
-
-	.selected-news {
-	    height: 5.1rem;
 	}
 
 	.fanpage{
