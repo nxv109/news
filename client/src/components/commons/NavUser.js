@@ -46,7 +46,7 @@ export default function NavUser(props) {
               ? appState.categories.data.map((item, index) => (
                   <li key={index} className="nav-item">
                     <Link className="nav-link" to={`/category/${item.name && urlPretty(item.name)}/${item._id}`}>
-                      {item.name ? item.name.toUpperCase() : null}
+                      {item.name.toUpperCase() || null}
                     </Link>
                   </li>
                 ))

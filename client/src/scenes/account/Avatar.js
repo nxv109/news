@@ -3,7 +3,7 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { addUser } from "../../actions/user.action";
 import { setMessage } from "../../actions/message.action";
-import { closeMessage } from "../closeMessage";
+import { closeMessage} from "../../helpers";
 
 export default function Infomation() {
   const [users, setUsers] = React.useState("");

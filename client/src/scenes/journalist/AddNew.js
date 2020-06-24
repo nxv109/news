@@ -7,7 +7,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import { setMessage } from "../../actions/message.action";
 import Notified from "../../components/Notified/";
-import { closeMessage } from "../closeMessage";
+import { closeMessage} from "../../helpers";
 
 export default function AddNew() {
   const { register, handleSubmit, errors } = useForm();

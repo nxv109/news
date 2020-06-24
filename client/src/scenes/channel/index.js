@@ -10,7 +10,7 @@ import FeaturedChannal from "../home/FeaturedChannel";
 import LatestNew from "../home/LatestNew";
 
 import { setMessage } from "../../actions/message.action";
-import { closeMessage } from "../closeMessage";
+import { closeMessage} from "../../helpers";
 import Notified from "../../components/Notified/";
 
 // check nguoi dung da follow kenh chua

@@ -7,7 +7,7 @@ import { setMessage } from "../../actions/message.action";
 import { useDispatch } from "react-redux";
 
 import Notified from "../../components/Notified/";
-import { closeMessage } from "../closeMessage";
+import { closeMessage} from "../../helpers";
 
 export default function News() {
   const [news, setNews] = React.useState([]);

@@ -6,7 +6,7 @@ import useForm from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../actions/user.action";
 import { setMessage } from "../../actions/message.action";
-import { closeMessage } from "../closeMessage";
+import { closeMessage} from "../../helpers";
 import Notified from "../../components/Notified/";
 
 export default function Login({ history }) {
@@ -50,7 +50,6 @@ export default function Login({ history }) {
 			history.push("/");
 		 }
 		 const { code, message } = res.data;
-		 console.log(res.data);
 
 		 dispatch(setMessage({ code, message }));
 		 dispatch(closeMessage({ code, message }));

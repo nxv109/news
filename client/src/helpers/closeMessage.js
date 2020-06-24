@@ -1,6 +1,6 @@
 import { setMessage } from "../actions/message.action";
 
-export const closeMessage = () => {
+export default () => {
    return dispatch => {
 	  setTimeout(() => {
 		 dispatch(setMessage({message: "" }));

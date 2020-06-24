@@ -10,7 +10,7 @@ import { setMessage } from "../../actions/message.action";
 import Infomation from "./Infomation";
 import Avatar from "./Avatar";
 import Notified from "../../components/Notified/";
-import { closeMessage } from "../closeMessage";
+import { closeMessage} from "../../helpers";
 
 export default function Profile() {
   const [userName, setUserName] = React.useState("");
@@ -165,7 +165,7 @@ export default function Profile() {
           {/*/col-3*/}
           <div className="col-sm-8">
             <Notified />
-            <h3>Edit profile</h3>
+            <h3 className="mb-3">Edit profile</h3>
             <div className="tab-content">
               <div className="tab-pane active">
                 <div className="form-group">

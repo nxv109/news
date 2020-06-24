@@ -4,7 +4,7 @@ import useForm from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { setMessage } from "../../actions/message.action";
 import Notified from "../../components/Notified/";
-import { closeMessage } from "../closeMessage";
+import { closeMessage} from "../../helpers";
 
 export default function Comment() {
   const [words, setWords] = React.useState([]);

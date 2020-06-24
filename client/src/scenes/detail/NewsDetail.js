@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 
 import BoxLoadingDetail from "../../components/BoxLoadingDetail";
 import { setMessage } from "../../actions/message.action";
-import { closeMessage } from "../closeMessage";
+import { closeMessage} from "../../helpers";
 import Notified from "../../components/Notified/";
 
 export default function NewsDetail(props) {
