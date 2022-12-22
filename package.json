@@ -23,7 +23,7 @@
     "formidable": "^1.2.2",
     "fs": "0.0.1-security",
     "http-errors": "~1.6.3",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "moment": "^2.26.0",
     "mongoose": "^5.9.19",
     "mongoose-double": "0.0.1",
